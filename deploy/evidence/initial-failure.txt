@@ -1,0 +1,25 @@
++ migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+psql:/tmp/tmp.c5pL25zOV1:40: ERROR:  syntax error at or near "\x1b"
+LINE 1: \x1bndif
+        ^
+INSERT 0 1
+ Container db005-smoke-25229-db-1 Stopping
+ Container db005-smoke-25229-db-1 Stopped
+ Container db005-smoke-25229-db-1 Removing
+ Container db005-smoke-25229-db-1 Removed
+ Network db005-smoke-25229_default Removing
+ Volume db005-smoke-25229_pgdata Removing
+ Volume db005-smoke-25229_pgdata Removed
+ Network db005-smoke-25229_default Removed
