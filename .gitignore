@@ -1,0 +1,16 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Build output
+target/
+bin/
+dist/
+coverage/
+*.test
+.DS_Store
