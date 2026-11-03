@@ -1,0 +1,4 @@
+{
+  "log_level": "info",
+  "shutdown_poll_ms": 100
+}
