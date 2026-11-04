@@ -1,0 +1,71 @@
+=== RUN   TestInstallLifecycle
+--- PASS: TestInstallLifecycle (1.67s)
+=== RUN   TestExplicitPrefixSpacesAndCleanUninstall
+--- PASS: TestExplicitPrefixSpacesAndCleanUninstall (0.46s)
+=== RUN   TestRejectsInvalidPackagesBeforeWriting
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/corruption
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/missing
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink-bin
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/target
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/invalid-version
+--- PASS: TestRejectsInvalidPackagesBeforeWriting (1.52s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/corruption (0.31s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/missing (0.24s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink (0.21s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink-bin (0.34s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/target (0.22s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/invalid-version (0.19s)
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/unmanaged
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/relative
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/dotdot
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/empty
+--- PASS: TestRejectsUnmanagedAndSymlinkDestinations (1.45s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/unmanaged (0.35s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/symlink (0.24s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink (0.27s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/relative (0.14s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/dotdot (0.16s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/empty (0.29s)
+=== RUN   TestManagedStateFailuresLeaveInstallation
+=== RUN   TestManagedStateFailuresLeaveInstallation/lock
+=== RUN   TestManagedStateFailuresLeaveInstallation/unrelated-bin
+=== RUN   TestManagedStateFailuresLeaveInstallation/foreign-link
+=== RUN   TestManagedStateFailuresLeaveInstallation/extra-release-file
+=== RUN   TestManagedStateFailuresLeaveInstallation/corrupt-previous
+=== RUN   TestManagedStateFailuresLeaveInstallation/version-reuse
+--- PASS: TestManagedStateFailuresLeaveInstallation (2.31s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/lock (0.31s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/unrelated-bin (0.37s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/foreign-link (0.33s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/extra-release-file (0.33s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/corrupt-previous (0.29s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/version-reuse (0.67s)
+=== RUN   TestPackageValidationAndNoOverwrite
+--- PASS: TestPackageValidationAndNoOverwrite (0.42s)
+=== RUN   TestArgumentsAndHelp
+--- PASS: TestArgumentsAndHelp (0.16s)
+=== RUN   TestInstallerHashUtilities
+=== RUN   TestInstallerHashUtilities/sha256sum
+=== RUN   TestInstallerHashUtilities/shasum
+    main_test.go:412: hash utility unavailable
+=== RUN   TestInstallerHashUtilities/openssl
+    main_test.go:412: hash utility unavailable
+=== RUN   TestInstallerHashUtilities/none
+--- PASS: TestInstallerHashUtilities (0.48s)
+    --- PASS: TestInstallerHashUtilities/sha256sum (0.20s)
+    --- SKIP: TestInstallerHashUtilities/shasum (0.00s)
+    --- SKIP: TestInstallerHashUtilities/openssl (0.00s)
+    --- PASS: TestInstallerHashUtilities/none (0.28s)
+=== RUN   TestFailedActivationPreservesRollback
+=== RUN   TestFailedActivationPreservesRollback/binary-directory
+=== RUN   TestFailedActivationPreservesRollback/history-rename
+--- PASS: TestFailedActivationPreservesRollback (2.19s)
+    --- PASS: TestFailedActivationPreservesRollback/binary-directory (1.12s)
+    --- PASS: TestFailedActivationPreservesRollback/history-rename (1.06s)
+=== RUN   TestUpgradeRefreshesInstalledManager
+--- PASS: TestUpgradeRefreshesInstalledManager (0.51s)
+PASS

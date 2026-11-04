@@ -20,6 +20,16 @@ Secure, lightweight remote maintenance infrastructure for embedded Linux / ARM d
 
 Directory ownership is reserved; empty folders are created by their owning issues.
 
+## Installation previews
+
+Portable packages install with `sh install.sh` after extraction, without compiling
+on the destination. They provide explicit upgrade, rollback and uninstall in a
+private user prefix. See the [installation guide](packaging/README.md) or
+[คู่มือติดตั้งภาษาไทย](packaging/README.th.md). These are M01 foundation previews;
+remote SSH/tunneling remains unimplemented. No public binary release is published
+by this change. Package tooling consumes explicit prebuilt artifacts; application
+PR approval/manual merge and release validation remain separate gates.
+
 ## Workflow
 Feature branch -> Draft PR targeting `develop` -> CI -> independent review -> explicit human Tech Lead approval -> manual merge. Never automatically merge into `main` or `develop`.
 

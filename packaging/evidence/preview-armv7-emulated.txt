@@ -1,0 +1,66 @@
+Host: Linux armv7l
+UID: 1000
+devicebridge-agent-0.1.0-preview.4-linux-armv7.tar.gz: OK
+Installed agent 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-agent/bin/devicebridge-agent"
+Manage: sh "/tmp/tmp.enTG8R/installed-agent/manage.sh" --status
+Installed agent 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-agent/bin/devicebridge-agent"
+Manage: sh "/tmp/tmp.enTG8R/installed-agent/manage.sh" --status
+Component: agent
+Target: linux-armv7
+Active: 0.1.0-preview.4-linux-armv7
+Previous: none
+Executable: /tmp/tmp.enTG8R/installed-agent/bin/devicebridge-agent
+devicebridge-agent 0.1.0
+configuration valid
+{"timestamp_ms":1793782950940,"level":"info","event":"agent_stopped","message":"shutdown requested"}
+Uninstalled agent; unrelated files/configuration preserved. Stop running processes separately.
+devicebridge-control-0.1.0-preview.4-linux-armv7.tar.gz: OK
+Installed control 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-control/bin/devicebridge-control"
+Manage: sh "/tmp/tmp.enTG8R/installed-control/manage.sh" --status
+Installed control 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-control/bin/devicebridge-control"
+Manage: sh "/tmp/tmp.enTG8R/installed-control/manage.sh" --status
+Component: control
+Target: linux-armv7
+Active: 0.1.0-preview.4-linux-armv7
+Previous: none
+Executable: /tmp/tmp.enTG8R/installed-control/bin/devicebridge-control
+Control: health=ok ready=ready
+{"time":"2026-11-04T09:02:34.12711913Z","level":"INFO","msg":"control API stopped"}
+Uninstalled control; unrelated files/configuration preserved. Stop running processes separately.
+devicebridge-relay-0.1.0-preview.4-linux-armv7.tar.gz: OK
+Installed relay 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-relay/bin/devicebridge-relay"
+Manage: sh "/tmp/tmp.enTG8R/installed-relay/manage.sh" --status
+Installed relay 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-relay/bin/devicebridge-relay"
+Manage: sh "/tmp/tmp.enTG8R/installed-relay/manage.sh" --status
+Component: relay
+Target: linux-armv7
+Active: 0.1.0-preview.4-linux-armv7
+Previous: none
+Executable: /tmp/tmp.enTG8R/installed-relay/bin/devicebridge-relay
+devicebridge-relay 0.1.0-dev
+configuration valid; transport unimplemented and disabled
+relay stopped
+Uninstalled relay; unrelated files/configuration preserved. Stop running processes separately.
+devicebridge-cli-0.1.0-preview.4-linux-armv7.tar.gz: OK
+Installed cli 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-cli/bin/devicebridge"
+Manage: sh "/tmp/tmp.enTG8R/installed-cli/manage.sh" --status
+Installed cli 0.1.0-preview.4
+Run: "/tmp/tmp.enTG8R/installed-cli/bin/devicebridge"
+Manage: sh "/tmp/tmp.enTG8R/installed-cli/manage.sh" --status
+Component: cli
+Target: linux-armv7
+Active: 0.1.0-preview.4-linux-armv7
+Previous: none
+Executable: /tmp/tmp.enTG8R/installed-cli/bin/devicebridge
+devicebridge 0.1.0-dev
+configuration valid; transport unimplemented; no connection attempted
+relay-url must be an absolute HTTPS URL
+Uninstalled cli; unrelated files/configuration preserved. Stop running processes separately.
+PASS: trusted preview install/reinstall/status/run/negative/shutdown/uninstall
