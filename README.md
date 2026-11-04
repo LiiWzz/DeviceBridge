@@ -11,6 +11,14 @@ Secure, lightweight remote maintenance infrastructure for embedded Linux / ARM d
 - SSH-native access, least privilege, relay cannot decrypt SSH traffic
 
 ## Repository roadmap
+
+Delivery plan: **M01 foundation -> M02 secure connectivity -> M03 management
+dashboard**. UX/UI design can start before M02 completes; production dashboard
+integration depends on accepted connectivity and approved API/security contracts.
+See the [product roadmap and UX/UI plan](docs/ROADMAP.md) for screens, work
+packages, dependencies and acceptance gates. M02/M03 are planned work, not
+implemented capabilities.
+
 - `agent/`: Rust embedded agent (DB-002)
 - `server/control/`: Go control API (DB-003)
 - `server/relay/` and `cli/`: Go relay and CLI (DB-004)
