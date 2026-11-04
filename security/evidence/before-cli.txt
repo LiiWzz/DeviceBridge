@@ -1,0 +1,8 @@
+$ (cd cli && go test ./cmd/... -run TestMalformedArgumentsDoNotLeakValues -count=1 -v)
+=== RUN   TestMalformedArgumentsDoNotLeakValues
+    main_test.go:65: sensitive input leaked into diagnostics
+--- FAIL: TestMalformedArgumentsDoNotLeakValues (0.00s)
+FAIL
+FAIL	github.com/LiiWzz/DeviceBridge/cli/cmd/devicebridge	0.623s
+FAIL
+[exit 1]

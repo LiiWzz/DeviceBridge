@@ -1,0 +1,7 @@
+$ PATH="$PWD/dist/security-tools:$PATH" bash ci/security.sh
+scanned_head=ebb608f1af1ba9efd43e064f6486352797b8cd13
+PASS: synthetic private key detected; console and JSON report redacted
+4:31AM INF 19 commits scanned.
+4:31AM INF scanned ~523090 bytes (523.09 KB) in 92.6ms
+4:31AM INF no leaks found
+[exit 0]

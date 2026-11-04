@@ -23,9 +23,9 @@ func TestRun(t *testing.T) {
 		{"check help", []string{"check", "--help"}, 0, "Usage of check"},
 		{"insecure endpoint", []string{"check", "--relay-url", "http://relay.example"}, 2, "HTTPS"},
 		{"credential endpoint", []string{"check", "--relay-url", "https://user:secret@relay.example"}, 2, "must not contain credentials"},
-		{"bad timeout", []string{"check", "--timeout", "abc"}, 2, "invalid value"},
+		{"bad timeout", []string{"check", "--timeout", "abc"}, 2, "invalid value or flag"},
 		{"zero timeout", []string{"check", "--timeout", "0s"}, 2, "timeout"},
-		{"unknown flag", []string{"check", "--insecure"}, 2, "flag provided but not defined"},
+		{"unknown flag", []string{"check", "--insecure"}, 2, "invalid value or flag"},
 		{"positional", []string{"check", "device"}, 2, "positional"},
 		{"extra version args", []string{"version", "device"}, 2, "does not accept arguments"},
 		{"extra help args", []string{"help", "device"}, 2, "does not accept arguments"},
@@ -46,5 +46,23 @@ func TestRun(t *testing.T) {
 				t.Fatal("credential value leaked in output")
 			}
 		})
+	}
+}
+
+func TestMalformedArgumentsDoNotLeakValues(t *testing.T) {
+	const marker = "db007-sensitive-input"
+	for _, args := range [][]string{
+		{"check", "--timeout", marker},
+		{"check", "--" + marker},
+		{"check", "--relay-url", "https://user:" + marker + "@relay.example"},
+		{"check", "--relay-url", "https://relay.example?token=" + marker},
+	} {
+		var stdout, stderr bytes.Buffer
+		if code := run(args, &stdout, &stderr); code != 2 {
+			t.Fatalf("exit=%d; want 2", code)
+		}
+		if strings.Contains(stdout.String()+stderr.String(), marker) {
+			t.Fatal("sensitive input leaked into diagnostics")
+		}
 	}
 }

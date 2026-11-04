@@ -21,8 +21,8 @@ func TestRunCommands(t *testing.T) {
 		{"transport", []string{"--transport", "tls", "--check"}, 2, "transport is unimplemented"},
 		{"zero streams", []string{"--max-streams", "0", "--check"}, 2, "max-streams"},
 		{"oversized buffer", []string{"--max-buffer-bytes", "1048577", "--check"}, 2, "max-buffer-bytes"},
-		{"malformed integer", []string{"--max-streams", "abc"}, 2, "invalid value"},
-		{"unknown flag", []string{"--listen", "0.0.0.0:443"}, 2, "flag provided but not defined"},
+		{"malformed integer", []string{"--max-streams", "abc"}, 2, "invalid value or flag"},
+		{"unknown flag", []string{"--listen", "0.0.0.0:443"}, 2, "invalid value or flag"},
 		{"unexpected arguments", []string{"shell"}, 2, "unexpected positional"},
 		{"invalid config even with version", []string{"--version", "--transport", "tls"}, 2, "transport is unimplemented"},
 	}
@@ -84,5 +84,24 @@ func TestAlreadyCancelled(t *testing.T) {
 	var stdout, stderr bytes.Buffer
 	if code := run(ctx, nil, &stdout, &stderr); code != 0 || stdout.Len() != 0 || stderr.Len() != 0 {
 		t.Fatalf("exit=%d stdout=%q stderr=%q", code, stdout.String(), stderr.String())
+	}
+}
+
+func TestMalformedArgumentsDoNotLeakValues(t *testing.T) {
+	const marker = "db007-sensitive-input"
+	for _, args := range [][]string{
+		{"--max-streams", marker},
+		{"--max-buffer-bytes", marker},
+		{"--check=" + marker},
+		{"--" + marker},
+		{"--transport", marker, "--check"},
+	} {
+		var stdout, stderr bytes.Buffer
+		if code := run(context.Background(), args, &stdout, &stderr); code != 2 {
+			t.Fatalf("exit=%d; want 2", code)
+		}
+		if strings.Contains(stdout.String()+stderr.String(), marker) {
+			t.Fatal("sensitive input leaked into diagnostics")
+		}
 	}
 }

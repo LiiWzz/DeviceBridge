@@ -25,7 +25,8 @@ func main() {
 func run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	cfg := config.Default()
 	flags := flag.NewFlagSet("devicebridge-relay", flag.ContinueOnError)
-	flags.SetOutput(stderr)
+	// flag's default diagnostics echo untrusted values and option names.
+	flags.SetOutput(io.Discard)
 	showVersion := flags.Bool("version", false, "print version and exit")
 	check := flags.Bool("check", false, "validate settings and exit without starting")
 	flags.StringVar(&cfg.Transport, "transport", cfg.Transport, "transport (disabled only; unimplemented)")
@@ -33,12 +34,15 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	flags.IntVar(&cfg.MaxBufferBytes, "max-buffer-bytes", cfg.MaxBufferBytes, "reserved future buffer ceiling (1..1048576 bytes)")
 	flags.Usage = func() {
 		fmt.Fprintln(stderr, "Usage: devicebridge-relay [flags]\nM01 idle skeleton: no listeners; transport unimplemented.")
+		flags.SetOutput(stderr)
 		flags.PrintDefaults()
+		flags.SetOutput(io.Discard)
 	}
 	if err := flags.Parse(args); err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			return 0
 		}
+		fmt.Fprintln(stderr, "invalid value or flag; use --help")
 		return 2
 	}
 	if flags.NArg() != 0 {
