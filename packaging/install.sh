@@ -143,11 +143,26 @@ trap 'exit 130' INT
 trap 'exit 143' TERM HUP
 atomic_link() {
     candidate=$(dirname "$2")/.devicebridge-next-$$
-    if [ -e "$candidate" ] || [ -L "$candidate" ]; then die 'temporary link already exists'; fi
-    ln -s "$1" "$candidate" || die 'cannot prepare activation'
+    if [ -e "$candidate" ] || [ -L "$candidate" ]; then return 1; fi
+    ln -s "$1" "$candidate" || return 1
     link_tmp=$candidate
-    mv -f "$link_tmp" "$2" || die 'cannot activate link'
+    if ! mv -f "$link_tmp" "$2"; then
+        rm -f "$link_tmp"
+        link_tmp=
+        return 1
+    fi
     link_tmp=
+}
+activate_release() {
+    # Updating history first would lose the last rollback target if the binary
+    # directory is unwritable. Commit the executable before touching history.
+    atomic_link "../releases/$1/$binary" "$prefix/bin/$binary" || die 'activation failed; existing version and rollback target unchanged'
+    if [ -n "$active_id" ]; then
+        if ! atomic_link "releases/$active_id/$binary" "$prefix/previous"; then
+            atomic_link "../releases/$active_id/$binary" "$prefix/bin/$binary" || die 'history update and restoration failed; inspect installation before retrying'
+            die 'history update failed; existing version and rollback target restored'
+        fi
+    fi
 }
 if [ "$action" = install ]; then
     [ "${0##*/}" = install.sh ] || die 'install/upgrade using install.sh from an extracted package'
@@ -202,15 +217,13 @@ case "$action" in
             stage=
         fi
         if [ "$active_id" != "$new_id" ]; then
-            if [ -n "$active_id" ]; then atomic_link "releases/$active_id/$binary" "$prefix/previous"; fi
-            atomic_link "../releases/$new_id/$binary" "$prefix/bin/$binary"
+            activate_release "$new_id"
         fi
         printf 'Installed %s %s\nRun: "%s/bin/%s" --help\nManage: sh "%s/manage.sh" --status\n' "$component" "$version" "$prefix" "$binary" "$prefix"
         ;;
     rollback)
         if [ -z "$active_id" ] || [ -z "$previous_id" ] || [ "$active_id" = "$previous_id" ]; then die 'no different previous release available'; fi
-        atomic_link "releases/$active_id/$binary" "$prefix/previous"
-        atomic_link "../releases/$previous_id/$binary" "$prefix/bin/$binary"
+        activate_release "$previous_id"
         printf 'Rolled back %s to %s\n' "$component" "$previous_id"
         ;;
     uninstall)

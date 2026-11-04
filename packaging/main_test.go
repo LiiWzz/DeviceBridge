@@ -449,3 +449,60 @@ func TestInstallerHashUtilities(t *testing.T) {
 		})
 	}
 }
+
+func TestFailedActivationPreservesRollback(t *testing.T) {
+	if os.Geteuid() == 0 {
+		t.Skip("permission failure requires an unprivileged UID")
+	}
+	for _, failure := range []string{"binary-directory", "history-rename"} {
+		t.Run(failure, func(t *testing.T) {
+			o := testOptions(t)
+			home := temp(t)
+			prefix := filepath.Join(home, "install")
+			for _, version := range []string{"1", "2"} {
+				o.version = version
+				root := unpack(t, o)
+				shell(t, filepath.Join(root, "install.sh"), home, true, "--prefix", prefix)
+			}
+			activePath := filepath.Join(prefix, "bin/devicebridge")
+			beforeActive, beforePrevious := readLink(t, activePath), readLink(t, filepath.Join(prefix, "previous"))
+			o.version = "3"
+			root := unpack(t, o)
+			cmd := exec.Command("sh", filepath.Join(root, "install.sh"), "--prefix", prefix)
+			cmd.Env = append(os.Environ(), "HOME="+home)
+			if failure == "binary-directory" {
+				if err := os.Chmod(filepath.Join(prefix, "bin"), 0500); err != nil {
+					t.Fatal(err)
+				}
+				t.Cleanup(func() { _ = os.Chmod(filepath.Join(prefix, "bin"), 0700) })
+			} else {
+				// Fail only the history commit; allow the executable commit and
+				// restoration to use the real mv, reproducing the second failure path.
+				mv, err := exec.LookPath("mv")
+				if err != nil {
+					t.Fatal(err)
+				}
+				shimDir := temp(t)
+				shim := "#!/bin/sh\ncase \"$3\" in */previous) exit 1 ;; esac\nexec \"$DB011_REAL_MV\" \"$@\"\n"
+				if err := os.WriteFile(filepath.Join(shimDir, "mv"), []byte(shim), 0700); err != nil {
+					t.Fatal(err)
+				}
+				cmd.Env = append(cmd.Env, "PATH="+shimDir+":"+os.Getenv("PATH"), "DB011_REAL_MV="+mv)
+			}
+			output, err := cmd.CombinedOutput()
+			if err == nil {
+				t.Fatalf("activation unexpectedly succeeded: %s", output)
+			}
+			if failure == "binary-directory" {
+				_ = os.Chmod(filepath.Join(prefix, "bin"), 0700)
+			}
+			if readLink(t, activePath) != beforeActive || readLink(t, filepath.Join(prefix, "previous")) != beforePrevious {
+				t.Fatalf("failed update changed active/rollback state: %s", output)
+			}
+			shell(t, filepath.Join(prefix, "manage.sh"), home, true, "--rollback")
+			if !strings.Contains(readLink(t, activePath), "/1-") {
+				t.Fatal("rollback target was lost")
+			}
+		})
+	}
+}
