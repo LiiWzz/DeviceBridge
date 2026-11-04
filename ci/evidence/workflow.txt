@@ -1,0 +1,25 @@
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 -shellcheck= .github/workflows/ci.yml
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ bash -n ci/check.sh
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ shellcheck ci/check.sh
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ python3 ci/test_check.py
+test_command_failure_survives_tee_and_is_recorded (__main__.FailureGates.test_command_failure_survives_tee_and_is_recorded) ... ok
+test_gofmt_parse_error_stops_before_vet (__main__.FailureGates.test_gofmt_parse_error_stops_before_vet) ... ok
+test_unformatted_go_fails_instead_of_only_printing (__main__.FailureGates.test_unformatted_go_fails_instead_of_only_printing) ... ok
+test_untrusted_selectors_are_rejected_before_output (__main__.FailureGates.test_untrusted_selectors_are_rejected_before_output) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.492s
+
+OK
+[exit 0]

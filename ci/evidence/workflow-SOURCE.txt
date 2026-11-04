@@ -1,0 +1,9 @@
+checked_out_commit=afc6cdf2bf3f7b8d028df64b766a66ffbf910393
+event_commit=local
+run_id=local
+run_attempt=local
+event=local
+job=workflow
+runner=Darwin 25.6.0 arm64
+rust_toolchain=1.89.0
+workspace_dirty=true

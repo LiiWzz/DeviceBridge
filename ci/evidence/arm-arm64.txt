@@ -1,0 +1,62 @@
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ rustc --version
+rustc 1.89.0 (29483883e 2025-08-04)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ cargo --version
+cargo 1.89.0 (c24e10642 2025-06-23)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ aarch64-linux-gnu-gcc --version
+aarch64-linux-gnu-gcc (Debian 12.2.0-14+deb12u1) 12.2.0
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go env GOOS GOARCH GOARM CGO_ENABLED GOTOOLCHAIN GOWORK
+linux
+arm64
+
+0
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo build --release --locked --target aarch64-unknown-linux-gnu
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.03s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cp target/aarch64-unknown-linux-gnu/release/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ file /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/control /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-arm64/bin/control:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=xYQI9BviKubMor4HFj_8/2rJNdtqaC6GW62uWDWiv/PokKiSHviYYTn_bg9yWt/QHuAxFV65MnJT2vwW-MB, with debug_info, not stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=sGwjNlCJOjmvUvZ12ok_/yJO55Uw2hS5tzKtB-XWf/6UjzjEV1LcoZnAR_gaVa/oHKv-ofaor0gq_h8U89v, with debug_info, not stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=b0bcbe7827d29b36bb0fc998de3b65b7aa0a3f9c, for GNU/Linux 3.7.0, stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=UMRa3UK0KZToY7-V-ZEw/6ZCRTqLbUz5S74vv17Dv/VUFrUKkq07afCEiObxR7/skqE5IP4xY8abMlWi_7_, with debug_info, not stripped
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-arm64]
+$ sha256sum bin/control bin/devicebridge bin/devicebridge-agent bin/devicebridge-relay SOURCE.txt
+68f01843e6625c1a7479a40b3994091c62a79baea97bc453a62e63de69657f59  bin/control
+0691f17a546305d6a8d18108f4ea3d6362e1efe165d30c7f956852e8a5bab275  bin/devicebridge
+6c4a668e8730224137bf4ecece9145a57e5306aeba04e165adb4663986cd796e  bin/devicebridge-agent
+679d26dc2fcf72ebdaef1a3ada117d30dfffa80e61cd0073ac65d75a4d839baa  bin/devicebridge-relay
+ed20f9be1a962b0b0c1e3575f99741509af5fbee19f35e57bfadcc081936456b  SOURCE.txt
+[exit 0]

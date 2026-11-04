@@ -1,0 +1,10 @@
+{
+  "workflow": 0,
+  "go-server-control": 0,
+  "go-server-relay": 0,
+  "go-cli": 0,
+  "go-packaging": 0,
+  "rust": 0,
+  "arm-armv7": 0,
+  "arm-arm64": 0
+}
