@@ -1,0 +1,63 @@
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ rustc --version
+rustc 1.89.0 (29483883e 2025-08-04)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ cargo --version
+cargo 1.89.0 (c24e10642 2025-06-23)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ arm-linux-gnueabihf-gcc --version
+arm-linux-gnueabihf-gcc (Debian 12.2.0-14) 12.2.0
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go env GOOS GOARCH GOARM CGO_ENABLED GOTOOLCHAIN GOWORK
+linux
+arm
+7
+0
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo build --release --locked --target armv7-unknown-linux-gnueabihf
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.04s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cp target/armv7-unknown-linux-gnueabihf/release/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ file /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/control /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-relay
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-armv7/bin/control:            ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=7T6elh8oCdkXGoLunO0d/HgiC0zhQvkIscpoSowoF/ThIAV9nEpzvKTBDdEZPC/7Bdqcj2GGVtyS6rkgHoA, with debug_info, not stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge:       ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=A0WlBpaBWcGZHZqEYyPW/cfOcCg4B7NPT9pi7FDUx/NCrVxbIsGLCwwXOCOtMr/kGcPmWQq9LtIzBdATN4_, with debug_info, not stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-agent: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=d46674dd394a86e7d180e469f4b2e5cc47be6fe9, for GNU/Linux 3.2.0, stripped
+/Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-relay: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=-dh2FYPJunJ8fCc4j4oQ/-FzhKp2HpgLIq7sEeFcT/E-zmnnJEk34d6JqpHuBr/cjXplbCUgd5aDw3Ttto8, with debug_info, not stripped
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/arm-armv7]
+$ sha256sum bin/control bin/devicebridge bin/devicebridge-agent bin/devicebridge-relay SOURCE.txt
+7fd7b9da1e291aa3c19d9d3a9e6a039b428b2bedfe89adef36bee7405fd5799b  bin/control
+b1131158de8f04966587b44336e34dbbfc2927cc5c5b23f5d628c304642a703a  bin/devicebridge
+c61c2d161dcddf3ad44567051951d274f8a024edfac6fe1d76fc1c0e0ae492c4  bin/devicebridge-agent
+df22db92c2466fd85f6c74fa01bf5df1ca945f0001dfea7cfe5a9f1abf3ee575  bin/devicebridge-relay
+24092e328aa06cf4799ea2bd63d9457e2b651819f0cd62b23fbd86864af56075  SOURCE.txt
+[exit 0]

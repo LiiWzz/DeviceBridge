@@ -1,0 +1,173 @@
+[
+  {
+    "artifact_id": 13363295773,
+    "name": "workflow-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:09e244775167072c706d2bc2def348695b857f557a570ad13f6a04e2c93b9a6c",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "workflow",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362951590,
+    "name": "linux-armv7-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:aa5773b06a9276feeded133df86ffdcabed729e039d252a472d9d3b85868f122",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/control",
+      "bin/devicebridge",
+      "bin/devicebridge-agent",
+      "bin/devicebridge-relay",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "arm-armv7",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362861855,
+    "name": "go-0-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:6d60a636c6096a6c8200a8addd9e6ca46d8fac8729c51df9872fee9737165ba0",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/control",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "go-server-control",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362806934,
+    "name": "go-2-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:d45da8072f7855263f4f442cd60277b3c6dedded03e5fe2d7c1e4197375552b4",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/devicebridge",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "go-cli",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362652575,
+    "name": "go-3-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:784ab085a1570a905068175cdfadd559e196c0bb345bc37c6e710e0051f698cd",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/packaging",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "go-packaging",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362572519,
+    "name": "rust-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:9f310dfcdaa070ad38641ec7ad530844abf68f365a053c4a7674b1a6d0661506",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/devicebridge-agent",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "rust",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13362198384,
+    "name": "go-1-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:f4cd33647e5ca3edcab7585b3f3ecd2b4c5d8e89a5810d8adc3bc44cb074f0be",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/devicebridge-relay",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "go-server-relay",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  },
+  {
+    "artifact_id": 13361799305,
+    "name": "linux-arm64-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+    "zip_sha256": "sha256:bb7a085c3139b9400ae3ecb4ea5ee2c5bdd212973198c461e54972580ba52462",
+    "zip_digest_valid": true,
+    "manifest_files_verified": [
+      "bin/control",
+      "bin/devicebridge",
+      "bin/devicebridge-agent",
+      "bin/devicebridge-relay",
+      "SOURCE.txt"
+    ],
+    "source": {
+      "checked_out_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "event_commit": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+      "run_id": "41911387490",
+      "run_attempt": "1",
+      "event": "pull_request",
+      "job": "arm-arm64",
+      "runner": "Linux 7.0.0-1017-azure x86_64",
+      "rust_toolchain": "1.89.0",
+      "workspace_dirty": "false"
+    }
+  }
+]

@@ -34,3 +34,7 @@ PR approval/manual merge and release validation remain separate gates.
 Feature branch -> Draft PR targeting `develop` -> CI -> independent review -> explicit human Tech Lead approval -> manual merge. Never automatically merge into `main` or `develop`.
 
 See [AGENTS.md](AGENTS.md), [M01 execution plan](docs/M01_EXECUTION.md) and [ADR-001](docs/adr/ADR-001-foundation.md).
+
+Build/test automation and local reproduction commands are documented in
+[CI checks](ci/README.md). ARM cross-build outputs do not establish physical
+device compatibility or memory acceptance.

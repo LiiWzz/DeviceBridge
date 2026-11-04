@@ -1,0 +1,93 @@
+[cwd /home/runner/work/DeviceBridge/DeviceBridge]
+$ go version
+go version go1.23.4 linux/amd64
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge]
+$ rustc --version
+rustc 1.89.0 (29483883e 2025-08-04)
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge]
+$ cargo --version
+cargo 1.89.0 (c24e10642 2025-06-23)
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge]
+$ aarch64-linux-gnu-gcc --version
+aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge]
+$ go env GOOS GOARCH GOARM CGO_ENABLED GOTOOLCHAIN GOWORK
+linux
+arm64
+
+0
+local
+off
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/server/control]
+$ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/server/relay]
+$ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/cli]
+$ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/agent]
+$ cargo build --release --locked --target aarch64-unknown-linux-gnu
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded proc-macro2 v1.0.107
+  Downloaded serde_core v1.0.229
+  Downloaded signal-hook-registry v1.4.8
+  Downloaded zmij v1.0.23
+  Downloaded serde_derive v1.0.229
+  Downloaded serde v1.0.229
+  Downloaded memchr v2.8.3
+  Downloaded quote v1.0.47
+  Downloaded serde_json v1.0.154
+  Downloaded signal-hook v0.3.18
+  Downloaded syn v3.0.9
+  Downloaded itoa v1.0.18
+  Downloaded errno v0.3.14
+  Downloaded libc v0.2.191
+  Downloaded unicode-ident v1.0.27
+   Compiling proc-macro2 v1.0.107
+   Compiling libc v0.2.191
+   Compiling unicode-ident v1.0.27
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling signal-hook v0.3.18
+   Compiling serde v1.0.229
+   Compiling syn v3.0.9
+   Compiling serde_json v1.0.154
+   Compiling memchr v2.8.3
+   Compiling errno v0.3.14
+   Compiling signal-hook-registry v1.4.8
+   Compiling itoa v1.0.18
+   Compiling serde_derive v1.0.229
+   Compiling devicebridge-agent v0.1.0 (/home/runner/work/DeviceBridge/DeviceBridge/agent)
+    Finished `release` profile [optimized] target(s) in 9.15s
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/agent]
+$ cp target/aarch64-unknown-linux-gnu/release/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/agent]
+$ file /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/control /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay
+/home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/control:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=39vdJQImKrBaUxTs-4jt/ZkjarZEDtmT-9noJreji/PokKiSHviYYTn_bg9yWt/6LhBkchG3SxKoklFcmUv, with debug_info, not stripped
+/home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=rPDU9yEBAwxUfClmE0qP/0wAOvBS7qHrRSPLltgf4/6UjzjEV1LcoZnAR_gaVa/aVjZsP2i41ebl_Yrk2L0, with debug_info, not stripped
+/home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f4fd67980cc63ad33beb15c5590cd4b72d8bf701, for GNU/Linux 3.7.0, stripped
+/home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=P8fqv9s03GWUIOZ-BZ6P/oHosrBdi6WaWBfCn8gbf/VUFrUKkq07afCEiObxR7/OUPcdif_5vDrZGrUWUIR, with debug_info, not stripped
+[exit 0]
+[cwd /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64]
+$ sha256sum bin/control bin/devicebridge bin/devicebridge-agent bin/devicebridge-relay SOURCE.txt
+98b67bd1b3ae8830f95a40cae4a4b20184e6c06747c53b5fad00110e48bdf93d  bin/control
+bad3e08ff484429bb7b74485c15c46ebdb81097586a635d66c18cb30184b91b7  bin/devicebridge
+2d37c45a2bc053b77ac61a4338a22616356ce6ad6ee27f23dd2208f4de3adb1b  bin/devicebridge-agent
+d1f86f55ecfcc1b6b3b2f35357b50c76b332bd0cbb8352e1f2e776fec7c5266d  bin/devicebridge-relay
+cd9c85b9671cc032bc25825ca7d65b64b79b2d07c1035570cbb37f566a926015  SOURCE.txt
+[exit 0]

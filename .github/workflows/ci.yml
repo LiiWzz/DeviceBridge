@@ -1,0 +1,124 @@
+name: M01 CI
+
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop, 'feat/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m01-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  GOTOOLCHAIN: local
+  GOWORK: 'off'
+  RUSTUP_TOOLCHAIN: '1.89.0'
+  CARGO_TERM_COLOR: never
+
+jobs:
+  workflow:
+    name: Workflow and shell lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.4'
+          cache: false
+      - run: bash ci/check.sh workflow
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: workflow-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/ci/workflow/
+          if-no-files-found: error
+          retention-days: 14
+
+  go:
+    name: Go (${{ matrix.module }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        module: [server/control, server/relay, cli, packaging]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.4'
+          cache: false
+      - run: bash ci/check.sh go "$MODULE"
+        env:
+          MODULE: ${{ matrix.module }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: go-${{ strategy.job-index }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/ci/go-*/
+          if-no-files-found: error
+          retention-days: 14
+
+  rust:
+    name: Rust agent
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy
+      - run: bash ci/check.sh rust
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rust-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/ci/rust/
+          if-no-files-found: error
+          retention-days: 14
+
+  arm:
+    name: Linux cross-build (${{ matrix.arch }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [armv7, arm64]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.4'
+          cache: false
+      - name: Install build-host GNU cross-linkers
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libc6-dev-armhf-cross libc6-dev-arm64-cross
+          rustup toolchain install 1.89.0 --profile minimal --target armv7-unknown-linux-gnueabihf,aarch64-unknown-linux-gnu
+      - run: bash ci/check.sh arm "$ARCH"
+        env:
+          ARCH: ${{ matrix.arch }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-${{ matrix.arch }}-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/ci/arm-*/
+          if-no-files-found: error
+          retention-days: 14

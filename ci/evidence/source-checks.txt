@@ -1,0 +1,50 @@
+Captured 2026-11-04T20:54:52.728769+00:00
+$ ['git', 'diff', '--cached', '--check']
+
+[exit 0; expected 0]
+$ ['rg', '-n', '--hidden', 'BEGIN [A-Z ]*PRIVATE KEY|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{20,}', '.github', 'ci']
+
+[exit 1; expected 1]
+$ ['docker', 'run', '--rm', '--mount', 'type=bind,source=/Users/liiwz/Documents/My works/DeviceBridge,target=/mnt,readonly', '--workdir', '/mnt', 'koalaman/shellcheck:v0.10.0', 'ci/evidence/local-cross-linker.sh']
+
+[exit 0; expected 0]
+$ (cd dist/ci/go-server-control && shasum -a 256 -c SHA256SUMS)
+bin/control: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/go-server-relay && shasum -a 256 -c SHA256SUMS)
+bin/devicebridge-relay: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/go-cli && shasum -a 256 -c SHA256SUMS)
+bin/devicebridge: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/rust && shasum -a 256 -c SHA256SUMS)
+bin/devicebridge-agent: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/arm-armv7 && shasum -a 256 -c SHA256SUMS)
+bin/control: OK
+bin/devicebridge: OK
+bin/devicebridge-agent: OK
+bin/devicebridge-relay: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/arm-arm64 && shasum -a 256 -c SHA256SUMS)
+bin/control: OK
+bin/devicebridge: OK
+bin/devicebridge-agent: OK
+bin/devicebridge-relay: OK
+SOURCE.txt: OK
+
+[exit 0; expected 0]
+$ (cd dist/ci/go-packaging && shasum -a 256 -c SHA256SUMS)
+bin/packaging: OK
+SOURCE.txt: OK
+[exit 0; expected 0]
