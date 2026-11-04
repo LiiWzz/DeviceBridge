@@ -1,0 +1,7 @@
+# Run Cargo from agent/ so this local configuration is discovered.
+# Install these target C toolchains separately on the build host; never on device.
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
