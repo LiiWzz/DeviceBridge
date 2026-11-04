@@ -1,68 +1,64 @@
-Unable to find image 'busybox@sha256:d82c2ab94640ded77cf76514ce6a84870761105058a4a9e51b05a8a79be97a6c' locally
-docker.io/library/busybox@sha256:d82c2ab94640ded77cf76514ce6a84870761105058a4a9e51b05a8a79be97a6c: Pulling from library/busybox
-Digest: sha256:d82c2ab94640ded77cf76514ce6a84870761105058a4a9e51b05a8a79be97a6c
-Status: Downloaded newer image for busybox@sha256:d82c2ab94640ded77cf76514ce6a84870761105058a4a9e51b05a8a79be97a6c
 Host: Linux aarch64
 UID: 1000
-devicebridge-agent-0.1.0-preview.3-linux-arm64.tar.gz: OK
-Installed agent 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-agent/bin/devicebridge-agent" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-agent/manage.sh" --status
-Installed agent 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-agent/bin/devicebridge-agent" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-agent/manage.sh" --status
+devicebridge-agent-0.1.0-preview.4-linux-arm64.tar.gz: OK
+Installed agent 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-agent/bin/devicebridge-agent"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-agent/manage.sh" --status
+Installed agent 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-agent/bin/devicebridge-agent"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-agent/manage.sh" --status
 Component: agent
 Target: linux-arm64
-Active: 0.1.0-preview.3-linux-arm64
+Active: 0.1.0-preview.4-linux-arm64
 Previous: none
-Executable: /tmp/tmp.o1hS0T/installed-agent/bin/devicebridge-agent
+Executable: /tmp/tmp.Ruu4c3/installed-agent/bin/devicebridge-agent
 devicebridge-agent 0.1.0
 configuration valid
-{"timestamp_ms":1793782582676,"level":"info","event":"agent_stopped","message":"shutdown requested"}
+{"timestamp_ms":1793782949031,"level":"info","event":"agent_stopped","message":"shutdown requested"}
 Uninstalled agent; unrelated files/configuration preserved. Stop running processes separately.
-devicebridge-control-0.1.0-preview.3-linux-arm64.tar.gz: OK
-Installed control 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-control/bin/devicebridge-control" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-control/manage.sh" --status
-Installed control 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-control/bin/devicebridge-control" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-control/manage.sh" --status
+devicebridge-control-0.1.0-preview.4-linux-arm64.tar.gz: OK
+Installed control 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-control/bin/devicebridge-control"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-control/manage.sh" --status
+Installed control 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-control/bin/devicebridge-control"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-control/manage.sh" --status
 Component: control
 Target: linux-arm64
-Active: 0.1.0-preview.3-linux-arm64
+Active: 0.1.0-preview.4-linux-arm64
 Previous: none
-Executable: /tmp/tmp.o1hS0T/installed-control/bin/devicebridge-control
+Executable: /tmp/tmp.Ruu4c3/installed-control/bin/devicebridge-control
 Control: health=ok ready=ready
-{"time":"2026-11-04T08:56:23.209927875Z","level":"INFO","msg":"control API stopped"}
+{"time":"2026-11-04T09:02:30.151784128Z","level":"INFO","msg":"control API stopped"}
 Uninstalled control; unrelated files/configuration preserved. Stop running processes separately.
-devicebridge-relay-0.1.0-preview.3-linux-arm64.tar.gz: OK
-Installed relay 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-relay/bin/devicebridge-relay" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-relay/manage.sh" --status
-Installed relay 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-relay/bin/devicebridge-relay" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-relay/manage.sh" --status
+devicebridge-relay-0.1.0-preview.4-linux-arm64.tar.gz: OK
+Installed relay 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-relay/bin/devicebridge-relay"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-relay/manage.sh" --status
+Installed relay 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-relay/bin/devicebridge-relay"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-relay/manage.sh" --status
 Component: relay
 Target: linux-arm64
-Active: 0.1.0-preview.3-linux-arm64
+Active: 0.1.0-preview.4-linux-arm64
 Previous: none
-Executable: /tmp/tmp.o1hS0T/installed-relay/bin/devicebridge-relay
+Executable: /tmp/tmp.Ruu4c3/installed-relay/bin/devicebridge-relay
 devicebridge-relay 0.1.0-dev
 configuration valid; transport unimplemented and disabled
 relay stopped
 Uninstalled relay; unrelated files/configuration preserved. Stop running processes separately.
-devicebridge-cli-0.1.0-preview.3-linux-arm64.tar.gz: OK
-Installed cli 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-cli/bin/devicebridge" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-cli/manage.sh" --status
-Installed cli 0.1.0-preview.3
-Run: "/tmp/tmp.o1hS0T/installed-cli/bin/devicebridge" --help
-Manage: sh "/tmp/tmp.o1hS0T/installed-cli/manage.sh" --status
+devicebridge-cli-0.1.0-preview.4-linux-arm64.tar.gz: OK
+Installed cli 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-cli/bin/devicebridge"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-cli/manage.sh" --status
+Installed cli 0.1.0-preview.4
+Run: "/tmp/tmp.Ruu4c3/installed-cli/bin/devicebridge"
+Manage: sh "/tmp/tmp.Ruu4c3/installed-cli/manage.sh" --status
 Component: cli
 Target: linux-arm64
-Active: 0.1.0-preview.3-linux-arm64
+Active: 0.1.0-preview.4-linux-arm64
 Previous: none
-Executable: /tmp/tmp.o1hS0T/installed-cli/bin/devicebridge
+Executable: /tmp/tmp.Ruu4c3/installed-cli/bin/devicebridge
 devicebridge 0.1.0-dev
 configuration valid; transport unimplemented; no connection attempted
 relay-url must be an absolute HTTPS URL

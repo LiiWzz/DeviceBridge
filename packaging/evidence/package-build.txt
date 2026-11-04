@@ -1,51 +1,51 @@
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component agent --target linux-arm64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-002-rust-agent/agent/target/aarch64-unknown-linux-musl/release/devicebridge-agent --revision dcefd3b2f8b1de53bfd180d9613d49d6a2539b54 --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-agent-0.1.0-preview.3-linux-arm64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component agent --target linux-arm64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-002-rust-agent/agent/target/aarch64-unknown-linux-musl/release/devicebridge-agent --revision dcefd3b2f8b1de53bfd180d9613d49d6a2539b54 --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-agent-0.1.0-preview.4-linux-arm64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component agent --target linux-armv7 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-002-rust-agent/agent/target/armv7-unknown-linux-musleabihf/release/devicebridge-agent --revision dcefd3b2f8b1de53bfd180d9613d49d6a2539b54 --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-agent-0.1.0-preview.3-linux-armv7.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component agent --target linux-armv7 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-002-rust-agent/agent/target/armv7-unknown-linux-musleabihf/release/devicebridge-agent --revision dcefd3b2f8b1de53bfd180d9613d49d6a2539b54 --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-agent-0.1.0-preview.4-linux-armv7.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-armv7 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-armv7 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-control-0.1.0-preview.3-linux-armv7.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-armv7 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-armv7 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-control-0.1.0-preview.4-linux-armv7.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-arm64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-arm64 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-control-0.1.0-preview.3-linux-arm64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-arm64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-arm64 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-control-0.1.0-preview.4-linux-arm64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-amd64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-amd64 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-control-0.1.0-preview.3-linux-amd64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component control --target linux-amd64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-003-control-api/server/control/bin/control-linux-amd64 --revision 5fca32be4d6cb67d6a3e013be6be7b855c0c1475 --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-control-0.1.0-preview.4-linux-amd64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-armv7 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-armv7 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-relay-0.1.0-preview.3-linux-armv7.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-armv7 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-armv7 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-relay-0.1.0-preview.4-linux-armv7.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-arm64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-arm64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-relay-0.1.0-preview.3-linux-arm64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-arm64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-arm64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-relay-0.1.0-preview.4-linux-arm64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-amd64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-relay-0.1.0-preview.3-linux-amd64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component relay --target linux-amd64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/server/relay/bin/devicebridge-relay-linux-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-relay-0.1.0-preview.4-linux-amd64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-armv7 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-armv7 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-cli-0.1.0-preview.3-linux-armv7.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-armv7 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-armv7 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-cli-0.1.0-preview.4-linux-armv7.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-arm64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-arm64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-cli-0.1.0-preview.3-linux-arm64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-arm64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-arm64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-cli-0.1.0-preview.4-linux-arm64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-amd64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-cli-0.1.0-preview.3-linux-amd64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target linux-amd64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-linux-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-cli-0.1.0-preview.4-linux-amd64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target darwin-arm64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-cli-0.1.0-preview.3-darwin-arm64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target darwin-arm64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-cli-0.1.0-preview.4-darwin-arm64.tar.gz
 exit: 0
 
-$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target darwin-amd64 --version 0.1.0-preview.3 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-darwin-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.3/packages
-/private/tmp/devicebridge-db011/dist/preview.3/packages/devicebridge-cli-0.1.0-preview.3-darwin-amd64.tar.gz
+$ /private/tmp/devicebridge-db011/packaging/bin/devicebridge-package --component cli --target darwin-amd64 --version 0.1.0-preview.4 --binary /Users/liiwz/orca/workspaces/DeviceBridge/feat-m01-db-004-relay-cli/cli/bin/devicebridge-darwin-amd64 --revision 4518fc8d3edb4a172cb763cca7222a8afdacb2cb --output /private/tmp/devicebridge-db011/dist/preview.4/packages
+/private/tmp/devicebridge-db011/dist/preview.4/packages/devicebridge-cli-0.1.0-preview.4-darwin-amd64.tar.gz
 exit: 0

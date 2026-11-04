@@ -233,7 +233,7 @@ case "$action" in
         if [ "$active_id" != "$new_id" ]; then
             activate_release "$new_id"
         fi
-        printf 'Installed %s %s\nRun: "%s/bin/%s" --help\nManage: sh "%s/manage.sh" --status\n' "$component" "$version" "$prefix" "$binary" "$prefix"
+        printf 'Installed %s %s\nRun: "%s/bin/%s"\nManage: sh "%s/manage.sh" --status\n' "$component" "$version" "$prefix" "$binary" "$prefix"
         ;;
     rollback)
         if [ -z "$active_id" ] || [ -z "$previous_id" ] || [ "$active_id" = "$previous_id" ]; then die 'no different previous release available'; fi

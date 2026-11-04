@@ -16,8 +16,8 @@ checksum ตรวจไฟล์เสียได้ แต่ไม่ยื�
 ตัวอย่าง CLI บน Mac ARM64 (เปลี่ยนชื่อให้ตรงกับแพ็กเกจที่ได้รับ):
 
 ```sh
-tar -xzf devicebridge-cli-0.1.0-preview.3-darwin-arm64.tar.gz
-cd devicebridge-cli-0.1.0-preview.3-darwin-arm64
+tar -xzf devicebridge-cli-0.1.0-preview.4-darwin-arm64.tar.gz
+cd devicebridge-cli-0.1.0-preview.4-darwin-arm64
 sh install.sh
 "$HOME/.local/devicebridge/cli/bin/devicebridge" help
 ```

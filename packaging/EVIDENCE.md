@@ -74,16 +74,16 @@ Final archive smoke used these arguments (all commands exit 0):
 docker run --rm --network none --read-only \
   --tmpfs /tmp:rw,exec,nosuid,nodev,size=128m \
   --cap-drop ALL --security-opt no-new-privileges --user 1000:1000 \
-  --mount type=bind,source=/private/tmp/devicebridge-db011/dist/preview.3/packages,target=/packages,readonly \
+  --mount type=bind,source=/private/tmp/devicebridge-db011/dist/preview.4/packages,target=/packages,readonly \
   --mount type=bind,source=/private/tmp/devicebridge-db011/packaging,target=/verification,readonly \
   --platform linux/arm64 --entrypoint /bin/busybox busybox@sha256:d82c2ab94640ded77cf76514ce6a84870761105058a4a9e51b05a8a79be97a6c \
-  timeout 30 sh /verification/smoke-preview.sh /packages linux-arm64 0.1.0-preview.3
+  timeout 30 sh /verification/smoke-preview.sh /packages linux-arm64 0.1.0-preview.4
 ```
 
 ARMv7 changed platform to `linux/arm/v7`, timeout to 60 and target to `linux-armv7`.
 It used manifest `sha256:91aa2a66a996afa9821eed6758ed0489ee891c50f4b8940b7b3db500b79f029f`.
 The dash variation used `--entrypoint /bin/sh devicebridge-m01-linkers:bookworm`
-followed by `/verification/smoke-preview.sh /packages linux-arm64 0.1.0-preview.3`.
+followed by `/verification/smoke-preview.sh /packages linux-arm64 0.1.0-preview.4`.
 The test binary used the same isolation flags with a 256 MiB writable tmpfs.
 
 The smoke script checks outer checksums, installs/reinstalls/status for every
@@ -122,7 +122,7 @@ still works. Both run on unprivileged macOS/Debian dash; BusyBox cannot intercep
 its built-in mv through PATH, so only the injected-rename case is skipped there.
 An additional upgrade test verifies replacement of an obsolete installed manager.
 The reviewer checked both fixes in follow-ups with no remaining normal-failure
-finding. Final full suites and regenerated preview.3 smokes include these fixes.
+finding. Final full suites and regenerated preview.4 smokes include these fixes.
 
 ## Source provenance and ARM build gap resolution
 
@@ -154,7 +154,7 @@ confirmed GNU dynamic ELF with `/lib/ld-linux-aarch64.so.1` /
 `/lib/ld-linux-armhf.so.3`. Those preliminary GNU artifacts are not the final
 portable preview package payloads.
 
-For fewer destination dependencies, the **final preview.3 agents are static musl**:
+For fewer destination dependencies, the **final preview.4 agents are static musl**:
 
 ```sh
 rustup target add aarch64-unknown-linux-musl armv7-unknown-linux-musleabihf
@@ -178,10 +178,10 @@ native Mac CLI inputs were the previously tested unchanged component artifacts.
 Linux AMD64 and macOS Intel binaries were packaged/format-checked, **not executed**.
 
 Thirteen final archives and outer checksums exist locally under
-`/private/tmp/devicebridge-db011/dist/preview.3/packages`; they are ignored build
+`/private/tmp/devicebridge-db011/dist/preview.4/packages`; they are ignored build
 artifacts, not Git commits or public release assets. Archive sizes and hashes:
-[ARTIFACTS.md](evidence/ARTIFACTS.md). The assembled local ZIP is 25,047,212 bytes,
-SHA-256 `f930152167636d046c7fe56c4aee2cbaf9e033481e373fc2f6eaf7cfa1b40f2e`.
+[ARTIFACTS.md](evidence/ARTIFACTS.md). The assembled local ZIP is 25,047,200 bytes,
+SHA-256 `b5c358eead9d165d0dbf85e87829ac4f8ca6df19a9defc0a38cfa850b20d237d`.
 The package version labels distribution previews; underlying skeleton version
 commands still report their existing 0.1.0 / 0.1.0-dev values. Declared source
 revision plus payload hash identify inputs; no signed build attestation is claimed.

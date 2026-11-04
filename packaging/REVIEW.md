@@ -36,8 +36,11 @@ upgrade. The Spec reviewer separately verified that delta:
 
 Final host/Linux suites, race checks, ShellCheck and actual archive smokes ran
 again after these fixes; [EVIDENCE.md](EVIDENCE.md) links actual output. Final
-`0.1.0-preview.3` archives supersede internal preview.1/preview.2 builds. The
-coordinator added final documentation/evidence after review, without changing
-production installer/builder code.
+`0.1.0-preview.4` archives supersede internal preview.1/preview.2 builds. The
+coordinator added final documentation/evidence after review. The only later code
+change removed an unsupported generic `--help` startup hint: Control has no help
+flag, so package instructions now print the executable path without inventing a
+component CLI contract. Installation/activation logic did not change; final full
+checks and preview smokes ran with that displayed-command correction.
 
 Standards: 0 findings (worst: none). Spec: 1 P2 finding, fixed and rechecked; 0 unresolved findings.
