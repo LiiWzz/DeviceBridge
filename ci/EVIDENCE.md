@@ -108,10 +108,48 @@ vulnerability audit is claimed.
 
 ## Hosted execution
 
-Hosted workflow run IDs, exact source SHA, conclusions and artifact results are
-recorded here after checking GitHub. A locally valid workflow alone is not a claim
-that hosted PR checks passed. GitHub CLI has no authentication in this environment;
-GitHub connector tools handle PR creation and workflow inspection instead.
+Both initial hosted runs completed successfully for delivered source commit
+`a4ed46c0ee0761a1e732ee610d04dfa4b764db0b`:
+
+- [Push run 41911341485](https://github.com/LiiWzz/DeviceBridge/actions/runs/41911341485): success.
+- [Draft PR #18 run 41911387490](https://github.com/LiiWzz/DeviceBridge/actions/runs/41911387490): all eight jobs and artifact uploads succeeded.
+
+The PR checked out synthetic merge commit
+`f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6` on hosted Linux x86_64. All eight downloaded
+ZIPs matched their GitHub-reported SHA-256 digest. All seven build manifests
+matched every listed binary/source file. Every artifact's source metadata matched
+the PR run, merge commit and clean workspace. The workflow-only artifact correctly
+contains logs/source metadata without binaries or a checksum manifest. Go/ARM ZIPs
+preserve a job subdirectory, so verification locates SOURCE.txt before reading
+relative manifest paths; the initial assumption that every ZIP was flat was
+corrected before the final verification. No downloaded ARM binaries were executed.
+
+Actual command sections from all eight jobs are captured in `evidence/hosted-*.txt`
+(timestamp prefixes removed and tabs rendered as literal \t). API run/job/step
+conclusions and artifact IDs/digests/expiry are in `evidence/hosted-results.json`.
+ZIP, manifest and provenance assertions are recorded in
+`evidence/hosted-artifact-verification.json`. The exact executed verifier is
+`evidence/verify-hosted-artifacts.py`; it uses Python standard-library urllib,
+zipfile and hashlib, reads archives without extraction/execution, and never saves
+signed download URLs in its results. Invocation:
+
+```sh
+python3 ci/evidence/verify-hosted-artifacts.py '<connector artifact metadata JSON with current download URLs>'
+```
+
+All eight artifact verifications exited 0. Signed download URLs were supplied by
+GitHub connector tools at execution time and are not committed. These are
+checksums/provenance consistency checks, not independent publisher attestation.
+This evidence update changes only docs/reports; its resulting PR head checks are
+reported in the PR after they complete.
+
+GitHub CLI has no authentication in this environment. The first Git push was
+rejected because the local OAuth App lacks workflow scope. The authorized GitHub
+connector successfully created the same complete source tree and feature branch;
+its tree SHA `0eea1aea6f679baff1a989a420e6a69c435b8eb5` matched the tested local commit
+exactly. Local branch history was aligned only after confirming identical trees
+and a clean worktree. No token, repository protection or protected branch was
+changed. Draft PR creation and hosted inspection used the same connector.
 
 ## Security, performance, platform limits and rollback
 

@@ -1,0 +1,651 @@
+{
+  "pr": 18,
+  "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b",
+  "checked_out_pr_merge_sha": "f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6",
+  "runs": [
+    {
+      "id": 41911387490,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b",
+      "html_url": "https://github.com/LiiWzz/DeviceBridge/actions/runs/41911387490",
+      "run_attempt": 1
+    },
+    {
+      "id": 41911341485,
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b",
+      "html_url": "https://github.com/LiiWzz/DeviceBridge/actions/runs/41911341485",
+      "run_attempt": 1
+    }
+  ],
+  "pr_jobs": [
+    {
+      "id": 126859550767,
+      "name": "Workflow and shell lint",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh workflow",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 126859551124,
+      "name": "Rust agent",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh rust",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 126859551258,
+      "name": "Go (packaging)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh go \"$MODULE\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 126859551297,
+      "name": "Go (cli)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh go \"$MODULE\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 126859551468,
+      "name": "Linux cross-build (arm64)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install build-host GNU cross-linkers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash ci/check.sh arm \"$ARCH\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 126859551565,
+      "name": "Linux cross-build (armv7)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install build-host GNU cross-linkers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run bash ci/check.sh arm \"$ARCH\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 126859551803,
+      "name": "Go (server/relay)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh go \"$MODULE\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 126859552005,
+      "name": "Go (server/control)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41911387490,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run bash ci/check.sh go \"$MODULE\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-go@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    }
+  ],
+  "pr_artifacts": [
+    {
+      "id": 13363295773,
+      "name": "workflow-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 954,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13363295773",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13363295773/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:10Z",
+      "expires_at": "2026-11-18T20:57:10Z",
+      "updated_at": "2026-11-04T20:57:10Z",
+      "digest": "sha256:09e244775167072c706d2bc2def348695b857f557a570ad13f6a04e2c93b9a6c",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362951590,
+      "name": "linux-armv7-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 7163568,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362951590",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362951590/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:45Z",
+      "expires_at": "2026-11-18T20:57:44Z",
+      "updated_at": "2026-11-04T20:57:45Z",
+      "digest": "sha256:aa5773b06a9276feeded133df86ffdcabed729e039d252a472d9d3b85868f122",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362861855,
+      "name": "go-0-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 4540251,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362861855",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362861855/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:44Z",
+      "expires_at": "2026-11-18T20:57:43Z",
+      "updated_at": "2026-11-04T20:57:44Z",
+      "digest": "sha256:6d60a636c6096a6c8200a8addd9e6ca46d8fac8729c51df9872fee9737165ba0",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362806934,
+      "name": "go-2-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 1474346,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362806934",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362806934/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:16Z",
+      "expires_at": "2026-11-18T20:57:15Z",
+      "updated_at": "2026-11-04T20:57:16Z",
+      "digest": "sha256:d45da8072f7855263f4f442cd60277b3c6dedded03e5fe2d7c1e4197375552b4",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362652575,
+      "name": "go-3-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 2176074,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362652575",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362652575/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:59:41Z",
+      "expires_at": "2026-11-18T20:59:40Z",
+      "updated_at": "2026-11-04T20:59:41Z",
+      "digest": "sha256:784ab085a1570a905068175cdfadd559e196c0bb345bc37c6e710e0051f698cd",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362572519,
+      "name": "rust-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 196458,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362572519",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362572519/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:11Z",
+      "expires_at": "2026-11-18T20:57:10Z",
+      "updated_at": "2026-11-04T20:57:11Z",
+      "digest": "sha256:9f310dfcdaa070ad38641ec7ad530844abf68f365a053c4a7674b1a6d0661506",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13362198384,
+      "name": "go-1-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 1501955,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362198384",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13362198384/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:57:24Z",
+      "expires_at": "2026-11-18T20:57:23Z",
+      "updated_at": "2026-11-04T20:57:24Z",
+      "digest": "sha256:f4cd33647e5ca3edcab7585b3f3ecd2b4c5d8e89a5810d8adc3bc44cb074f0be",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    },
+    {
+      "id": 13361799305,
+      "name": "linux-arm64-f91559e3d0290b12a8cdb8ebf1ce53f6d47156e6-1",
+      "size_in_bytes": 7236617,
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13361799305",
+      "archive_download_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/artifacts/13361799305/zip",
+      "expired": false,
+      "created_at": "2026-11-04T20:58:20Z",
+      "expires_at": "2026-11-18T20:58:18Z",
+      "updated_at": "2026-11-04T20:58:20Z",
+      "digest": "sha256:bb7a085c3139b9400ae3ecb4ea5ee2c5bdd212973198c461e54972580ba52462",
+      "workflow_run": {
+        "id": 41911387490,
+        "repository_id": 1444794553,
+        "head_repository_id": 1444794553,
+        "head_branch": "feat/m01-db-006",
+        "head_sha": "a4ed46c0ee0761a1e732ee610d04dfa4b764db0b"
+      }
+    }
+  ]
+}

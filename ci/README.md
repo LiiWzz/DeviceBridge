@@ -73,7 +73,8 @@ Artifact names include the event SHA and run attempt; retention is 14 days.
 For PR events, the checkout can be GitHub's synthetic merge commit. Compare
 `checked_out_commit` and `event_commit`; neither is assumed to be the PR head.
 Tool versions and cross-compiler identity are captured in command output.
-Verify a downloaded successful build from its artifact directory with
+Verify a downloaded successful build from the directory containing its
+`SOURCE.txt` and `SHA256SUMS` (Go/ARM ZIPs have a job subdirectory) with
 `sha256sum -c SHA256SUMS` (or `shasum -a 256 -c SHA256SUMS`).
 
 Failed checks still upload available logs using `if: always()`. A failed job can
