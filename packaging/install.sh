@@ -14,6 +14,7 @@ prefix_seen=no
 action_seen=no
 stage=
 link_tmp=
+manager_tmp=
 locked=no
 remove_root=no
 
@@ -135,6 +136,7 @@ check_state() {
 cleanup() {
     [ -z "$link_tmp" ] || rm -f "$link_tmp"
     [ -z "$stage" ] || rm -rf "$stage"
+    [ -z "$manager_tmp" ] || rm -f "$manager_tmp"
     if [ "$locked" = yes ]; then rmdir "$prefix/.install-lock" 2>/dev/null || :; fi
     if [ "$remove_root" = yes ]; then rmdir "$prefix" 2>/dev/null || :; fi
 }
@@ -163,6 +165,17 @@ activate_release() {
             die 'history update failed; existing version and rollback target restored'
         fi
     fi
+}
+refresh_manager() {
+    # Upgrades must deliver fixes to the installed rollback/uninstall tool too.
+    manager_sha=$(hash_file "$source_dir/install.sh")
+    if [ "$(hash_file "$prefix/manage.sh")" = "$manager_sha" ]; then return 0; fi
+    manager_tmp=$(mktemp "$prefix/.manager.XXXXXX") || die 'cannot stage management tool'
+    cp "$source_dir/install.sh" "$manager_tmp"
+    chmod 700 "$manager_tmp"
+    [ "$(hash_file "$manager_tmp")" = "$manager_sha" ] || die 'management script changed while copying'
+    mv -f "$manager_tmp" "$prefix/manage.sh" || die 'cannot update management tool'
+    manager_tmp=
 }
 if [ "$action" = install ]; then
     [ "${0##*/}" = install.sh ] || die 'install/upgrade using install.sh from an extracted package'
@@ -203,6 +216,7 @@ case "$action" in
         printf 'Component: %s\nTarget: %s\nActive: %s\nPrevious: %s\nExecutable: %s/bin/%s\n' "$component" "$target" "$active_id" "${previous_id:-none}" "$prefix" "$binary"
         ;;
     install)
+        refresh_manager
         new_id=$version-$target
         if [ -e "$prefix/releases/$new_id" ] || [ -L "$prefix/releases/$new_id" ]; then
             check_release "$new_id"

@@ -483,13 +483,18 @@ func TestFailedActivationPreservesRollback(t *testing.T) {
 					t.Fatal(err)
 				}
 				shimDir := temp(t)
-				shim := "#!/bin/sh\ncase \"$3\" in */previous) exit 1 ;; esac\nexec \"$DB011_REAL_MV\" \"$@\"\n"
+				shim := "#!/bin/sh\nprintf used > \"$DB011_MV_PROBE\"\ncase \"$3\" in */previous) exit 1 ;; esac\nexec \"$DB011_REAL_MV\" \"$@\"\n"
 				if err := os.WriteFile(filepath.Join(shimDir, "mv"), []byte(shim), 0700); err != nil {
 					t.Fatal(err)
 				}
-				cmd.Env = append(cmd.Env, "PATH="+shimDir+":"+os.Getenv("PATH"), "DB011_REAL_MV="+mv)
+				cmd.Env = append(cmd.Env, "PATH="+shimDir+":"+os.Getenv("PATH"), "DB011_REAL_MV="+mv, "DB011_MV_PROBE="+filepath.Join(home, "mv-shim-used"))
 			}
 			output, err := cmd.CombinedOutput()
+			if failure == "history-rename" && err == nil {
+				if _, probeErr := os.Stat(filepath.Join(home, "mv-shim-used")); os.IsNotExist(probeErr) {
+					t.Skip("shell bypasses PATH mv shim with built-in applet; failure injection unavailable")
+				}
+			}
 			if err == nil {
 				t.Fatalf("activation unexpectedly succeeded: %s", output)
 			}
@@ -504,5 +509,26 @@ func TestFailedActivationPreservesRollback(t *testing.T) {
 				t.Fatal("rollback target was lost")
 			}
 		})
+	}
+}
+
+func TestUpgradeRefreshesInstalledManager(t *testing.T) {
+	o := testOptions(t)
+	home := temp(t)
+	prefix := filepath.Join(home, "install")
+	first := unpack(t, o)
+	shell(t, filepath.Join(first, "install.sh"), home, true, "--prefix", prefix)
+	manager := filepath.Join(prefix, "manage.sh")
+	// Simulate an obsolete management tool. Upgrading must replace it without
+	// executing it or requiring users to keep the extracted archive around.
+	if err := os.WriteFile(manager, []byte("#!/bin/sh\nexit 47\n"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	o.version = "0.1.0-test.2"
+	next := unpack(t, o)
+	shell(t, filepath.Join(next, "install.sh"), home, true, "--prefix", prefix)
+	status := shell(t, manager, home, true, "--status")
+	if !strings.Contains(status, o.version) {
+		t.Fatal(status)
 	}
 }
