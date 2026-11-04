@@ -1,0 +1,73 @@
+=== RUN   TestInstallLifecycle
+--- PASS: TestInstallLifecycle (1.79s)
+=== RUN   TestExplicitPrefixSpacesAndCleanUninstall
+--- PASS: TestExplicitPrefixSpacesAndCleanUninstall (0.43s)
+=== RUN   TestRejectsInvalidPackagesBeforeWriting
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/corruption
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/missing
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink-bin
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/target
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/invalid-version
+--- PASS: TestRejectsInvalidPackagesBeforeWriting (1.46s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/corruption (0.28s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/missing (0.26s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink (0.23s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink-bin (0.22s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/target (0.27s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/invalid-version (0.19s)
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/unmanaged
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/relative
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/dotdot
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/empty
+--- PASS: TestRejectsUnmanagedAndSymlinkDestinations (1.67s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/unmanaged (0.26s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/symlink (0.25s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink (0.40s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/relative (0.23s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/dotdot (0.28s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/empty (0.25s)
+=== RUN   TestManagedStateFailuresLeaveInstallation
+=== RUN   TestManagedStateFailuresLeaveInstallation/lock
+=== RUN   TestManagedStateFailuresLeaveInstallation/unrelated-bin
+=== RUN   TestManagedStateFailuresLeaveInstallation/foreign-link
+=== RUN   TestManagedStateFailuresLeaveInstallation/extra-release-file
+=== RUN   TestManagedStateFailuresLeaveInstallation/corrupt-previous
+=== RUN   TestManagedStateFailuresLeaveInstallation/version-reuse
+--- PASS: TestManagedStateFailuresLeaveInstallation (2.66s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/lock (0.32s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/unrelated-bin (0.37s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/foreign-link (0.29s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/extra-release-file (0.41s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/corrupt-previous (0.45s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/version-reuse (0.82s)
+=== RUN   TestPackageValidationAndNoOverwrite
+--- PASS: TestPackageValidationAndNoOverwrite (0.56s)
+=== RUN   TestArgumentsAndHelp
+--- PASS: TestArgumentsAndHelp (0.28s)
+=== RUN   TestInstallerHashUtilities
+=== RUN   TestInstallerHashUtilities/sha256sum
+=== RUN   TestInstallerHashUtilities/shasum
+    main_test.go:412: hash utility unavailable
+=== RUN   TestInstallerHashUtilities/openssl
+    main_test.go:412: hash utility unavailable
+=== RUN   TestInstallerHashUtilities/none
+    main_test.go:437: shell exposes SHA utility as a built-in applet; PATH cannot simulate its absence
+--- PASS: TestInstallerHashUtilities (0.55s)
+    --- PASS: TestInstallerHashUtilities/sha256sum (0.29s)
+    --- SKIP: TestInstallerHashUtilities/shasum (0.00s)
+    --- SKIP: TestInstallerHashUtilities/openssl (0.00s)
+    --- SKIP: TestInstallerHashUtilities/none (0.26s)
+=== RUN   TestFailedActivationPreservesRollback
+=== RUN   TestFailedActivationPreservesRollback/binary-directory
+=== RUN   TestFailedActivationPreservesRollback/history-rename
+    main_test.go:495: shell bypasses PATH mv shim with built-in applet; failure injection unavailable
+--- PASS: TestFailedActivationPreservesRollback (2.10s)
+    --- PASS: TestFailedActivationPreservesRollback/binary-directory (1.36s)
+    --- SKIP: TestFailedActivationPreservesRollback/history-rename (0.74s)
+=== RUN   TestUpgradeRefreshesInstalledManager
+--- PASS: TestUpgradeRefreshesInstalledManager (0.50s)
+PASS

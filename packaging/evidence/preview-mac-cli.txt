@@ -1,0 +1,25 @@
+$ sh /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/devicebridge-cli-0.1.0-preview.3-darwin-arm64/install.sh --prefix /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix
+Installed cli 0.1.0-preview.3
+Run: "/private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/bin/devicebridge" --help
+Manage: sh "/private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/manage.sh" --status
+exit: 0
+
+$ /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/bin/devicebridge version
+devicebridge 0.1.0-dev
+exit: 0
+
+$ /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/bin/devicebridge check
+configuration valid; transport unimplemented; no connection attempted
+exit: 0
+
+$ sh /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/manage.sh --status
+Component: cli
+Target: darwin-arm64
+Active: 0.1.0-preview.3-darwin-arm64
+Previous: none
+Executable: /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/bin/devicebridge
+exit: 0
+
+$ sh /private/var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/db011-final-native-12yyc_m1/private prefix/manage.sh --uninstall
+Uninstalled cli; unrelated files/configuration preserved. Stop running processes separately.
+exit: 0

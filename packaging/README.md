@@ -16,9 +16,9 @@ using a separately trusted checksum, then extract it. For example, for a macOS
 ARM64 CLI preview (replace the version/target with your actual artifact):
 
 ```sh
-shasum -a 256 -c devicebridge-cli-0.1.0-preview.1-darwin-arm64.tar.gz.sha256
-tar -xzf devicebridge-cli-0.1.0-preview.1-darwin-arm64.tar.gz
-cd devicebridge-cli-0.1.0-preview.1-darwin-arm64
+shasum -a 256 -c devicebridge-cli-0.1.0-preview.3-darwin-arm64.tar.gz.sha256
+tar -xzf devicebridge-cli-0.1.0-preview.3-darwin-arm64.tar.gz
+cd devicebridge-cli-0.1.0-preview.3-darwin-arm64
 sh install.sh
 "$HOME/.local/devicebridge/cli/bin/devicebridge" help
 "$HOME/.local/devicebridge/cli/bin/devicebridge" check
@@ -63,6 +63,12 @@ then activates by replacing one symlink on the same filesystem. No partially
 copied executable is activated. Reinstalling identical version/content is a no-op
 for the binary; reusing a version with different content fails. Installation never
 executes the supplied binary.
+Upgrades refresh the installed management script so fixes reach existing users.
+If executable activation fails, the previous executable and rollback target remain
+available; if history replacement fails, the installer restores the old executable.
+The management script may already have been refreshed after such a failed upgrade.
+Atomicity covers the executable link, not a journaled multi-file transaction;
+unrecoverable filesystem errors or power loss require inspection.
 
 ```sh
 # The installed management script knows its own prefix (including custom paths).
@@ -108,6 +114,9 @@ the installer checks OS/CPU without an override. ARMv7 ISA attributes, CPU featu
 libc/loader versions, distribution and kernel compatibility need separate validation.
 In particular, a GNU-linked Rust build is **not** a universal musl/Buildroot/Yocto
 binary. No ABI auto-detection or automatic runtime installation is attempted.
+The local `0.1.0-preview.3` agent artifacts use statically linked musl instead;
+those ran in ARM64 Linux containers and ARMv7 emulation. Neither result establishes
+compatibility with every embedded kernel, CPU or distribution.
 
 Destination: POSIX shell, standard file utilities including `mktemp` and `readlink`,
 and at least one of `sha256sum`, `shasum -a 256`, or `openssl dgst -sha256`.
@@ -127,7 +136,7 @@ parent directories. The installer does not need root or create a privileged serv
 Run from `packaging/` on a workstation with Go 1.23+:
 
 ```sh
-go run . --component agent --version 0.1.0-preview.1 --target linux-arm64 \
+go run . --component agent --version 0.1.0-preview.3 --target linux-arm64 \
   --binary /path/to/prebuilt/devicebridge-agent \
   --revision FULL_40_CHARACTER_SOURCE_COMMIT --output ../dist
 ```

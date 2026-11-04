@@ -1,0 +1,27 @@
+$ go version
+go version go1.23.4 darwin/arm64
+exit: 0
+
+$ go list -m all
+github.com/LiiWzz/DeviceBridge/packaging
+exit: 0
+
+$ sh -n install.sh
+(no output)
+exit: 0
+
+$ sh -n smoke-preview.sh
+(no output)
+exit: 0
+
+$ gofmt -l .
+(no output)
+exit: 0
+
+$ go vet ./...
+(no output)
+exit: 0
+
+$ git diff --check
+(no output)
+exit: 0

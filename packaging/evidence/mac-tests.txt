@@ -1,0 +1,70 @@
+=== RUN   TestInstallLifecycle
+--- PASS: TestInstallLifecycle (0.78s)
+=== RUN   TestExplicitPrefixSpacesAndCleanUninstall
+--- PASS: TestExplicitPrefixSpacesAndCleanUninstall (0.25s)
+=== RUN   TestRejectsInvalidPackagesBeforeWriting
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/corruption
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/missing
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink-bin
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/target
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/invalid-version
+--- PASS: TestRejectsInvalidPackagesBeforeWriting (0.95s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/corruption (0.14s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/missing (0.14s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink (0.14s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink-bin (0.20s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/target (0.18s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/invalid-version (0.15s)
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/unmanaged
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/relative
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/dotdot
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/empty
+--- PASS: TestRejectsUnmanagedAndSymlinkDestinations (0.74s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/unmanaged (0.13s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/symlink (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/relative (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/dotdot (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/empty (0.12s)
+=== RUN   TestManagedStateFailuresLeaveInstallation
+=== RUN   TestManagedStateFailuresLeaveInstallation/lock
+=== RUN   TestManagedStateFailuresLeaveInstallation/unrelated-bin
+=== RUN   TestManagedStateFailuresLeaveInstallation/foreign-link
+=== RUN   TestManagedStateFailuresLeaveInstallation/extra-release-file
+=== RUN   TestManagedStateFailuresLeaveInstallation/corrupt-previous
+=== RUN   TestManagedStateFailuresLeaveInstallation/version-reuse
+--- PASS: TestManagedStateFailuresLeaveInstallation (1.51s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/lock (0.20s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/unrelated-bin (0.27s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/foreign-link (0.22s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/extra-release-file (0.23s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/corrupt-previous (0.22s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/version-reuse (0.38s)
+=== RUN   TestPackageValidationAndNoOverwrite
+--- PASS: TestPackageValidationAndNoOverwrite (0.31s)
+=== RUN   TestArgumentsAndHelp
+--- PASS: TestArgumentsAndHelp (0.13s)
+=== RUN   TestInstallerHashUtilities
+=== RUN   TestInstallerHashUtilities/sha256sum
+=== RUN   TestInstallerHashUtilities/shasum
+=== RUN   TestInstallerHashUtilities/openssl
+=== RUN   TestInstallerHashUtilities/none
+--- PASS: TestInstallerHashUtilities (0.76s)
+    --- PASS: TestInstallerHashUtilities/sha256sum (0.18s)
+    --- PASS: TestInstallerHashUtilities/shasum (0.25s)
+    --- PASS: TestInstallerHashUtilities/openssl (0.20s)
+    --- PASS: TestInstallerHashUtilities/none (0.13s)
+=== RUN   TestFailedActivationPreservesRollback
+=== RUN   TestFailedActivationPreservesRollback/binary-directory
+=== RUN   TestFailedActivationPreservesRollback/history-rename
+--- PASS: TestFailedActivationPreservesRollback (1.52s)
+    --- PASS: TestFailedActivationPreservesRollback/binary-directory (0.70s)
+    --- PASS: TestFailedActivationPreservesRollback/history-rename (0.82s)
+=== RUN   TestUpgradeRefreshesInstalledManager
+--- PASS: TestUpgradeRefreshesInstalledManager (0.41s)
+PASS
+ok  \tgithub.com/LiiWzz/DeviceBridge/packaging\t7.612s
