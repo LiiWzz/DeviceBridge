@@ -2,6 +2,10 @@
 
 Planning issue: [DB-012 / #19](https://github.com/LiiWzz/DeviceBridge/issues/19).
 
+UX-01 proposal: [operator journeys and information architecture](ux/UX-01.md),
+tracked in [#27](https://github.com/LiiWzz/DeviceBridge/issues/27). Human review is
+pending; this link does not approve UX-02 or production integration.
+
 ## Status and boundaries
 
 The repository currently provides M01 foundations; enrollment, working tunnels,

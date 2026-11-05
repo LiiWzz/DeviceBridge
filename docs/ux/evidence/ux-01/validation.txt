@@ -1,0 +1,44 @@
+Initial inline document check failed because validation.txt did not exist yet; created the log before rerunning. No application checks failed.
+
+Exact validator source (/tmp/devicebridge-ux01-validate.py):
+from pathlib import Path
+import re
+import subprocess
+
+root = Path.cwd()
+files = [root / 'docs/ux/UX-01.md', root / 'docs/ROADMAP.md']
+count = 0
+for file in files:
+    for target in re.findall(r'\]\(([^)]+)\)', file.read_text()):
+        if '://' in target or target.startswith('#'):
+            continue
+        assert (file.parent / target.split('#', 1)[0]).exists(), (file, target)
+        count += 1
+print(f'PASS: {count} local Markdown targets in 2 changed documents exist.')
+print('External URLs and link fragments are not checked.')
+paths = ['agent', 'server', 'cli', 'deploy', 'packaging', 'ci', 'security', 'tests', '.github', 'AGENTS.md', 'README.md', 'docs/adr', 'docs/M01_EXECUTION.md']
+result = subprocess.run(['git', 'diff', 'origin/develop', '--', *paths], capture_output=True, text=True, check=True)
+assert not result.stdout
+print('PASS: application/config/CI/security/contracts diff against origin/develop is empty.')
+subprocess.run(['git', 'diff', '--check'], check=True)
+print('PASS: git diff --check')
+
+$ git rev-parse HEAD
+73808fa24d955f7863b2bbefa5d67f8735cb1ead
+exit=0
+
+$ python3 --version
+Python 3.14.5
+exit=0
+
+$ python3 /tmp/devicebridge-ux01-validate.py
+PASS: 18 local Markdown targets in 2 changed documents exist.
+External URLs and link fragments are not checked.
+PASS: application/config/CI/security/contracts diff against origin/develop is empty.
+PASS: git diff --check
+exit=0
+
+Documentation-only validation: no application build/lint/runtime/security or browser/accessibility tests run. No physical ARM hardware; ARM toolchains and Windows execution not validated.
+
+$ git diff --cached --check
+exit=0
