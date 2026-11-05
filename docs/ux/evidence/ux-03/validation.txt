@@ -1,0 +1,29 @@
+UX-03 base: 3eb9a80a58899ff5bd2131b1d23b264740e3a764
+Commands and captured output follow.
+Git staging note: initial `git add docs/ROADMAP.md docs/ux/UX-02.md docs/ux/UX-03.md docs/ux/evidence/ux-03` exited 1 because /Users/liiwz/.gitignore_global line 3 ignores docs. Existing tracked files staged; new documentation requires explicit `git add -f` paths. Global ignore configuration is unchanged.
+
+$ python3 --version
+Python 3.14.5
+exit=0
+
+$ python3 docs/ux/evidence/ux-03/validate.py
+PASS: 19 local Markdown file targets exist; URLs/fragments not checked.
+PASS: Main text: #173D36/#FFFFFF = 11.95:1 >= 4.5:1
+PASS: Supporting text: #50605B/#FFFFFF = 6.63:1 >= 4.5:1
+PASS: Canvas text: #173D36/#F4F7F5 = 11.08:1 >= 4.5:1
+PASS: Link: #145D52/#FFFFFF = 7.73:1 >= 4.5:1
+PASS: Primary action: #FFFFFF/#145D52 = 7.73:1 >= 4.5:1
+PASS: Selected navigation: #173D36/#E2EDE8 = 9.97:1 >= 4.5:1
+PASS: Online observation: #294D3C/#EDF5EF = 8.51:1 >= 4.5:1
+PASS: Offline observation: #783327/#F5ECE9 = 7.85:1 >= 4.5:1
+PASS: Unknown observation: #66551E/#F1EFE6 = 6.32:1 >= 4.5:1
+PASS: Warning / stale: #66551E/#FFF5DA = 6.70:1 >= 4.5:1
+PASS: Destructive / error: #90291F/#FFFFFF = 8.32:1 >= 4.5:1
+PASS: Control boundary: #50605B/#FFFFFF = 6.63:1 >= 3.0:1
+PASS: Focus ring: #145D52/#FFFFFF = 7.73:1 >= 3.0:1
+PASS: Focus ring on canvas: #145D52/#F4F7F5 = 7.16:1 >= 3.0:1
+PASS: application/prototype/contracts unchanged against 3eb9a80a58899ff5bd2131b1d23b264740e3a764.
+PASS: git diff --check
+PASS: git diff --cached --check
+LIMIT: static documentation and opaque sRGB pairs only; no browser, ARM or security acceptance.
+exit=0
