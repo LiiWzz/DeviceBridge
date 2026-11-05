@@ -1,0 +1,5 @@
+base=0e134e61c60f0841dc255d31e01a1042fc2800bb
+Changed scripts tested as an uncommitted worktree; SHA-256:
+c19ba52639bfe306f4f70fccd8ef3d4f5165cdd413490d5aead6bb4d065da4b3  ci/check.sh
+a9b8d76acdb4de02b9eed83a58b82f751fcf8f79cdd3781e165367d06d89e52f  deploy/smoke.sh
+1c258a1098fd88b9141970fc6fe0cbe1d3c883a7ca369e7f8aedc896d8b9ff9a  .github/workflows/ci.yml
