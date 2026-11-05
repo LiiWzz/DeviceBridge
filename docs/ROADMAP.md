@@ -7,8 +7,11 @@ tracked in [#27](https://github.com/LiiWzz/DeviceBridge/issues/27). The owner
 approved its journeys, inventory and capability separation as inputs to UX-02
 on 2026-11-05 in the project conversation; see its limited review record.
 The [UX-02 prototype packet](ux/UX-02.md), tracked in
-[#29](https://github.com/LiiWzz/DeviceBridge/issues/29), awaits human flow review
-and variant selection. Production integration remains gated separately.
+[#29](https://github.com/LiiWzz/DeviceBridge/issues/29), received owner flow
+approval and selection of A (fleet sidebar) on 2026-11-05 in the project
+conversation. The [UX-03 design system and handoff](ux/UX-03.md), tracked in
+[#31](https://github.com/LiiWzz/DeviceBridge/issues/31), is proposed for human
+review. Production integration remains gated separately.
 
 ## Status and boundaries
 
