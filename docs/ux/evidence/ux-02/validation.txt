@@ -1,0 +1,161 @@
+UX-02 source base: d78edb36875e0939b21b08238d464b0a309e693b
+Initial VM smoke exited 1: stub addEventListener overwrote the dialog close method. Corrected the temporary stub to retain callbacks separately; no application failure was established. Final rerun below.
+
+Exact temporary diagnostic source: /tmp/devicebridge-ux02-smoke.cjs
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const source = fs.readFileSync('docs/ux/prototype/prototype.js', 'utf8');
+function environment(url) {
+  const listeners = {}, nodes = {};
+  function node(id) {
+    return nodes[id] ||= { innerHTML: '', textContent: '', hidden: true, open: false, value: 'Unknown', focus() {}, setAttribute() {}, append(child) { this.innerHTML += child.textContent; }, addEventListener(type, fn) { this['on-' + type] = fn; }, showModal() { this.open = true; }, close() { this.open = false; this['on-close']?.(); }, querySelector() { return node('dialog-button'); } };
+  }
+  const context = vm.createContext({ URL, URLSearchParams, location: new URL(url), history: { replaceState(_a, _b, next) { Object.assign(context, { location: new URL(next) }); } }, document: { querySelector: node, getElementById: node, createElement: () => node('created'), addEventListener(type, fn) { listeners[type] = fn; } } });
+  vm.runInContext(source, context);
+  return { context, nodes, listeners, run: code => vm.runInContext(code, context) };
+}
+const e = environment('http://127.0.0.1:8765/?variant=A');
+let renders = 0;
+for (const variant of ['A', 'B', 'C']) {
+  for (const screen of ['overview', 'devices', 'detail', 'onboarding', 'sessions', 'users', 'audit', 'signin']) {
+    for (const scenario of ['ready', 'loading', 'empty', 'error', 'expired', 'forbidden', 'stale']) {
+      e.run(`Object.assign(state, ${JSON.stringify({ variant, screen, scenario })}); render();`);
+      const html = e.nodes['#app'].innerHTML;
+      assert(html.includes('Design review only'));
+      assert(!html.includes('undefined'));
+      if (scenario === 'forbidden') assert(html.includes('Access not permitted'));
+      if (scenario === 'expired') assert(html.includes('Session expired'));
+      renders++;
+    }
+  }
+}
+console.log(`PASS: ${renders} variant/screen/scenario output combinations rendered without exceptions or undefined output (VM DOM stub, not a browser).`);
+e.run("Object.assign(state,{variant:'A',screen:'devices',scenario:'ready',query:'',filter:'all',page:0});render()");
+assert(e.nodes['#app'].innerHTML.includes('Page 1 of 2'));
+e.run('state.page=1;render()');
+assert(e.nodes['#app'].innerHTML.includes('Page 2 of 2'));
+e.run("state.filter='unknown';state.page=0;render()");
+assert(e.nodes['#app'].innerHTML.includes('2 of 6'));
+e.run(`state.query=${JSON.stringify('<img src=x onerror=alert(1)>')};render()`);
+assert(e.nodes['#app'].innerHTML.includes('No matching devices'));
+assert(!e.nodes['#app'].innerHTML.includes('<img src=x'));
+assert(e.nodes['#app'].innerHTML.includes('&lt;img'));
+e.run("state.audit.result='Denied';state.screen='audit';render()");
+assert(e.nodes['#app'].innerHTML.includes('demo-001'));
+assert(!e.nodes['#app'].innerHTML.includes('demo-002'));
+e.run("state.audit.result='no-match';render()");
+assert(e.nodes['#app'].innerHTML.includes('No matching events'));
+console.log('PASS: device pagination/filter/no-match, escaped hostile search text, audit result filtering/no-match.');
+e.run("state.screen='sessions';state.scenario='ready';state.session='Unavailable';render()");
+assert(e.nodes['#app'].innerHTML.includes('outcome is unknown'));
+e.run("state.session='Handoff guidance';render()");
+assert(e.nodes['#app'].innerHTML.includes('no runnable command'));
+e.run("state.variant='C';state.screen='detail';state.device='demo-003';state.scenario='stale';render()");
+function click(action, dataset = {}) {
+  e.listeners.click({ target: { closest() { return { dataset: { action, ...dataset } }; } } });
+}
+click('variant', { step: '1' });
+assert.equal(e.run('state.variant'), 'A');
+assert.equal(e.run('state.device'), 'demo-003');
+assert.equal(e.run('state.scenario'), 'stale');
+assert.equal(e.context.location.searchParams.get('variant'), 'A');
+click('variant', { step: '-1' });
+assert.equal(e.run('state.variant'), 'C');
+click('revoke');
+assert(e.nodes['#confirm'].open);
+click('cancel');
+assert(!e.nodes['#confirm'].open);
+click('revoke');
+e.nodes['#confirmation-outcome'] ||= { value: 'Unknown' };
+click('submit-confirm');
+assert(e.run('state.outcome').includes('reconcile authoritative state'));
+assert(!e.nodes['#confirm'].open);
+console.log('PASS: unavailable/handoff text, variant wrapping/URL/state retention, simulated confirmation cancel and unknown result.');
+const before = e.run('state.variant');
+e.listeners.keydown({ key: 'ArrowLeft', target: { closest() { return {}; } }, preventDefault() { throw Error('Input arrow was intercepted'); } });
+assert.equal(e.run('state.variant'), before);
+for (const url of ['file:///tmp/index.html?variant=B', 'http://localhost:8765/?variant=C', 'http://[::1]:8765/?variant=A']) assert(environment(url).nodes['#app'].innerHTML.includes('Design review only'));
+const remote = environment('https://example.org/?variant=A');
+assert(remote.nodes['#app'].textContent.includes('Local throwaway preview only'));
+assert(remote.nodes['#switcher'] === undefined || remote.nodes['#switcher'].hidden);
+console.log('PASS: input arrows preserved; file/loopback preview accepted; non-local origin withholds prototype/switcher.');
+console.log('LIMIT: no real DOM layout, browser security policy, focus, keyboard, responsive, accessibility or human flow validation.');
+
+Exact temporary diagnostic source: /tmp/devicebridge-ux02-validate.py
+from pathlib import Path
+from html.parser import HTMLParser
+import re
+import subprocess
+
+files = ['docs/ROADMAP.md', 'docs/ux/UX-01.md', 'docs/ux/UX-02.md']
+count = 0
+for name in files:
+    source = Path(name)
+    for target in re.findall(r'\]\(([^)]+)\)', source.read_text()):
+        if '://' in target or target.startswith('#'):
+            continue
+        assert (source.parent / target.split('#', 1)[0]).exists(), (name, target)
+        count += 1
+print(f'PASS: {count} local Markdown targets exist; external URLs and fragments not checked.')
+class Assets(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        if tag in ('script', 'link'):
+            target = values.get('src') or values.get('href')
+            assert target and (Path('docs/ux/prototype') / target).is_file(), target
+            print(f'PASS: local {tag} asset {target}')
+Assets().feed(Path('docs/ux/prototype/index.html').read_text())
+unchanged = ['agent', 'server', 'cli', 'deploy', 'packaging', 'ci', 'security', 'tests', '.github', 'AGENTS.md', 'README.md', 'docs/adr', 'docs/M01_EXECUTION.md']
+assert not subprocess.check_output(['git', 'diff', 'origin/develop', '--', *unchanged])
+print('PASS: application/config/CI/security/contracts unchanged against origin/develop.')
+subprocess.run(['git', 'diff', '--check'], check=True)
+print('PASS: tracked diff whitespace check.')
+for name in Path('docs/ux/prototype').iterdir():
+    print(f'ASSET: {name}: {name.stat().st_size} bytes')
+print('LIMIT: static assets/docs only; no application, browser or ARM acceptance.')
+
+$ node --version
+v24.18.0
+
+exit=0
+
+$ python3 --version
+Python 3.14.5
+
+exit=0
+
+$ node --check docs/ux/prototype/prototype.js
+
+exit=0
+
+$ node /tmp/devicebridge-ux02-smoke.cjs
+PASS: 168 variant/screen/scenario output combinations rendered without exceptions or undefined output (VM DOM stub, not a browser).
+PASS: device pagination/filter/no-match, escaped hostile search text, audit result filtering/no-match.
+PASS: unavailable/handoff text, variant wrapping/URL/state retention, simulated confirmation cancel and unknown result.
+PASS: input arrows preserved; file/loopback preview accepted; non-local origin withholds prototype/switcher.
+LIMIT: no real DOM layout, browser security policy, focus, keyboard, responsive, accessibility or human flow validation.
+
+exit=0
+
+$ python3 /tmp/devicebridge-ux02-validate.py
+PASS: 24 local Markdown targets exist; external URLs and fragments not checked.
+PASS: local link asset prototype.css
+PASS: local script asset prototype.js
+PASS: application/config/CI/security/contracts unchanged against origin/develop.
+PASS: tracked diff whitespace check.
+ASSET: docs/ux/prototype/index.html: 1190 bytes
+ASSET: docs/ux/prototype/prototype.css: 7133 bytes
+ASSET: docs/ux/prototype/prototype.js: 23246 bytes
+LIMIT: static assets/docs only; no application, browser or ARM acceptance.
+
+exit=0
+
+Initial staged whitespace check exited 2 for a trailing blank line in each evidence log. Removed those blank lines and restaged.
+$ git diff --cached --check
+exit=0
+
+SHA-256 of prototype assets:
+2c8bd7d0dcbe2e3bd62c41c894357391d03166872d0f7e3dc4b1bda78baac367  docs/ux/prototype/index.html
+705ddefb7875958e43736f46b4a38a0894a5094e8d84b5d83eb7a57d6e59c671  docs/ux/prototype/prototype.css
+f33cb48acd9ab14414e838ecf3d31459f9f71f9d32542eb06b9aae15b3b96d48  docs/ux/prototype/prototype.js
