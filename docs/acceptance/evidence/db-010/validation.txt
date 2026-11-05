@@ -1,0 +1,61 @@
+$ python3 /tmp/devicebridge-db010-validate.py
+Executed script:
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from urllib.parse import unquote
+
+root = Path('/Users/liiwz/Documents/My works/DeviceBridge')
+evidence = root / 'docs/acceptance/evidence/db-010'
+evidence.mkdir(parents=True, exist_ok=True)
+(evidence / 'validation.txt').touch()
+lines = ['$ python3 /tmp/devicebridge-db010-validate.py', 'Executed script:', Path(__file__).read_text()]
+
+def record(command):
+    lines.append('$ ' + ' '.join(command))
+    result = subprocess.run(command, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    lines.extend([result.stdout.rstrip(), f'[exit {result.returncode}]'])
+    assert result.returncode == 0, command
+
+record(['git', 'rev-parse', 'HEAD'])
+record(['git', 'diff', '--exit-code', '75b445b20831a6f68a6425d9ced0a3cf9ce3d7b0', 'HEAD', '--', 'agent', 'server', 'cli', 'deploy', 'ci', 'tests', 'packaging', '.github', 'README.md', 'AGENTS.md', 'docs/M01_EXECUTION.md', 'docs/ROADMAP.md', 'docs/adr'])
+count = 0
+for line in (root / 'docs/reviews/evidence/db-009/reviewed-source-sha256.txt').read_text().splitlines():
+    expected, name = line.split('  ', 1)
+    assert hashlib.sha256((root / name).read_bytes()).hexdigest() == expected, name
+    count += 1
+lines.append(f'PASS: {count} reviewed-source SHA-256 hashes match current checkout')
+doc = root / 'docs/acceptance/DB-010.md'
+links = 0
+for target in re.findall(r'\[[^\]]*\]\(([^)]+)\)', doc.read_text()):
+    if re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', target) or target.startswith('#'):
+        continue
+    target = unquote(target.split('#', 1)[0])
+    assert (doc.parent / target).is_file(), target
+    links += 1
+lines.append(f'PASS: {links} local Markdown link targets exist (fragments/external URLs not validated)')
+snapshot = json.loads((evidence / 'github-snapshot.json').read_text())
+assert snapshot['responses']
+lines.append('PASS: GitHub snapshot JSON parses with captured responses')
+record(['git', 'diff', '--check'])
+lines.append('No application builds, runtime checks, or ARM hardware measurements rerun in DB-010.')
+output = '\n'.join(lines) + '\n'
+(evidence / 'validation.txt').write_text(output)
+print(output)
+
+$ git rev-parse HEAD
+76009bac636308f80c74faa17c883b69c48526de
+[exit 0]
+$ git diff --exit-code 75b445b20831a6f68a6425d9ced0a3cf9ce3d7b0 HEAD -- agent server cli deploy ci tests packaging .github README.md AGENTS.md docs/M01_EXECUTION.md docs/ROADMAP.md docs/adr
+
+[exit 0]
+PASS: 142 reviewed-source SHA-256 hashes match current checkout
+PASS: 34 local Markdown link targets exist (fragments/external URLs not validated)
+PASS: GitHub snapshot JSON parses with captured responses
+$ git diff --check
+
+[exit 0]
+No application builds, runtime checks, or ARM hardware measurements rerun in DB-010.

@@ -1,0 +1,236 @@
+{
+  "captured_at": "2026-11-05 13:42:26 UTC",
+  "source": "Read-only GitHub connector; selected response fields. No decisions inferred from merge.",
+  "responses": [
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/issues?state=open&per_page=100",
+      "value": [
+        {
+          "number": 19,
+          "title": "[Planning][DB-012] Define UX/UI and management dashboard roadmap",
+          "state": "open"
+        },
+        {
+          "number": 16,
+          "title": "[M01][DB-011] Portable offline packages and simple unprivileged installation",
+          "state": "open"
+        },
+        {
+          "number": 10,
+          "title": "[M01][DB-010] Milestone acceptance / GO-NO-GO",
+          "state": "open"
+        },
+        {
+          "number": 9,
+          "title": "[M01][DB-009] Independent architecture and security review",
+          "state": "open"
+        },
+        {
+          "number": 8,
+          "title": "[M01][DB-008] Integration smoke tests",
+          "state": "open"
+        },
+        {
+          "number": 7,
+          "title": "[M01][DB-007] Configuration and security baseline",
+          "state": "open"
+        },
+        {
+          "number": 6,
+          "title": "[M01][DB-006] CI build, lint, cross-compile ARM",
+          "state": "open"
+        },
+        {
+          "number": 5,
+          "title": "[M01][DB-005] PostgreSQL and local Docker Compose",
+          "state": "open"
+        },
+        {
+          "number": 4,
+          "title": "[M01][DB-004] Go relay and developer CLI skeleton",
+          "state": "open"
+        },
+        {
+          "number": 3,
+          "title": "[M01][DB-003] Go control API skeleton",
+          "state": "open"
+        },
+        {
+          "number": 2,
+          "title": "[M01][DB-002] Rust ARM agent skeleton",
+          "state": "open"
+        },
+        {
+          "number": 1,
+          "title": "[M01][DB-001] Repository foundation + Architecture Decisions",
+          "state": "open"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/pulls?state=all&per_page=30",
+      "value": [
+        {
+          "number": 23,
+          "title": "[M01][DB-009] Independent architecture/security review and acceptance blockers",
+          "state": "closed",
+          "merged_at": "2026-11-05T10:20:34Z",
+          "head_sha": "b29e96edddd4192aa42cc46f78f9ac294fe7aeae",
+          "merge_commit_sha": "76009bac636308f80c74faa17c883b69c48526de",
+          "base": "develop"
+        },
+        {
+          "number": 22,
+          "title": "[M01][DB-008] Linux integration smoke for probes, shutdown and Compose",
+          "state": "closed",
+          "merged_at": "2026-11-05T09:31:09Z",
+          "head_sha": "5a327b1e40efc74d9b7e3231e2b42c2b525c722a",
+          "merge_commit_sha": "75b445b20831a6f68a6425d9ced0a3cf9ce3d7b0",
+          "base": "develop"
+        },
+        {
+          "number": 21,
+          "title": "[DB-007] Security baseline, secret scan and safe config diagnostics",
+          "state": "closed",
+          "merged_at": "2026-11-05T09:11:02Z",
+          "head_sha": "c8e310e5e7a444292271e5620dc4c85f9bbfee26",
+          "merge_commit_sha": "af49bad5270988d533ebb9e50f925274c13d67b7",
+          "base": "develop"
+        },
+        {
+          "number": 20,
+          "title": "docs(db-012): plan UX/UI and management dashboard delivery",
+          "state": "closed",
+          "merged_at": "2026-11-04T21:27:35Z",
+          "head_sha": "74aa066fc9be130e982fe903f76547ef6afcb4f5",
+          "merge_commit_sha": "30b5e0d8b249420c69a2845d5cfec2f6ae3b4a64",
+          "base": "develop"
+        },
+        {
+          "number": 18,
+          "title": "[M01][DB-006] Add CI checks and traceable Linux ARM cross-builds",
+          "state": "closed",
+          "merged_at": "2026-11-04T21:14:31Z",
+          "head_sha": "b54c205451719525f5690d18a913a80d2b1201ca",
+          "merge_commit_sha": "74cda23736501463a15f95be20410c06e33bbba3",
+          "base": "develop"
+        },
+        {
+          "number": 17,
+          "title": "[M01][DB-011] Add portable packages and simple offline installation",
+          "state": "closed",
+          "merged_at": "2026-11-04T20:45:12Z",
+          "head_sha": "91b65bc52d6fbc83a60b66bc20a76d35d07db3fc",
+          "merge_commit_sha": "e7ee1ce9f56442eb1ed4597f1868bd755dbbcbe6",
+          "base": "develop"
+        },
+        {
+          "number": 15,
+          "title": "[M01][DB-005] Add local PostgreSQL and tracked migration foundation",
+          "state": "closed",
+          "merged_at": "2026-11-04T20:45:12Z",
+          "head_sha": "b4cbbb3fdc4607508a7b65db88d98ca75d27394c",
+          "merge_commit_sha": "498f94d98bc40942cf967882d8119fe62591ecfc",
+          "base": "develop"
+        },
+        {
+          "number": 14,
+          "title": "[M01][DB-003] Add loopback Control API foundation",
+          "state": "closed",
+          "merged_at": "2026-11-04T20:45:12Z",
+          "head_sha": "5fca32be4d6cb67d6a3e013be6be7b855c0c1475",
+          "merge_commit_sha": "b7290db230421b1e7d9a8fa530d5dcc2639f6185",
+          "base": "develop"
+        },
+        {
+          "number": 13,
+          "title": "[M01][DB-002] Add Rust agent skeleton and ARM build evidence",
+          "state": "closed",
+          "merged_at": "2026-11-04T20:45:12Z",
+          "head_sha": "dcefd3b2f8b1de53bfd180d9613d49d6a2539b54",
+          "merge_commit_sha": "7627bcd837af474aca3bba83e0ce88a9e1913015",
+          "base": "develop"
+        },
+        {
+          "number": 12,
+          "title": "[M01][DB-004] Add fail-closed relay and developer CLI skeletons",
+          "state": "closed",
+          "merged_at": "2026-11-04T20:44:34Z",
+          "head_sha": "4518fc8d3edb4a172cb763cca7222a8afdacb2cb",
+          "merge_commit_sha": "eea0c485b8ed3b43c46bd52990a6b13bc9c92c77",
+          "base": "develop"
+        },
+        {
+          "number": 11,
+          "title": "[M01][DB-001] Establish repository foundation and architecture ADR",
+          "state": "closed",
+          "merged_at": "2026-11-03T20:38:57Z",
+          "head_sha": "c8fae1481fe657f385d7747878780d1f4485e986",
+          "merge_commit_sha": "c8fae1481fe657f385d7747878780d1f4485e986",
+          "base": "develop"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/pulls/23/reviews",
+      "value": []
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/pulls/11/reviews",
+      "value": []
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/branches/develop",
+      "value": {
+        "name": "develop",
+        "protected": false,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "enforcement_level": "off",
+            "contexts": [],
+            "checks": []
+          }
+        },
+        "sha": "76009bac636308f80c74faa17c883b69c48526de"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/branches/main",
+      "value": {
+        "name": "main",
+        "protected": false,
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "enforcement_level": "off",
+            "contexts": [],
+            "checks": []
+          }
+        },
+        "sha": "085f229191ea63bd7f8781d3b2dace39bc66b87a"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge/rulesets",
+      "value": []
+    },
+    {
+      "url": "https://api.github.com/repos/LiiWzz/DeviceBridge",
+      "value": {
+        "full_name": "LiiWzz/DeviceBridge",
+        "allow_auto_merge": false
+      }
+    },
+    {
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/23",
+      "query": "fetch_pr_comments",
+      "value": []
+    },
+    {
+      "url": "https://github.com/LiiWzz/DeviceBridge/issues/10",
+      "query": "fetch_issue_comments",
+      "value": []
+    }
+  ]
+}
