@@ -1,0 +1,3 @@
+$ docker run --rm --network none -v '/Users/liiwz/Documents/My works/DeviceBridge:/src:ro' -w /src koalaman/shellcheck:v0.10.0 ci/check.sh ci/security.sh tests/smoke.sh
+
+[exit 0]

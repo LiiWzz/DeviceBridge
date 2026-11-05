@@ -1,0 +1,61 @@
+$ bash ci/check.sh rust
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ rustc --version
+rustc 1.89.0 (29483883e 2025-08-04)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo --version
+cargo 1.89.0 (c24e10642 2025-06-23)
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo fmt --all -- --check
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo clippy --locked --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo test --locked
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/main.rs (target/debug/deps/devicebridge_agent-74eca58069441435)
+
+running 10 tests
+test cli::tests::invalid_utf8_options_and_values_are_errors ... ok
+test cli::tests::defaults_actions_and_overrides ... ok
+test config::tests::read_errors_are_reported ... ok
+test config::tests::defaults_and_boundaries_are_valid ... ok
+test cli::tests::rejects_bad_duplicate_or_conflicting_arguments ... ok
+test config::tests::malformed_unknown_duplicate_and_invalid_values_fail_closed ... ok
+test config::tests::input_bound_is_enforced_and_exact_limit_is_accepted ... ok
+test logging::tests::write_failure_is_returned ... ok
+test logging::tests::logs_are_one_json_line_with_escaped_input ... ok
+test cli::tests::file_values_are_overridden_by_cli ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/process.rs (target/debug/deps/process-936e39427d23adba)
+
+running 5 tests
+test file_cli_precedence_and_invalid_file_cannot_be_masked ... ok
+test informational_commands_and_invalid_options ... ok
+test missing_directory_oversized_and_malformed_config_are_rejected ... ok
+test unix::fifo_config_is_rejected_without_waiting_for_a_writer ... ok
+test unix::sigint_and_sigterm_exit_successfully_with_structured_shutdown ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cargo build --release --locked
+    Finished `release` profile [optimized] target(s) in 0.02s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/agent]
+$ cp target/release/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/rust/bin/
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/rust]
+$ sha256sum bin/devicebridge-agent SOURCE.txt
+e7307000242478c36018ee67ed3a3f1a05c5b137018dc7b388e8b6da4e142c31  bin/devicebridge-agent
+66443b4000d3e406831bf425b4caf131abe15feb5eec0562129570e0bf7efa4f  SOURCE.txt
+[exit 0]
+
+[exit 0]

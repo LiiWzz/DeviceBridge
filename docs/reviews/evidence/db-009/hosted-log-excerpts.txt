@@ -1,0 +1,136 @@
+## integration
+2026-11-05T09:17:55.9334531Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-05T09:18:02.1497660Z HEAD is now at 5adb91b Merge 5a327b1e40efc74d9b7e3231e2b42c2b525c722a into af49bad5270988d533ebb9e50f925274c13d67b7
+2026-11-05T09:18:02.1667909Z 5adb91b46c424c84ca4d4e8d5c15dda5e5ec259f
+2026-11-05T09:18:30.3042095Z $ go version
+2026-11-05T09:18:30.3075015Z $ cargo --version
+2026-11-05T09:18:35.4693256Z $ python3 tests/test_process_smoke.py
+2026-11-05T09:18:35.6374696Z Ran 4 tests in 0.057s
+2026-11-05T09:18:35.6374927Z OK
+2026-11-05T09:18:35.6507273Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration/bin/ ./...
+2026-11-05T09:18:47.1516741Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration/bin/ ./...
+2026-11-05T09:18:47.4107725Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration/bin/ ./...
+2026-11-05T09:18:47.5999036Z $ cargo build --release --locked
+2026-11-05T09:18:56.7494342Z     Finished `release` profile [optimized] target(s) in 9.14s
+2026-11-05T09:18:56.7619799Z $ cp agent/target/release/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration/bin/
+2026-11-05T09:18:56.7640428Z $ python3 tests/process_smoke.py /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration/bin /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/integration
+2026-11-05T09:18:56.8119152Z PASS: control [] exit=1
+2026-11-05T09:18:56.8137910Z PASS: devicebridge-relay ['--transport', 'tls'] exit=2
+2026-11-05T09:18:56.8164918Z PASS: devicebridge ['connect'] exit=2
+2026-11-05T09:18:56.8180963Z PASS: devicebridge ['check', '--relay-url', 'http://localhost'] exit=2
+2026-11-05T09:18:56.8207109Z PASS: devicebridge ['check'] exit=0
+2026-11-05T09:18:56.8226758Z PASS: devicebridge-relay ['--check'] exit=0
+2026-11-05T09:18:56.8239686Z PASS: devicebridge-agent ['--check-config'] exit=0
+2026-11-05T09:18:56.8251465Z PASS: devicebridge-agent ['--shutdown-poll-ms', '0'] exit=2
+2026-11-05T09:18:56.8790106Z PASS: GET /healthz status=200
+2026-11-05T09:18:56.8794410Z PASS: GET /readyz status=200
+2026-11-05T09:18:56.8798678Z PASS: GET /debug/pprof/ status=404
+2026-11-05T09:18:56.8803537Z PASS: GET /devices status=404
+2026-11-05T09:18:56.8811734Z PASS: HEAD/POST /healthz status=200/405
+2026-11-05T09:18:56.8819935Z PASS: HEAD/POST /readyz status=200/405
+2026-11-05T09:18:56.8831968Z PASS: control-SIGTERM SIGTERM exit=0 and stopped log
+2026-11-05T09:18:56.8832777Z PASS: control listener closed
+2026-11-05T09:18:56.9356040Z PASS: devicebridge-relay-SIGTERM SIGTERM exit=0 and stopped log
+2026-11-05T09:18:57.0504816Z PASS: devicebridge-agent-SIGTERM SIGTERM exit=0 and stopped log
+2026-11-05T09:18:57.1030506Z PASS: GET /healthz status=200
+2026-11-05T09:18:57.1035098Z PASS: GET /readyz status=200
+2026-11-05T09:18:57.1039485Z PASS: GET /debug/pprof/ status=404
+2026-11-05T09:18:57.1043291Z PASS: GET /devices status=404
+2026-11-05T09:18:57.1051308Z PASS: HEAD/POST /healthz status=200/405
+2026-11-05T09:18:57.1059162Z PASS: HEAD/POST /readyz status=200/405
+2026-11-05T09:18:57.1071453Z PASS: control-SIGINT SIGINT exit=0 and stopped log
+2026-11-05T09:18:57.1072321Z PASS: control listener closed
+2026-11-05T09:18:57.1594831Z PASS: devicebridge-relay-SIGINT SIGINT exit=0 and stopped log
+2026-11-05T09:18:57.2744226Z PASS: devicebridge-agent-SIGINT SIGINT exit=0 and stopped log
+2026-11-05T09:18:57.2745143Z PASS: M01 probes, negative cases and SIGINT/SIGTERM lifecycle
+2026-11-05T09:18:57.3151854Z + expect failure: env -u POSTGRES_PASSWORD docker compose --project-directory /tmp/tmp.vTzYa3z2X3 -p db005-smoke-4527 config --quiet
+2026-11-05T09:18:57.5085412Z error while interpolating services.db.environment.POSTGRES_PASSWORD: required variable POSTGRES_PASSWORD is missing a value: Set POSTGRES_PASSWORD in deploy/.env or the environment
+2026-11-05T09:18:57.5133263Z + expect failure: env POSTGRES_PASSWORD= docker compose --project-directory /tmp/tmp.vTzYa3z2X3 -p db005-smoke-4527 config --quiet
+2026-11-05T09:18:57.5897273Z error while interpolating services.db.environment.POSTGRES_PASSWORD: required variable POSTGRES_PASSWORD is missing a value: Set POSTGRES_PASSWORD in deploy/.env or the environment
+2026-11-05T09:19:12.9093878Z + expect failure: compose exec -T -e PGPASSWORD= db psql -X -h 127.0.0.1 -U devicebridge -d devicebridge -w -c SELECT 1
+2026-11-05T09:19:13.8069464Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+2026-11-05T09:19:13.9559228Z PASS SQL: SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public' => 0
+2026-11-05T09:19:14.4398853Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 0
+2026-11-05T09:19:15.3513085Z PASS SQL: SELECT to_regclass('public.db005_failure_probe') IS NULL => t
+2026-11-05T09:19:15.5072206Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+2026-11-05T09:19:16.0607958Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+2026-11-05T09:19:22.2978872Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+2026-11-05T09:19:22.6095501Z PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 0
+2026-11-05T09:19:22.9765734Z PASS: DB-005 smoke; cleanup will remove only the isolated test volume
+2026-11-05T09:19:23.1583943Z PASS: DB-008 process and isolated Compose smoke
+2026-11-05T09:19:23.1585730Z [exit 0]
+2026-11-05T09:19:25.3618687Z SHA256 digest of uploaded artifact zip is 82fdad7c720061cf3a08896be302760a23f879059a2613c2ff6070b0190f1037
+
+## security
+2026-11-05T09:17:54.6881167Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T09:17:56.7703482Z HEAD is now at 5adb91b Merge 5a327b1e40efc74d9b7e3231e2b42c2b525c722a into af49bad5270988d533ebb9e50f925274c13d67b7
+2026-11-05T09:17:56.7905623Z 5adb91b46c424c84ca4d4e8d5c15dda5e5ec259f
+2026-11-05T09:18:26.5298435Z PASS: synthetic private key detected; console and JSON report redacted
+2026-11-05T09:18:26.6268749Z [90m9:18AM[0m [32mINF[0m [1mno leaks found[0m
+2026-11-05T09:18:27.0499307Z SHA256 digest of uploaded artifact zip is 5f85615a7b3e19c9d9fceca0e36257d5499a695a078e4d2dc8112e3455dc1f78
+
+## armv7
+2026-11-05T09:17:55.5462967Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-05T09:17:58.2870259Z HEAD is now at 5adb91b Merge 5a327b1e40efc74d9b7e3231e2b42c2b525c722a into af49bad5270988d533ebb9e50f925274c13d67b7
+2026-11-05T09:17:58.2926041Z 5adb91b46c424c84ca4d4e8d5c15dda5e5ec259f
+2026-11-05T09:18:46.1787231Z $ go version
+2026-11-05T09:18:46.1824486Z [exit 0]
+2026-11-05T09:18:46.1860004Z $ rustc --version
+2026-11-05T09:18:46.1988962Z [exit 0]
+2026-11-05T09:18:46.2023813Z $ cargo --version
+2026-11-05T09:18:46.2129231Z [exit 0]
+2026-11-05T09:18:46.2190784Z [exit 0]
+2026-11-05T09:18:46.2226863Z $ go env GOOS GOARCH GOARM CGO_ENABLED GOTOOLCHAIN GOWORK
+2026-11-05T09:18:46.2266462Z [exit 0]
+2026-11-05T09:18:46.2302705Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+2026-11-05T09:18:54.2417205Z [exit 0]
+2026-11-05T09:18:54.2451919Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+2026-11-05T09:18:54.4352497Z [exit 0]
+2026-11-05T09:18:54.4386173Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/ ./...
+2026-11-05T09:18:54.5721144Z [exit 0]
+2026-11-05T09:18:54.5755815Z $ cargo build --release --locked --target armv7-unknown-linux-gnueabihf
+2026-11-05T09:19:02.7256534Z     Finished `release` profile [optimized] target(s) in 8.14s
+2026-11-05T09:19:02.7373782Z [exit 0]
+2026-11-05T09:19:02.7408690Z $ cp target/armv7-unknown-linux-gnueabihf/release/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/
+2026-11-05T09:19:02.7435459Z [exit 0]
+2026-11-05T09:19:02.7471731Z $ file /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/control /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-relay
+2026-11-05T09:19:02.9541896Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/control:            ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=gCbC8yzrPLXZeYCmtp1i/M_a18UZ8OIC0oBwxZitG/ThIAV9nEpzvKTBDdEZPC/h3ENjEZFG6jOiPQM4vIe, with debug_info, not stripped
+2026-11-05T09:19:02.9544101Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge:       ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=_eA_aDduBJFKdoc6-g6q/mF88JTaJ50NXEE6sbEQg/gBumV7M0zFYf_N_28Pk9/yfyW7RwIvPQe0KExkNTj, with debug_info, not stripped
+2026-11-05T09:19:02.9546416Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-agent: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=8b3b3a42d9d35d33d1a6a12c16bb9269260f0c2d, for GNU/Linux 3.2.0, stripped
+2026-11-05T09:19:02.9548283Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-armv7/bin/devicebridge-relay: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=ca8YxQt9nYCtL-95JOw3/Mm2DqSVv5XSNGKMKjig0/E30I4hmzfZLfc-Pjx0uv/-qYoKClWpFYdSphtMubU, with debug_info, not stripped
+2026-11-05T09:19:02.9560762Z [exit 0]
+2026-11-05T09:19:03.0888285Z [exit 0]
+2026-11-05T09:19:04.8895862Z SHA256 digest of uploaded artifact zip is e26d2f2cd7dceea9cd85494095be04950bcdcb2dafcfe42e40d4bebbaaf03942
+
+## arm64
+2026-11-05T09:17:54.9336617Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-05T09:17:56.4281242Z HEAD is now at 5adb91b Merge 5a327b1e40efc74d9b7e3231e2b42c2b525c722a into af49bad5270988d533ebb9e50f925274c13d67b7
+2026-11-05T09:17:56.4358274Z 5adb91b46c424c84ca4d4e8d5c15dda5e5ec259f
+2026-11-05T09:18:35.1444149Z $ go version
+2026-11-05T09:18:35.1487601Z [exit 0]
+2026-11-05T09:18:35.1526984Z $ rustc --version
+2026-11-05T09:18:35.1671038Z [exit 0]
+2026-11-05T09:18:35.1710622Z $ cargo --version
+2026-11-05T09:18:35.1817976Z [exit 0]
+2026-11-05T09:18:35.1886105Z [exit 0]
+2026-11-05T09:18:35.1927557Z $ go env GOOS GOARCH GOARM CGO_ENABLED GOTOOLCHAIN GOWORK
+2026-11-05T09:18:35.1972877Z [exit 0]
+2026-11-05T09:18:35.2016525Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+2026-11-05T09:18:45.0188859Z [exit 0]
+2026-11-05T09:18:45.0230912Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+2026-11-05T09:18:45.2671114Z [exit 0]
+2026-11-05T09:18:45.2712136Z $ go build -trimpath -o /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/ ./...
+2026-11-05T09:18:45.4385295Z [exit 0]
+2026-11-05T09:18:45.4426110Z $ cargo build --release --locked --target aarch64-unknown-linux-gnu
+2026-11-05T09:18:54.0684245Z     Finished `release` profile [optimized] target(s) in 8.61s
+2026-11-05T09:18:54.0805324Z [exit 0]
+2026-11-05T09:18:54.0847671Z $ cp target/aarch64-unknown-linux-gnu/release/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/
+2026-11-05T09:18:54.0878811Z [exit 0]
+2026-11-05T09:18:54.0921570Z $ file /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/control /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay
+2026-11-05T09:18:54.1588369Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/control:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=qOKSufe3hK-5xk7E57EP/VWgkydx-pXZB_vVGlTYo/PokKiSHviYYTn_bg9yWt/tRviTh0IHo5lmawPIQ2x, with debug_info, not stripped
+2026-11-05T09:18:54.1590872Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=0ae37cvWL-zESCJ40On3/9JmGEgY_y7bf7UlPZ9uv/5a8aZJAshnVmd_UAd062/T8Qg0HDpkamuJQ8tSXb9, with debug_info, not stripped
+2026-11-05T09:18:54.1593592Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-agent: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f4fd67980cc63ad33beb15c5590cd4b72d8bf701, for GNU/Linux 3.7.0, stripped
+2026-11-05T09:18:54.1596917Z /home/runner/work/DeviceBridge/DeviceBridge/dist/ci/arm-arm64/bin/devicebridge-relay: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=m68cYaVI_vqfTyw4oXkg/ap-3Xo2FWaScGmRZ2Rxh/4hms9dbOSwOY4jC579Ly/vXfkUez0IHbKTIIC5mSO, with debug_info, not stripped
+2026-11-05T09:18:54.1611105Z [exit 0]
+2026-11-05T09:18:54.1786014Z [exit 0]
+2026-11-05T09:18:55.3277269Z SHA256 digest of uploaded artifact zip is 80c9addf9d969787fcab4dc9d4c87234a3eb2f3ee3b279012274fd482c098db5

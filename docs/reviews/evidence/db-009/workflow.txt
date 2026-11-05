@@ -1,0 +1,17 @@
+$ bash ci/check.sh workflow
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 -shellcheck= .github/workflows/ci.yml
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ bash -n ci/check.sh ci/security.sh tests/smoke.sh
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge]
+$ shellcheck ci/check.sh ci/security.sh tests/smoke.sh
+ci/check.sh: line 53: shellcheck: command not found
+[exit 127]
+
+[exit 127]
