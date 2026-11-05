@@ -1,0 +1,134 @@
+UX-04: base cdf5671a1316687b1b58fe75ba6510b6e0deb974.
+Initial VM diagnostic exited 1 because the DOM stub lazily creates queried nodes; corrected the temporary diagnostic to query the reconciliation select before assigning its value. This did not establish a prototype failure.
+
+
+Exact temporary diagnostic source: /tmp/devicebridge-ux04-smoke.cjs
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const source = fs.readFileSync('docs/ux/prototype/prototype.js', 'utf8');
+function environment(variant = 'A', origin = 'http://127.0.0.1:8765/') {
+  const listeners = {}, nodes = {};
+  const node = id => nodes[id] ||= { innerHTML: '', textContent: '', hidden: true, open: false, value: 'Still unknown', focus() {}, setAttribute() {}, append(child) { this.innerHTML += child.textContent; }, addEventListener(type, fn) { this['on-' + type] = fn; }, showModal() { this.open = true; }, close() { this.open = false; this['on-close']?.(); }, querySelector() { return node('dialog-button'); } };
+  const context = vm.createContext({ URL, URLSearchParams, location: new URL(`${origin}?variant=${variant}&screen=devices`), history: { replaceState(_a, _b, next) { context.location = new URL(next); } }, document: { querySelector: node, getElementById: node, createElement: () => node('created'), addEventListener(type, fn) { listeners[type] = fn; } } });
+  vm.runInContext(source, context);
+  return { run: code => vm.runInContext(code, context), nodes, listeners, html: () => nodes['#app'].innerHTML,
+    click(action, extra = {}) { listeners.click({ target: { closest() { return { dataset: { action, ...extra } }; } } }); },
+    input(key, value) { listeners.input({ target: { dataset: { draft: key }, value } }); },
+    result(value) { listeners.change({ target: { id: 'create-result', value } }); },
+    submit() { listeners.submit({ target: { id: 'create-device' }, preventDefault() {} }); }
+  };
+}
+let rendered = 0;
+for (const variant of ['A', 'B', 'C']) {
+  const e = environment(variant);
+  for (const screen of ['overview', 'devices', 'add', 'detail', 'onboarding', 'sessions', 'users', 'audit', 'signin']) {
+    for (const scenario of ['ready', 'loading', 'empty', 'error', 'expired', 'forbidden', 'stale']) {
+      e.run(`Object.assign(state, ${JSON.stringify({screen,scenario})});render()`);
+      assert(!e.html().includes('undefined'));
+      assert(e.html().includes('Design review only'));
+      rendered++;
+    }
+  }
+  e.click('new-device');
+  assert(e.html().includes('Device name (required)'));
+  e.input('name', '   '); e.submit();
+  assert(e.html().includes('spaces alone'));
+  assert.equal(e.run('devices.length'), 6);
+  e.input('name', 'Synthetic new pump');
+  for (const result of ['Rejected', 'Forbidden', 'Expired']) {
+    e.result(result); e.submit(); assert.equal(e.run('devices.length'), 6);
+    assert(e.html().includes('No record was added') || e.html().includes('No record was added'.toLowerCase()) || e.html().includes('No record was added;'));
+  }
+  e.result('Created'); e.submit();
+  assert.equal(e.run('devices.length'), 7);
+  assert(e.html().includes('Synthetic new pump'));
+  assert(e.html().includes('Not enrolled'));
+  assert(e.html().includes('No observation available'));
+  e.click('navigate', {screen:'devices'});
+  assert(e.html().includes('Page 3 of 3')); assert(e.html().includes('Synthetic new pump'));
+  e.click('new-device'); e.input('name','Discard me'); e.click('cancel-create');
+  assert.equal(e.run('devices.length'), 7);
+  e.click('new-device'); e.input('name','Uncertain pump'); e.result('Unknown'); e.submit();
+  assert(e.html().includes('Check the original request')); assert(e.html().includes('type="submit" class="primary" disabled'));
+  e.submit(); assert.equal(e.run('devices.length'), 7);
+  e.click('variant',{step:'1'}); assert.equal(e.run('state.draft.name'),'Uncertain pump');
+  e.click('navigate',{screen:'devices'}); e.click('new-device');
+  assert(e.run('Boolean(state.draft.pending)'));
+  assert(e.html().includes('Check the original request'));
+  e.run("document.querySelector('#reconcile-result').value='Still unknown'"); e.click('reconcile-create'); assert.equal(e.run('devices.length'),7);
+  e.run("document.querySelector('#reconcile-result').value='Created'"); e.click('reconcile-create'); assert.equal(e.run('devices.length'),8);
+  assert(e.html().includes('Uncertain pump'));
+  e.click('new-device'); e.input('name','Retry pump'); e.result('Unknown'); e.submit();
+  e.run("document.querySelector('#reconcile-result').value='Not created'"); e.click('reconcile-create');
+  assert.equal(e.run('devices.length'),8); assert(!e.run('state.draft.pending')); e.submit();
+  assert.equal(e.run('devices.length'),9);
+  e.click('new-empty'); assert.equal(e.run('devices.length'),0); e.click('cancel-create'); assert(e.html().includes('No devices yet'));
+  for (const screen of ['overview','detail','onboarding','sessions']) { e.click('navigate',{screen}); assert(!e.html().includes('undefined')); }
+  e.click('new-device');
+  const hostile = '<img src=x onerror=alert(1)>';
+  e.input('name',hostile); e.input('site',hostile); e.input('model',hostile); e.submit();
+  assert.equal(e.run('devices.length'),1); assert(e.html().includes('&lt;img')); assert(!e.html().includes('<img src=x'));
+  e.click('navigate',{screen:'devices'}); assert(!e.html().includes('<img src=x'));
+  e.listeners.keydown({key:'ArrowLeft',target:{closest(){return {}; }},preventDefault(){throw Error('Input arrow intercepted');}});
+  console.log(`PASS ${variant}: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).`);
+}
+console.log(`PASS: ${rendered} layout/screen/scenario render combinations (VM stub).`);
+assert(environment('A','https://example.org/').nodes['#app'].textContent.includes('Local throwaway preview only'));
+console.log('PASS: nonlocal origin withholds prototype. LIMIT: no real browser/DOM, native validation, focus, CSP, responsive, accessibility or human-flow acceptance.');
+
+Exact temporary diagnostic source: /tmp/devicebridge-ux04-validate.py
+from pathlib import Path
+import re
+import subprocess
+base = 'cdf5671a1316687b1b58fe75ba6510b6e0deb974'
+files = ['docs/ROADMAP.md', 'docs/ux/UX-01.md', 'docs/ux/UX-02.md', 'docs/ux/UX-03.md', 'docs/ux/UX-04.md']
+count = 0
+for name in files:
+ doc = Path(name)
+ for target in re.findall(r'\]\(([^)]+)\)',doc.read_text()):
+  if '://' in target or target.startswith('#'): continue
+  path = target.split('#',1)[0].split('?',1)[0]
+  assert (doc.parent / path).is_file(), (name, target)
+  count += 1
+print(f'PASS: {count} local Markdown file targets; external URLs/fragments not checked.')
+changed = subprocess.check_output(['git','diff',base,'--name-only'],text=True).splitlines()
+allowed = set(files + ['docs/ux/prototype/prototype.js','docs/ux/prototype/prototype.css','docs/ux/prototype/index.html','docs/ux/evidence/ux-04/validation.txt','docs/ux/evidence/ux-04/secrets.txt'])
+assert set(changed) <= allowed, changed
+assert len(changed) == len(allowed), (changed, sorted(allowed-set(changed)))
+print(f'PASS: all {len(changed)} changes scoped to UX-04 documents/prototype/evidence.')
+subprocess.run(['git','diff','--check',base],check=True)
+subprocess.run(['git','diff','--exit-code',base,'--','agent','server','cli','deploy','ci','security','tests','packaging','docs/adr','docs/M01_EXECUTION.md','docs/M02_EXECUTION.md'],check=True)
+print('PASS: whitespace; application, API/security contracts and execution plans unchanged.')
+source = Path('docs/ux/prototype/prototype.js').read_text()
+for forbidden in ['fetch(', 'XMLHttpRequest', 'WebSocket', 'localStorage', 'sessionStorage', 'document.cookie']:
+ assert forbidden not in source, forbidden
+html=Path('docs/ux/prototype/index.html').read_text()
+assert "connect-src 'none'" in html and "form-action 'none'" in html
+print('PASS: static network/storage exclusions and unchanged CSP restrictions; not browser enforcement evidence.')
+
+$ node --version
+v24.18.0
+exit=0
+
+$ python3 --version
+Python 3.14.5
+exit=0
+
+$ node --check docs/ux/prototype/prototype.js
+exit=0
+
+$ node /tmp/devicebridge-ux04-smoke.cjs
+PASS A: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS B: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS C: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS: 189 layout/screen/scenario render combinations (VM stub).
+PASS: nonlocal origin withholds prototype. LIMIT: no real browser/DOM, native validation, focus, CSP, responsive, accessibility or human-flow acceptance.
+exit=0
+
+$ python3 /tmp/devicebridge-ux04-validate.py
+PASS: 47 local Markdown file targets; external URLs/fragments not checked.
+PASS: all 10 changes scoped to UX-04 documents/prototype/evidence.
+PASS: whitespace; application, API/security contracts and execution plans unchanged.
+PASS: static network/storage exclusions and unchanged CSP restrictions; not browser enforcement evidence.
+exit=0

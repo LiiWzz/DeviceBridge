@@ -1,12 +1,14 @@
 /* Throwaway UX-02. Question: fleet navigation, attention-first board, or device workbench?
  * Three structural variants on this local page via ?variant=A/B/C. No production route.
+ * UX-04 question: can an operator create a device from scratch, then enroll later?
+ * The same add-device flow runs inside all three existing layouts.
  * All mutations affect memory only. No real commands, identities, credentials or network.
  */
 'use strict';
 const localPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 const app = document.querySelector('#app');
 const variants = { A: 'Fleet sidebar', B: 'Operations board', C: 'Device workbench' };
-const screens = { overview: 'Overview', devices: 'Devices', detail: 'Device detail', onboarding: 'Onboarding', sessions: 'Sessions', users: 'Users & permissions', audit: 'Audit history', signin: 'Sign-in' };
+const screens = { overview: 'Overview', devices: 'Devices', add: 'Add device', detail: 'Device detail', onboarding: 'Onboarding', sessions: 'Sessions', users: 'Users & permissions', audit: 'Audit history', signin: 'Sign-in' };
 const scenarios = ['ready', 'loading', 'empty', 'error', 'expired', 'forbidden', 'stale'];
 const devices = [
   { id: 'demo-001', name: 'North pump station', site: 'North · synthetic', status: 'online', seen: '05 Nov 2026, 15:58 UTC', model: 'ARMv7 sample' },
@@ -22,20 +24,20 @@ const events = [
   { actor: 'Demo operator', device: 'demo-004', action: 'Access request', time: '2026-11-05', result: 'Expired' }
 ];
 const params = new URLSearchParams(location.search);
-const state = { variant: Object.hasOwn(variants, params.get('variant')) ? params.get('variant') : 'A', screen: Object.hasOwn(screens, params.get('screen')) ? params.get('screen') : 'overview', scenario: 'ready', device: 'demo-001', query: '', filter: 'all', page: 0, session: 'Denied', outcome: '', audit: { actor: '', device: '', action: '', date: '', result: '' } };
+const state = { variant: Object.hasOwn(variants, params.get('variant')) ? params.get('variant') : 'A', screen: Object.hasOwn(screens, params.get('screen')) ? params.get('screen') : 'overview', scenario: 'ready', device: 'demo-001', query: '', filter: 'all', page: 0, session: 'Denied', outcome: '', draft: { name: '', site: '', model: '', result: 'Created', message: '', pending: null }, audit: { actor: '', device: '', action: '', date: '', result: '' } };
 const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const button = (text, action, extra = '') => `<button type="button" data-action="${action}" ${extra}>${text}</button>`;
 const badge = value => `<span class="status ${esc(value)}">${esc(value[0].toUpperCase() + value.slice(1))}</span>`;
 const selectedDevice = () => devices.find(d => d.id === state.device);
 const announce = text => { document.querySelector('#announcement').textContent = text; };
 function nav() {
-  return ['overview', 'devices', 'sessions', 'users', 'audit'].map(key => button(screens[key], 'navigate', `data-screen="${key}" ${state.screen === key || key === 'devices' && ['detail', 'onboarding'].includes(state.screen) ? 'aria-current="page"' : ''}`)).join('');
+  return ['overview', 'devices', 'sessions', 'users', 'audit'].map(key => button(screens[key], 'navigate', `data-screen="${key}" ${state.screen === key || key === 'devices' && ['add', 'detail', 'onboarding'].includes(state.screen) ? 'aria-current="page"' : ''}`)).join('');
 }
 function VariantA(content) {
-  return `<div class="layout-a"><aside class="sidebar"><div class="brand"><span class="mark">D</span>DeviceBridge</div><p class="eyebrow">Fleet workspace</p><nav aria-label="Main">${nav()}</nav><p class="note">Demo workspace<br>6 synthetic devices<br><br>No live connection</p>${button('Sign-in preview', 'navigate', 'data-screen="signin"')}</aside><main id="content" tabindex="-1">${content}</main></div>`;
+  return `<div class="layout-a"><aside class="sidebar"><div class="brand"><span class="mark">D</span>DeviceBridge</div><p class="eyebrow">Fleet workspace</p><nav aria-label="Main">${nav()}</nav><p class="note">Demo workspace<br>${devices.length} synthetic devices<br><br>No live connection</p>${button('Sign-in preview', 'navigate', 'data-screen="signin"')}</aside><main id="content" tabindex="-1">${content}</main></div>`;
 }
 function VariantB(content) {
-  return `<div class="layout-b"><header class="topbar"><div class="brand"><span class="mark">D</span>DeviceBridge</div><nav aria-label="Main">${nav()}${button('Sign-in', 'navigate', 'data-screen="signin"')}</nav></header><section class="ops-intro" aria-label="Demo attention queue"><div><p class="eyebrow">Operations · synthetic snapshot</p><p class="attention">4 devices need a closer look</p><p>2 offline · 2 unknown · observations fixed at 16:00 UTC</p></div>${button('Inspect attention queue', 'attention')}</section><main id="content" tabindex="-1">${content}</main></div>`;
+  return `<div class="layout-b"><header class="topbar"><div class="brand"><span class="mark">D</span>DeviceBridge</div><nav aria-label="Main">${nav()}${button('Sign-in', 'navigate', 'data-screen="signin"')}</nav></header><section class="ops-intro" aria-label="Demo attention queue"><div><p class="eyebrow">Operations · synthetic snapshot</p><p class="attention">${devices.filter(d => d.status !== 'online').length} devices need a closer look</p><p>${devices.filter(d => d.status === 'offline').length} offline · ${devices.filter(d => d.status === 'unknown').length} unknown · synthetic observations</p></div>${button('Inspect attention queue', 'attention')}</section><main id="content" tabindex="-1">${content}</main></div>`;
 }
 function VariantC(content) {
   return `<div class="layout-c"><header class="topbar"><div class="brand"><span class="mark">D</span>DeviceBridge / Workbench</div><div class="inline">${button('Fleet overview', 'navigate', 'data-screen="overview"')}${button('Sign-in', 'navigate', 'data-screen="signin"')}</div></header><div class="workbench"><aside class="device-rail"><p class="eyebrow">Choose a device</p><div class="rail-devices">${devices.map(d => button(`${esc(d.name)}<br><small>${esc(d.id)} · ${esc(d.status)}</small>`, 'device', `data-id="${d.id}" class="${state.device === d.id ? 'selected' : ''}"`)).join('')}</div><p class="review-note">Context persists across sessions and audit views. Every record here is invented.</p></aside><main id="content" tabindex="-1"><nav class="tabs" aria-label="Workspace">${nav()}</nav><hr>${content}</main></div></div>`;
@@ -53,7 +55,7 @@ function stateContent() {
   };
   const entry = views[state.scenario];
   if (!entry) return '';
-  return `<section class="panel state-panel"><h2>${entry[0]}</h2><p>${entry[1]}</p>${button(entry[2], state.scenario === 'expired' ? 'signin' : state.scenario === 'forbidden' ? 'home' : 'ready', 'class="primary"')}</section>`;
+  return `<section class="panel state-panel"><h2>${entry[0]}</h2><p>${entry[1]}</p>${state.screen === 'devices' && state.scenario === 'empty' ? button('Add device to an empty demo inventory', 'new-empty', 'class="primary"') : ''}${button(entry[2], state.scenario === 'expired' ? 'signin' : state.scenario === 'forbidden' ? 'home' : 'ready', 'class="primary"')}</section>`;
 }
 function overview() {
   const metric = status => devices.filter(d => d.status === status).length;
@@ -68,16 +70,50 @@ function deviceList() {
   const found = devices.filter(d => `${d.name} ${d.id} ${d.site}`.toLowerCase().includes(state.query.toLowerCase()) && (state.filter === 'all' || (state.filter === 'attention' ? d.status !== 'online' : d.status === state.filter)));
   const pages = Math.max(1, Math.ceil(found.length / 3));
   state.page = Math.min(state.page, pages - 1);
-  return `<section class="panel"><div class="toolbar"><label for="search">Find a device<input id="search" type="search" placeholder="Name, ID or site" value="${esc(state.query)}"></label><label for="filter">Observation<select id="filter">${['all', 'online', 'offline', 'unknown', 'attention'].map(s => `<option ${s === state.filter ? 'selected' : ''}>${s}</option>`).join('')}</select></label>${button('Clear filters', 'clear')}</div><p class="muted">${found.length} of ${devices.length} synthetic devices · last-seen times in UTC</p>${found.length ? `<div class="table-wrap"><table><caption class="sr-only">Synthetic devices matching filters</caption><thead><tr><th>Device</th><th>Observation</th><th>Last seen</th></tr></thead><tbody>${found.slice(state.page * 3, state.page * 3 + 3).map(d => `<tr><td>${button(esc(d.name), 'device', `data-id="${d.id}"`)}<small>${d.id} · ${d.site}</small></td><td>${badge(d.status)}</td><td>${d.seen}</td></tr>`).join('')}</tbody></table></div>` : `<div class="state-panel"><h2>No matching devices</h2><p>Try another search or clear the filters. This is a successful query with no matches.</p></div>`}<div class="pagination">${button('Previous', 'page', `data-step="-1" ${state.page === 0 ? 'disabled' : ''}`)}<span>Page ${state.page + 1} of ${pages}</span>${button('Next', 'page', `data-step="1" ${state.page + 1 === pages ? 'disabled' : ''}`)}</div></section>`;
+  return `<section class="panel"><div class="inline"><h2>Device inventory</h2>${button('Add device', 'new-device', 'class="primary"')}</div><div class="toolbar"><label for="search">Find a device<input id="search" type="search" placeholder="Name, ID or site" value="${esc(state.query)}"></label><label for="filter">Observation<select id="filter">${['all', 'online', 'offline', 'unknown', 'attention'].map(s => `<option ${s === state.filter ? 'selected' : ''}>${s}</option>`).join('')}</select></label>${button('Clear filters', 'clear')}</div><p class="muted">${found.length} of ${devices.length} synthetic devices · last-seen times in UTC</p>${found.length ? `<div class="table-wrap"><table><caption class="sr-only">Synthetic devices matching filters</caption><thead><tr><th>Device</th><th>Observation</th><th>Last seen</th></tr></thead><tbody>${found.slice(state.page * 3, state.page * 3 + 3).map(d => `<tr><td>${button(esc(d.name), 'device', `data-id="${d.id}"`)}<small>${d.id} · ${esc(d.site)}</small></td><td>${badge(d.status)}</td><td>${d.seen}</td></tr>`).join('')}</tbody></table></div>` : `<div class="state-panel"><h2>${devices.length ? 'No matching devices' : 'No devices yet'}</h2><p>${devices.length ? 'Try another search or clear the filters. This is a successful query with no matches.' : 'Add your first device record, then enroll its agent separately.'}</p></div>`}<div class="pagination">${button('Previous', 'page', `data-step="-1" ${state.page === 0 ? 'disabled' : ''}`)}<span>Page ${state.page + 1} of ${pages}</span>${button('Next', 'page', `data-step="1" ${state.page + 1 === pages ? 'disabled' : ''}`)}</div></section>`;
 }
+function addDevice() {
+  const draft = state.draft;
+  const locked = draft.pending ? 'disabled' : '';
+  return `<section class="panel"><h2>Create a new device record</h2><p>Start here without an existing device. Use invented review data only. Changes disappear on reload.</p><form id="create-device"><label class="field" for="device-name">Device name (required)<input id="device-name" data-draft="name" value="${esc(draft.name)}" required maxlength="120" ${locked}></label><label class="field" for="device-site">Site (optional)<input id="device-site" data-draft="site" value="${esc(draft.site)}" maxlength="120" ${locked}></label><label class="field" for="device-model">Model (optional)<input id="device-model" data-draft="model" value="${esc(draft.model)}" maxlength="120" ${locked}></label><p class="notice">A record is separate from agent enrollment, connectivity and permission to SSH. No address, password, key or token is needed for this demo.</p><label class="field" for="create-result">Review control: simulated submission result<select id="create-result" ${locked}>${['Created', 'Rejected', 'Forbidden', 'Expired', 'Unknown'].map(result => `<option ${draft.result === result ? 'selected' : ''}>${result}</option>`).join('')}</select></label>${draft.message ? `<p class="notice" role="alert">${esc(draft.message)}</p>` : ''}<div class="toolbar"><button type="submit" class="primary" ${locked}>Create device (demo)</button>${draft.pending ? '' : button('Cancel', 'cancel-create')}</div></form>${draft.pending ? `<section aria-label="Reconcile uncertain creation"><h3>Check the original request</h3><p>Submission is locked while its outcome is unknown. This lookup is simulated; the future backend must determine the authoritative result.</p><label class="field" for="reconcile-result">Review control: lookup result<select id="reconcile-result"><option>Still unknown</option><option>Created</option><option>Not created</option></select></label>${button('Check creation result (demo)', 'reconcile-create')}</section>` : ''}</section>`;
+}
+function finishCreate(draft) {
+  const record = { id: `demo-new-${devices.length + 1}`, name: draft.name.trim(), site: draft.site.trim() || 'Not specified', model: draft.model.trim() || 'Not specified', status: 'unknown', seen: 'No observation available', enrollment: 'Not enrolled' };
+  devices.push(record);
+  state.device = record.id;
+  state.query = '';
+  state.filter = 'all';
+  state.page = Math.floor((devices.length - 1) / 3);
+  state.draft = { name: '', site: '', model: '', result: 'Created', message: '', pending: null };
+  navigate('detail');
+  state.outcome = 'Device record created in this local demo. Next: enroll its agent. No enrollment or connectivity is confirmed.';
+  render();
+  announce(state.outcome);
+}
+document.addEventListener('submit', event => {
+  if (event.target.id !== 'create-device') return;
+  event.preventDefault();
+  if (!localPreview || state.draft.pending) return;
+  const draft = state.draft;
+  if (!draft.name.trim()) { draft.message = 'Enter a device name; spaces alone are not a name.'; render(); document.querySelector('#device-name').focus(); return; }
+  if (draft.result === 'Created') finishCreate(draft);
+  else {
+    draft.message = { Rejected: 'Creation rejected in this demo. No record was added; review the details before retrying.', Forbidden: 'Creation denied in this demo. No record was added; request the required authority.', Expired: 'Session expired in this demo. No record was added; sign in again through the future approved flow.', Unknown: 'Response lost. Whether a record was created is unknown. Check the original result before retrying.' }[draft.result];
+    if (draft.result === 'Unknown') draft.pending = { name: draft.name, site: draft.site, model: draft.model };
+    render(); announce(draft.message);
+  }
+});
 function detail(compact = false) {
   const d = selectedDevice();
-  return `<section class="panel"><p class="eyebrow">Selected device · synthetic</p><h2>${esc(d.name)}</h2><dl><dt>Device ID</dt><dd>${d.id}</dd><dt>Site</dt><dd>${d.site}</dd><dt>Model</dt><dd>${d.model}</dd><dt>Observation</dt><dd>${badge(d.status)}</dd><dt>Last seen</dt><dd>${d.seen}</dd></dl><p class="notice">${d.status === 'offline' ? 'Offline example. The last observation does not establish current reachability.' : d.status === 'unknown' ? 'Unknown example. No observation is available; do not treat this as offline.' : 'Online observation is synthetic and does not authorize a connection.'}</p><div class="inline">${button('Access request preview', 'access', 'class="primary"')}${button('Onboarding guidance', 'navigate', 'data-screen="onboarding"')}${!compact ? button('Revoke access preview', 'revoke', 'class="danger"') : ''}${button('Back to device results', 'navigate', 'data-screen="devices"')}</div></section>${!compact ? `<section class="panel"><h2>Connectivity and identity</h2><p>Enrollment, identity verification and SSH access are not implemented. Native client host-key verification is required in the future approved flow. No ignore-verification shortcut is offered.</p></section>` : ''}`;
+  if (!d) return `<section class="panel"><h2>No device selected</h2>${button('Add device', 'new-device', 'class="primary"')}${button('View devices', 'navigate', 'data-screen="devices"')}</section>`;
+  return `<section class="panel"><p class="eyebrow">Selected device · synthetic</p><h2>${esc(d.name)}</h2><dl><dt>Device ID</dt><dd>${d.id}</dd><dt>Site</dt><dd>${esc(d.site)}</dd><dt>Model</dt><dd>${esc(d.model)}</dd><dt>Enrollment</dt><dd>${d.enrollment || 'Unconfirmed demo identity'}</dd><dt>Observation</dt><dd>${badge(d.status)}</dd><dt>Last seen</dt><dd>${d.seen}</dd></dl><p class="notice">${d.status === 'offline' ? 'Offline example. The last observation does not establish current reachability.' : d.status === 'unknown' ? 'Unknown example. No observation is available; do not treat this as offline.' : 'Online observation is synthetic and does not authorize a connection.'}</p><div class="inline">${d.enrollment ? '<p>Enroll the agent before requesting access. Creating this record grants no SSH permission.</p>' : button('Access request preview', 'access', 'class="primary"')}${button('Onboarding guidance', 'navigate', 'data-screen="onboarding"')}${!compact ? button('Revoke access preview', 'revoke', 'class="danger"') : ''}${button('Back to device results', 'navigate', 'data-screen="devices"')}</div></section>${!compact ? `<section class="panel"><h2>Connectivity and identity</h2>${state.outcome ? `<p role="status">${esc(state.outcome)}</p>` : ''}<p>Enrollment, identity verification and SSH access are not implemented. Native client host-key verification is required in the future approved flow. No ignore-verification shortcut is offered.</p></section>` : ''}`;
 }
 function onboarding() {
+  if (!selectedDevice()) return detail();
   return `<section class="panel"><h2>Onboard ${esc(selectedDevice().name)}</h2><ol class="steps"><li>Confirm the intended device identity and operator authority.</li><li>Follow enrollment instructions once the M02 contract is approved. No command or token is provided here.</li><li>Inspect an authoritative enrollment result separately from connectivity.</li></ol><p class="notice">Example only. A successful local health or configuration check does not establish enrollment.</p><div class="inline">${button('Preview pending enrollment', 'enroll')}${button('View device', 'navigate', 'data-screen="detail"')}</div></section>${state.outcome ? `<section class="panel" role="status"><h2>Simulated enrollment result</h2><p>${esc(state.outcome)}</p></section>` : ''}`;
 }
 function sessions() {
+  if (!selectedDevice()) return detail();
   return `<section class="panel"><h2>Access request example</h2><p>Device context: <strong>${esc(selectedDevice().name)}</strong> · ${state.device}</p><label class="field" for="request-result">Inspect simulated outcome<select id="request-result">${['Denied', 'Expired', 'Revoked', 'Unavailable', 'Handoff guidance'].map(s => `<option ${s === state.session ? 'selected' : ''}>${s}</option>`).join('')}</select></label><div class="notice" role="status">${esc({ Denied: 'Request denied. Viewing a device does not grant connection permission.', Expired: 'The example request expired. A future client must obtain fresh authorization.', Revoked: 'Access was revoked in this example. Do not reuse old credentials or silently restore identity.', Unavailable: 'Request outcome is unknown. Reconcile authoritative state before retrying.', 'Handoff guidance': 'Use the future approved native client flow with host-key verification. CLI syntax is not yet defined; no runnable command is shown.' }[state.session])}</div><p>No session is connected. Browser terminal, SSH private-key upload and session termination are outside this prototype.</p></section><section class="panel"><h2>Request history · synthetic</h2>${events.map(e => `<p>${badge(e.result.toLowerCase())} ${esc(e.device)} · ${e.time}</p>`).join('')}${button('Inspect audit examples', 'navigate', 'data-screen="audit"')}</section>`;
 }
 function users() {
@@ -95,9 +131,9 @@ function render(focus = false) {
     app.textContent = 'Local throwaway preview only. Open the HTML file or serve it on localhost. This is not a production dashboard.';
     return;
   }
-  const views = { overview, devices: deviceList, detail, onboarding, sessions, users, audit, signin };
+  const views = { overview, devices: deviceList, add: addDevice, detail, onboarding, sessions, users, audit, signin };
   const blocked = stateContent();
-  const content = `<header class="page-head"><div><p class="eyebrow">Demo workspace / ${esc(screens[state.screen])}</p><h1>${esc(screens[state.screen])}</h1><p class="muted">Synthetic snapshot · 05 Nov 2026, 16:00 UTC</p></div><span class="status">Design review only</span></header>${scenarioControls()}${state.scenario === 'stale' ? '<p class="notice">Stale data example: last refresh failed. These historical observations do not establish current reachability.</p>' : ''}${blocked || views[state.screen]()}<details class="state-readout"><summary>Prototype state (for review)</summary><pre>${esc(JSON.stringify(state, null, 2))}</pre></details>`;
+  const content = `<header class="page-head"><div><p class="eyebrow">Demo workspace / ${esc(screens[state.screen])}</p><h1>${esc(screens[state.screen])}</h1><p class="muted">Synthetic snapshot · 05 Nov 2026, 16:00 UTC</p></div><span class="status">Design review only</span></header>${scenarioControls()}${state.scenario === 'stale' ? '<p class="notice">Stale data example: last refresh failed. These historical observations do not establish current reachability.</p>' : ''}${blocked || views[state.screen]()}<details class="state-readout"><summary>Prototype state (for review)</summary><pre>${esc(JSON.stringify({ ...state, inventory: devices }, null, 2))}</pre></details>`;
   app.innerHTML = ({ A: VariantA, B: VariantB, C: VariantC }[state.variant])(content);
   const switcher = document.querySelector('#switcher');
   switcher.hidden = false;
@@ -130,7 +166,25 @@ document.addEventListener('click', event => {
   const control = event.target.closest('button[data-action]');
   if (!control || !localPreview) return;
   const action = control.dataset.action;
-  if (action === 'navigate') navigate(control.dataset.screen);
+  if (action === 'new-device' || action === 'new-empty') {
+    if (state.draft.pending) { navigate('add'); return; }
+    if (action === 'new-empty') { devices.length = 0; state.device = ''; state.query = ''; state.filter = 'all'; state.page = 0; }
+    state.draft = { name: '', site: '', model: '', result: 'Created', message: '', pending: null };
+    navigate('add');
+    document.querySelector('#device-name').focus();
+  }
+  else if (action === 'cancel-create') { state.draft = { name: '', site: '', model: '', result: 'Created', message: '', pending: null }; navigate('devices'); document.querySelector('[data-action="new-device"]').focus(); }
+  else if (action === 'reconcile-create') {
+    if (!state.draft.pending) return;
+    const result = document.querySelector('#reconcile-result').value;
+    if (result === 'Created') finishCreate(state.draft.pending);
+    else {
+      if (result === 'Not created') { state.draft.pending = null; state.draft.result = 'Created'; }
+      state.draft.message = result === 'Not created' ? 'Simulated lookup confirms no record was created. You can edit and retry.' : 'Outcome is still unknown. Do not submit again; check the authoritative result later.';
+      render(); announce(state.draft.message);
+    }
+  }
+  else if (action === 'navigate') navigate(control.dataset.screen);
   else if (action === 'device') { state.device = control.dataset.id; navigate('detail'); }
   else if (action === 'variant') { const keys = Object.keys(variants); state.variant = keys[(keys.indexOf(state.variant) + Number(control.dataset.step) + keys.length) % keys.length]; syncURL(); render(true); }
   else if (action === 'status' || action === 'attention') { state.filter = control.dataset.status || 'attention'; state.query = ''; state.page = 0; navigate('devices'); }
@@ -154,12 +208,14 @@ document.addEventListener('click', event => {
   } else if (action === 'clear-audit') { Object.keys(state.audit).forEach(k => state.audit[k] = ''); render(); document.querySelector('#audit-actor').focus(); }
 });
 document.addEventListener('change', event => {
-  if (event.target.id === 'scenario') { state.scenario = event.target.value; render(); document.querySelector('#scenario').focus(); announce(`Synthetic ${state.scenario} state`); }
+  if (event.target.id === 'create-result' && !state.draft.pending) state.draft.result = event.target.value;
+  else if (event.target.id === 'scenario') { state.scenario = event.target.value; render(); document.querySelector('#scenario').focus(); announce(`Synthetic ${state.scenario} state`); }
   else if (event.target.id === 'filter') { state.filter = event.target.value; state.page = 0; render(); document.querySelector('#filter').focus(); }
   else if (event.target.id === 'request-result') { state.session = event.target.value; render(); document.querySelector('#request-result').focus(); }
 });
 document.addEventListener('input', event => {
   const target = event.target;
+  if (target.dataset.draft && !state.draft.pending) { state.draft[target.dataset.draft] = target.value; return; }
   if (target.id !== 'search' && !target.dataset.audit) return;
   const position = target.selectionStart;
   if (target.id === 'search') { state.query = target.value; state.page = 0; }

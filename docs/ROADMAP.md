@@ -25,6 +25,12 @@ into dependency-ordered planning packages and approval/evidence gates. It is
 documentation for review; it neither closes M01 acceptance nor authorizes M02
 implementation or selects web/security contracts.
 
+The proposed [UX-04 Add device flow](ux/UX-04.md), tracked in
+[#37](https://github.com/LiiWzz/DeviceBridge/issues/37), starts with creating a
+new record from Devices or empty inventory, then hands off to agent onboarding.
+Its local synthetic prototype and field choices await detailed human review;
+backend creation, enrollment and authorization contracts remain gated.
+
 ## Status and boundaries
 
 The repository currently provides M01 foundations; enrollment, working tunnels,
