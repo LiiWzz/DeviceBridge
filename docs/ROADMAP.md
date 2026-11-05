@@ -3,8 +3,12 @@
 Planning issue: [DB-012 / #19](https://github.com/LiiWzz/DeviceBridge/issues/19).
 
 UX-01 proposal: [operator journeys and information architecture](ux/UX-01.md),
-tracked in [#27](https://github.com/LiiWzz/DeviceBridge/issues/27). Human review is
-pending; this link does not approve UX-02 or production integration.
+tracked in [#27](https://github.com/LiiWzz/DeviceBridge/issues/27). The owner
+approved its journeys, inventory and capability separation as inputs to UX-02
+on 2026-11-05 in the project conversation; see its limited review record.
+The [UX-02 prototype packet](ux/UX-02.md), tracked in
+[#29](https://github.com/LiiWzz/DeviceBridge/issues/29), awaits human flow review
+and variant selection. Production integration remains gated separately.
 
 ## Status and boundaries
 
