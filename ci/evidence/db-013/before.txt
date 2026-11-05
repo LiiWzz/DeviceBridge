@@ -1,0 +1,19 @@
+$ docker run --rm --network none -v "$PWD:/src:ro" -w /src koalaman/shellcheck:v0.10.0 deploy/smoke.sh
+
+In deploy/smoke.sh line 6:
+export POSTGRES_PORT=${POSTGRES_PORT:-55435}
+                     ^---------------------^ SC2086 (info): Double quote to prevent globbing and word splitting.
+
+Did you mean:
+export POSTGRES_PORT="${POSTGRES_PORT:-55435}"
+
+
+In deploy/smoke.sh line 7:
+source_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+                    ^-- SC1007 (warning): Remove space after = if trying to assign a value (for empty string, use var='' ... ).
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1007 -- Remove space after = if trying to...
+  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
+
+[exit 1]

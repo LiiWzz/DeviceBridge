@@ -3,8 +3,8 @@
 set -eu
 : "${POSTGRES_PASSWORD:?Provide a unique disposable test password}"
 export POSTGRES_PASSWORD
-export POSTGRES_PORT=${POSTGRES_PORT:-55435}
-source_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+export POSTGRES_PORT="${POSTGRES_PORT:-55435}"
+source_dir=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
 test_dir=$(mktemp -d)
 project=db005-smoke-$$
 cp "$source_dir/compose.yaml" "$source_dir/migrate.sh" "$test_dir/"

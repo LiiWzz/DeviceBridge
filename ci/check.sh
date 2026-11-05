@@ -85,8 +85,11 @@ case "$mode" in
   workflow)
     run go version
     run go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 -shellcheck= .github/workflows/ci.yml
-    run bash -n ci/check.sh ci/security.sh tests/smoke.sh
-    run shellcheck ci/check.sh ci/security.sh tests/smoke.sh
+    bash_scripts=(ci/check.sh ci/security.sh tests/smoke.sh)
+    posix_scripts=(deploy/smoke.sh deploy/migrate.sh packaging/install.sh packaging/smoke-preview.sh)
+    for script in "${bash_scripts[@]}"; do run bash -n "$script"; done
+    for script in "${posix_scripts[@]}"; do run sh -n "$script"; done
+    run shellcheck "${bash_scripts[@]}" "${posix_scripts[@]}"
     run python3 ci/test_check.py
     ;;
   go)

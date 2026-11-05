@@ -8,7 +8,7 @@ silently skip a module. No deployment, release, PR approval or merge is performe
 | Job | Checks and outputs |
 | --- | --- |
 | Linux integration smoke | native binaries, black-box probes and signal shutdown, isolated PostgreSQL Compose lifecycle; [reproduction and limits](../tests/README.md) |
-| Workflow and shell lint | actionlint 1.7.7, Bash syntax, ShellCheck, four CI failure-gate tests |
+| Workflow and shell lint | actionlint 1.7.7, per-file Bash/POSIX shell syntax, ShellCheck, four CI failure-gate tests |
 | Go, one job per module | formatting, vet, uncached verbose tests, race tests, native executable |
 | Rust agent | rustfmt, Clippy with warnings denied, locked tests and release build |
 | Linux cross-build, ARMv7 and AArch64 | three Go applications with CGO disabled, Rust agent with GNU cross-linkers, ELF details and checksums |
@@ -23,6 +23,12 @@ not added to device dependencies or ARM application bundles. Compose integration
 Run from the repository root (the script also accepts invocation from another
 directory). Build-host requirements: Bash, Git, Go, Rust/rustup, Python 3 for CI
 gate tests, ShellCheck, `file` for ARM inspection, and SHA-256 utilities.
+
+Workflow lint checks `ci/check.sh`, `ci/security.sh` and `tests/smoke.sh` with
+Bash syntax, and `deploy/smoke.sh`, `deploy/migrate.sh`, `packaging/install.sh`
+and `packaging/smoke-preview.sh` with POSIX shell syntax. ShellCheck uses each
+file's shebang across all seven scripts. Syntax checks run once per file so
+every script is parsed. Historical evidence scripts are outside this lint scope.
 
 ```sh
 rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy
@@ -118,6 +124,8 @@ databases or deployed services are changed. Human Tech Lead review and manual
 merge into `develop` remain mandatory.
 
 See [EVIDENCE.md](EVIDENCE.md) for executed results and host/runner limitations.
+The [DB-013 maintenance evidence](DB-013.md) records the later deployment/package
+lint expansion and its separate validation scope.
 # Security baseline (DB-007)
 
 The `security` job scans full fetched Git history with Gitleaks v8.24.3 and
