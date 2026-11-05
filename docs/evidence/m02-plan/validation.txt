@@ -1,0 +1,17 @@
+$ python3 --version
+Python 3.14.5
+exit=0
+
+$ git rev-parse HEAD
+8d258fdacad19a896026dccaf8e67a38218dbdb7
+exit=0
+
+$ python3 docs/evidence/m02-plan/validate.py
+PASS: 34 local Markdown targets exist; external URLs/fragments not checked.
+PASS: 5 changed/new files restricted to issue #35 documentation/evidence.
+PASS: git diff --check 8d258fdacad19a896026dccaf8e67a38218dbdb7
+LIMIT: no application, browser, cross-build, physical ARM or security acceptance.
+exit=0
+
+$ git diff --exit-code 8d258fdacad19a896026dccaf8e67a38218dbdb7 -- agent server cli deploy ci security tests packaging docs/adr docs/M01_EXECUTION.md
+exit=0

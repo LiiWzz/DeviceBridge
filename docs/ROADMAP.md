@@ -19,6 +19,12 @@ to dashboard needs and records contract prerequisites. This discovery slice
 does not satisfy WEB-01's agreed M02 identity/authorization dependency or select
 API/security contracts. UX-03 review and all implementation gates remain open.
 
+The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
+[#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
+into dependency-ordered planning packages and approval/evidence gates. It is
+documentation for review; it neither closes M01 acceptance nor authorizes M02
+implementation or selects web/security contracts.
+
 ## Status and boundaries
 
 The repository currently provides M01 foundations; enrollment, working tunnels,
@@ -48,7 +54,7 @@ manual merge.
 | M02 — Secure connectivity | Planned device identity/enrollment, session authorization, outbound TLS relay and SSH-native CLI access behind NAT/CGNAT | Separate execution plan and approved contracts; demonstrated allow/deny/expiry behavior, host-key verification, reconnect handling and real ARM resource evidence; independent review and Tech Lead acceptance |
 | M03 — Management dashboard | UX/UI design, authenticated web management, fleet/device visibility, session management, users/permissions and audit history | UX/UI approval, accepted M02 prerequisites, approved web/API/security contracts, dashboard functional/security/accessibility evidence and Tech Lead acceptance |
 
-M02 scope above is a planning baseline, not a replacement execution contract.
+M02 scope above and the linked execution plan are proposals for human review.
 M02 implementation follows M01 acceptance. M03 discovery, wireframes and a
 clearly labeled prototype using synthetic data may start earlier. Production
 integration and rollout wait for M01/M02 acceptance and the web contract gate.
