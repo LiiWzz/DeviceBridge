@@ -1,0 +1,8 @@
+$ (cd server/relay && go test ./cmd/... -run TestMalformedArgumentsDoNotLeakValues -count=1 -v)
+=== RUN   TestMalformedArgumentsDoNotLeakValues
+    main_test.go:104: sensitive input leaked into diagnostics
+--- FAIL: TestMalformedArgumentsDoNotLeakValues (0.00s)
+FAIL
+FAIL	github.com/LiiWzz/DeviceBridge/server/relay/cmd/devicebridge-relay	0.409s
+FAIL
+[exit 1]

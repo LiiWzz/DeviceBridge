@@ -43,13 +43,21 @@ func run(args []string, stdout, stderr io.Writer) int {
 	case "check":
 		cfg := config.Default()
 		flags := flag.NewFlagSet("check", flag.ContinueOnError)
-		flags.SetOutput(stderr)
+		// flag's default diagnostics echo untrusted values and option names.
+		flags.SetOutput(io.Discard)
+		flags.Usage = func() {
+			fmt.Fprintln(stderr, "Usage of check:")
+			flags.SetOutput(stderr)
+			flags.PrintDefaults()
+			flags.SetOutput(io.Discard)
+		}
 		flags.StringVar(&cfg.RelayURL, "relay-url", cfg.RelayURL, "future relay HTTPS endpoint; never contacted")
 		flags.DurationVar(&cfg.Timeout, "timeout", cfg.Timeout, "reserved future request timeout (0 < timeout <= 1m)")
 		if err := flags.Parse(args[1:]); err != nil {
 			if errors.Is(err, flag.ErrHelp) {
 				return 0
 			}
+			fmt.Fprintln(stderr, "invalid value or flag; use --help")
 			return 2
 		}
 		if flags.NArg() != 0 {

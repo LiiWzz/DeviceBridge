@@ -1,0 +1,191 @@
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go env GOOS GOARCH CGO_ENABLED GOTOOLCHAIN GOWORK
+darwin
+arm64
+1
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ check_go_format
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go vet ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go test -count=1 -v ./...
+?   	github.com/LiiWzz/DeviceBridge/server/control/cmd/control	[no test files]
+=== RUN   TestConfigDefaultsAndOverrides
+--- PASS: TestConfigDefaultsAndOverrides (0.00s)
+=== RUN   TestRejectMalformedConfig
+=== RUN   TestRejectMalformedConfig/addr=
+=== RUN   TestRejectMalformedConfig/addr=:8080
+=== RUN   TestRejectMalformedConfig/addr=0.0.0.0:8080
+=== RUN   TestRejectMalformedConfig/addr=[::]:8080
+=== RUN   TestRejectMalformedConfig/addr=192.0.2.1:8080
+=== RUN   TestRejectMalformedConfig/addr=localhost:8080
+=== RUN   TestRejectMalformedConfig/addr=[::1%lo0]:8080
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:0
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:80
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:65536
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:http
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:+8080
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:08080
+=== RUN   TestRejectMalformedConfig/addr=127.0.0.1:8080_
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=secret-do-not-log
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=0
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=-1s
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=1ns
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=301s
+=== RUN   TestRejectMalformedConfig/READ_HEADER_TIMEOUT=999999999999999999h
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=secret-do-not-log
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=0
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=-1s
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=1ns
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=301s
+=== RUN   TestRejectMalformedConfig/READ_TIMEOUT=999999999999999999h
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=secret-do-not-log
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=0
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=-1s
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=1ns
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=301s
+=== RUN   TestRejectMalformedConfig/WRITE_TIMEOUT=999999999999999999h
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=secret-do-not-log
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=0
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=-1s
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=1ns
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=301s
+=== RUN   TestRejectMalformedConfig/IDLE_TIMEOUT=999999999999999999h
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=secret-do-not-log
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=0
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=-1s
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=1ns
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=301s
+=== RUN   TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=999999999999999999h
+--- PASS: TestRejectMalformedConfig (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr= (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=0.0.0.0:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=[::]:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=192.0.2.1:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=localhost:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=[::1%lo0]:8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:80 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:65536 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:http (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:+8080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:08080 (0.00s)
+    --- PASS: TestRejectMalformedConfig/addr=127.0.0.1:8080_ (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT= (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=secret-do-not-log (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=-1s (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=1ns (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=301s (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_HEADER_TIMEOUT=999999999999999999h (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT= (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=secret-do-not-log (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=-1s (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=1ns (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=301s (0.00s)
+    --- PASS: TestRejectMalformedConfig/READ_TIMEOUT=999999999999999999h (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT= (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=secret-do-not-log (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=-1s (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=1ns (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=301s (0.00s)
+    --- PASS: TestRejectMalformedConfig/WRITE_TIMEOUT=999999999999999999h (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT= (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=secret-do-not-log (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=-1s (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=1ns (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=301s (0.00s)
+    --- PASS: TestRejectMalformedConfig/IDLE_TIMEOUT=999999999999999999h (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT= (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=secret-do-not-log (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=0 (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=-1s (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=1ns (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=301s (0.00s)
+    --- PASS: TestRejectMalformedConfig/SHUTDOWN_TIMEOUT=999999999999999999h (0.00s)
+=== RUN   TestProbeRoutes
+=== RUN   TestProbeRoutes/GET/healthz{"status":"ok"}_
+=== RUN   TestProbeRoutes/HEAD/healthz
+=== RUN   TestProbeRoutes/GET/readyz{"status":"ready"}_
+=== RUN   TestProbeRoutes/GET/readyz{"status":"shutting_down"}_
+=== RUN   TestProbeRoutes/HEAD/readyz
+=== RUN   TestProbeRoutes/POST/healthz{"error":"method_not_allowed"}_
+=== RUN   TestProbeRoutes/DELETE/readyz{"error":"method_not_allowed"}_
+=== RUN   TestProbeRoutes/OPTIONS/healthz{"error":"method_not_allowed"}_
+=== RUN   TestProbeRoutes/GET/{"error":"not_found"}_
+=== RUN   TestProbeRoutes/GET/debug/pprof/{"error":"not_found"}_
+=== RUN   TestProbeRoutes/GET/healthz/{"error":"not_found"}_
+=== RUN   TestProbeRoutes/GET/x/../healthz{"error":"not_found"}_
+--- PASS: TestProbeRoutes (0.00s)
+    --- PASS: TestProbeRoutes/GET/healthz{"status":"ok"}_ (0.00s)
+    --- PASS: TestProbeRoutes/HEAD/healthz (0.00s)
+    --- PASS: TestProbeRoutes/GET/readyz{"status":"ready"}_ (0.00s)
+    --- PASS: TestProbeRoutes/GET/readyz{"status":"shutting_down"}_ (0.00s)
+    --- PASS: TestProbeRoutes/HEAD/readyz (0.00s)
+    --- PASS: TestProbeRoutes/POST/healthz{"error":"method_not_allowed"}_ (0.00s)
+    --- PASS: TestProbeRoutes/DELETE/readyz{"error":"method_not_allowed"}_ (0.00s)
+    --- PASS: TestProbeRoutes/OPTIONS/healthz{"error":"method_not_allowed"}_ (0.00s)
+    --- PASS: TestProbeRoutes/GET/{"error":"not_found"}_ (0.00s)
+    --- PASS: TestProbeRoutes/GET/debug/pprof/{"error":"not_found"}_ (0.00s)
+    --- PASS: TestProbeRoutes/GET/healthz/{"error":"not_found"}_ (0.00s)
+    --- PASS: TestProbeRoutes/GET/x/../healthz{"error":"not_found"}_ (0.00s)
+=== RUN   TestServeReadinessAndShutdown
+--- PASS: TestServeReadinessAndShutdown (0.00s)
+=== RUN   TestShutdownDrainsOrTimesOut
+=== RUN   TestShutdownDrainsOrTimesOut/drain
+=== RUN   TestShutdownDrainsOrTimesOut/deadline
+--- PASS: TestShutdownDrainsOrTimesOut (0.11s)
+    --- PASS: TestShutdownDrainsOrTimesOut/drain (0.00s)
+    --- PASS: TestShutdownDrainsOrTimesOut/deadline (0.10s)
+=== RUN   TestMalformedHTTPAndHeaderLimit
+=== RUN   TestMalformedHTTPAndHeaderLimit/bad-version
+=== RUN   TestMalformedHTTPAndHeaderLimit/bad-header
+=== RUN   TestMalformedHTTPAndHeaderLimit/ambiguous-length
+=== RUN   TestMalformedHTTPAndHeaderLimit/oversized-header
+--- PASS: TestMalformedHTTPAndHeaderLimit (0.54s)
+    --- PASS: TestMalformedHTTPAndHeaderLimit/bad-version (0.00s)
+    --- PASS: TestMalformedHTTPAndHeaderLimit/bad-header (0.00s)
+    --- PASS: TestMalformedHTTPAndHeaderLimit/ambiguous-length (0.00s)
+    --- PASS: TestMalformedHTTPAndHeaderLimit/oversized-header (0.00s)
+=== RUN   TestSlowHeadersAreClosed
+--- PASS: TestSlowHeadersAreClosed (0.03s)
+=== RUN   TestStartupAndServeFailures
+--- PASS: TestStartupAndServeFailures (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/server/control/internal/control	1.250s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go test -race -count=1 ./...
+?   	github.com/LiiWzz/DeviceBridge/server/control/cmd/control	[no test files]
+ok  	github.com/LiiWzz/DeviceBridge/server/control/internal/control	2.236s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/control]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/go-server-control/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/go-server-control]
+$ sha256sum bin/control SOURCE.txt
+765933c2785d82a098ba7e1a131283d0ca3e962b70756fe526fb427ac74039bd  bin/control
+884a1a8d4a14be685329c02d88482ac93f06446bf2dffac9ee757b9017ac4d6e  SOURCE.txt
+[exit 0]
+
+[script exit 0]

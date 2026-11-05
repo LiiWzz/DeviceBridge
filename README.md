@@ -46,3 +46,6 @@ See [AGENTS.md](AGENTS.md), [M01 execution plan](docs/M01_EXECUTION.md) and [ADR
 Build/test automation and local reproduction commands are documented in
 [CI checks](ci/README.md). ARM cross-build outputs do not establish physical
 device compatibility or memory acceptance.
+
+The [security baseline](security/README.md) records M01 trust boundaries, config
+validation, secret handling, and proposed credential lifecycle review gates.

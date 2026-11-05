@@ -1,0 +1,99 @@
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go env GOOS GOARCH CGO_ENABLED GOTOOLCHAIN GOWORK
+darwin
+arm64
+1
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ check_go_format
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go vet ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go test -count=1 -v ./...
+=== RUN   TestRunCommands
+=== RUN   TestRunCommands/help
+=== RUN   TestRunCommands/version
+=== RUN   TestRunCommands/check
+=== RUN   TestRunCommands/transport
+=== RUN   TestRunCommands/zero_streams
+=== RUN   TestRunCommands/oversized_buffer
+=== RUN   TestRunCommands/malformed_integer
+=== RUN   TestRunCommands/unknown_flag
+=== RUN   TestRunCommands/unexpected_arguments
+=== RUN   TestRunCommands/invalid_config_even_with_version
+--- PASS: TestRunCommands (0.00s)
+    --- PASS: TestRunCommands/help (0.00s)
+    --- PASS: TestRunCommands/version (0.00s)
+    --- PASS: TestRunCommands/check (0.00s)
+    --- PASS: TestRunCommands/transport (0.00s)
+    --- PASS: TestRunCommands/zero_streams (0.00s)
+    --- PASS: TestRunCommands/oversized_buffer (0.00s)
+    --- PASS: TestRunCommands/malformed_integer (0.00s)
+    --- PASS: TestRunCommands/unknown_flag (0.00s)
+    --- PASS: TestRunCommands/unexpected_arguments (0.00s)
+    --- PASS: TestRunCommands/invalid_config_even_with_version (0.00s)
+=== RUN   TestIdleStopsOnCancellation
+--- PASS: TestIdleStopsOnCancellation (0.00s)
+=== RUN   TestAlreadyCancelled
+--- PASS: TestAlreadyCancelled (0.00s)
+=== RUN   TestMalformedArgumentsDoNotLeakValues
+--- PASS: TestMalformedArgumentsDoNotLeakValues (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/cmd/devicebridge-relay	0.920s
+=== RUN   TestValidate
+=== RUN   TestValidate/defaults
+=== RUN   TestValidate/minimum_bounds
+=== RUN   TestValidate/maximum_bounds
+=== RUN   TestValidate/zero_value
+=== RUN   TestValidate/tls_unavailable
+=== RUN   TestValidate/empty_transport
+=== RUN   TestValidate/zero_streams
+=== RUN   TestValidate/negative_streams
+=== RUN   TestValidate/too_many_streams
+=== RUN   TestValidate/zero_buffer
+=== RUN   TestValidate/negative_buffer
+=== RUN   TestValidate/oversized_buffer
+--- PASS: TestValidate (0.00s)
+    --- PASS: TestValidate/defaults (0.00s)
+    --- PASS: TestValidate/minimum_bounds (0.00s)
+    --- PASS: TestValidate/maximum_bounds (0.00s)
+    --- PASS: TestValidate/zero_value (0.00s)
+    --- PASS: TestValidate/tls_unavailable (0.00s)
+    --- PASS: TestValidate/empty_transport (0.00s)
+    --- PASS: TestValidate/zero_streams (0.00s)
+    --- PASS: TestValidate/negative_streams (0.00s)
+    --- PASS: TestValidate/too_many_streams (0.00s)
+    --- PASS: TestValidate/zero_buffer (0.00s)
+    --- PASS: TestValidate/negative_buffer (0.00s)
+    --- PASS: TestValidate/oversized_buffer (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/internal/config	0.475s
+=== RUN   TestDisabledAlwaysFailsClosed
+--- PASS: TestDisabledAlwaysFailsClosed (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/internal/transport	1.337s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go test -race -count=1 ./...
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/cmd/devicebridge-relay	2.342s
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/internal/config	1.428s
+ok  	github.com/LiiWzz/DeviceBridge/server/relay/internal/transport	1.890s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/server/relay]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/go-server-relay/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/go-server-relay]
+$ sha256sum bin/devicebridge-relay SOURCE.txt
+c32359aa6b2a0eb3a9770299a3c8847661dccd20f0479fe55dbbfd5a3b08b59f  bin/devicebridge-relay
+0c603ab5a3725e3cfc8b90db837bb1c2be2c333a208c923d6751e85138b59f4d  SOURCE.txt
+[exit 0]
+
+[script exit 0]

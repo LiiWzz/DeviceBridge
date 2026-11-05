@@ -15,8 +15,7 @@ silently skip a module. No deployment, release, PR approval or merge is performe
 All jobs use GitHub-hosted `ubuntu-24.04` with explicit timeouts and cancel older
 runs for the same ref. Go modules are independent: `server/control`, `server/relay`,
 `cli`, and `packaging`. The packager is checked/built as build-host tooling; it is
-not added to device dependencies or ARM application bundles. Compose integration
-and the security baseline remain DB-008 and DB-007 respectively.
+not added to device dependencies or ARM application bundles. Compose integration remains DB-008; the security job is supplied by DB-007.
 
 ## Reproduce checks
 
@@ -118,3 +117,16 @@ databases or deployed services are changed. Human Tech Lead review and manual
 merge into `develop` remain mandatory.
 
 See [EVIDENCE.md](EVIDENCE.md) for executed results and host/runner limitations.
+# Security baseline (DB-007)
+
+The `security` job scans full fetched Git history with Gitleaks v8.24.3 and
+checks detection/redaction using a disposable synthetic fixture. Run locally:
+
+```sh
+go install github.com/zricethezav/gitleaks/v8@v8.24.3
+bash ci/security.sh
+```
+
+Add the Go bin directory to `PATH`. Commit changes before scanning; this command
+does not scan uncommitted files. Reports in `dist/ci/security/` are fully redacted.
+See [security baseline](../security/README.md) for limitations and evidence.

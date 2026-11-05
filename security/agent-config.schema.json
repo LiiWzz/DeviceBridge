@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeviceBridge M01 agent configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "log_level": {
+      "type": "string",
+      "enum": ["error", "info", "debug"],
+      "default": "info"
+    },
+    "shutdown_poll_ms": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 1000,
+      "default": 100
+    }
+  }
+}
