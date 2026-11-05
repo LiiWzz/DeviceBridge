@@ -13,6 +13,12 @@ conversation. The [UX-03 design system and handoff](ux/UX-03.md), tracked in
 [#31](https://github.com/LiiWzz/DeviceBridge/issues/31), is proposed for human
 review. Production integration remains gated separately.
 
+The preliminary [WEB-01a backend gap inventory](web/WEB-01a.md), tracked in
+[#33](https://github.com/LiiWzz/DeviceBridge/issues/33), maps source capabilities
+to dashboard needs and records contract prerequisites. This discovery slice
+does not satisfy WEB-01's agreed M02 identity/authorization dependency or select
+API/security contracts. UX-03 review and all implementation gates remain open.
+
 ## Status and boundaries
 
 The repository currently provides M01 foundations; enrollment, working tunnels,
