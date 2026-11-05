@@ -13,4 +13,5 @@ bin/
 dist/
 coverage/
 *.test
+__pycache__/
 .DS_Store

@@ -1,0 +1,4 @@
+PASS: synthetic private key detected; console and JSON report redacted
+4:16PM INF 20 commits scanned.
+4:16PM INF scanned ~556751 bytes (556.75 KB) in 104ms
+4:16PM INF no leaks found

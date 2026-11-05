@@ -7,6 +7,7 @@ silently skip a module. No deployment, release, PR approval or merge is performe
 
 | Job | Checks and outputs |
 | --- | --- |
+| Linux integration smoke | native binaries, black-box probes and signal shutdown, isolated PostgreSQL Compose lifecycle; [reproduction and limits](../tests/README.md) |
 | Workflow and shell lint | actionlint 1.7.7, Bash syntax, ShellCheck, four CI failure-gate tests |
 | Go, one job per module | formatting, vet, uncached verbose tests, race tests, native executable |
 | Rust agent | rustfmt, Clippy with warnings denied, locked tests and release build |
