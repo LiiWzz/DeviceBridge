@@ -1,0 +1,5 @@
+checked_out_commit=af49bad5270988d533ebb9e50f925274c13d67b7
+event_commit=local
+run_id=local
+runner=Darwin 25.6.0 arm64
+workspace_dirty=true

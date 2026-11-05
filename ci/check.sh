@@ -85,8 +85,8 @@ case "$mode" in
   workflow)
     run go version
     run go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 -shellcheck= .github/workflows/ci.yml
-    run bash -n ci/check.sh ci/security.sh
-    run shellcheck ci/check.sh ci/security.sh
+    run bash -n ci/check.sh ci/security.sh tests/smoke.sh
+    run shellcheck ci/check.sh ci/security.sh tests/smoke.sh
     run python3 ci/test_check.py
     ;;
   go)

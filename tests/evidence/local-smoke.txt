@@ -1,0 +1,431 @@
+
+$ go version
+go version go1.23.4 darwin/arm64
+
+$ cargo --version
+cargo 1.89.0 (c24e10642 2025-06-23)
+
+$ docker version --format \{\{.Server.Version\}\}
+29.8.2
+
+$ docker compose version
+Docker Compose version v5.5.1
+
+$ python3 tests/test_process_smoke.py
+test_exception_cleans_up_owned_process (__main__.FailureGates.test_exception_cleans_up_owned_process) ... ok
+test_exit_before_readiness_fails (__main__.FailureGates.test_exit_before_readiness_fails) ... ok
+test_unclean_shutdown_fails (__main__.FailureGates.test_unclean_shutdown_fails) ... ok
+test_wrong_exit_code_fails (__main__.FailureGates.test_wrong_exit_code_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.065s
+
+OK
+
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration/bin/ ./...
+
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration/bin/ ./...
+
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration/bin/ ./...
+
+$ cargo build --release --locked
+    Finished `release` profile [optimized] target(s) in 0.06s
+
+$ cp agent/target/release/devicebridge-agent /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration/bin/
+
+$ python3 tests/process_smoke.py /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration/bin /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/integration
+PASS: control [] exit=1
+PASS: devicebridge-relay ['--transport', 'tls'] exit=2
+PASS: devicebridge ['connect'] exit=2
+PASS: devicebridge ['check', '--relay-url', 'http://localhost'] exit=2
+PASS: devicebridge ['check'] exit=0
+PASS: devicebridge-relay ['--check'] exit=0
+PASS: devicebridge-agent ['--check-config'] exit=0
+PASS: devicebridge-agent ['--shutdown-poll-ms', '0'] exit=2
+PASS: GET /healthz status=200
+PASS: GET /readyz status=200
+PASS: GET /debug/pprof/ status=404
+PASS: GET /devices status=404
+PASS: HEAD/POST /healthz status=200/405
+PASS: HEAD/POST /readyz status=200/405
+PASS: control-SIGTERM SIGTERM exit=0 and stopped log
+PASS: control listener closed
+PASS: devicebridge-relay-SIGTERM SIGTERM exit=0 and stopped log
+PASS: devicebridge-agent-SIGTERM SIGTERM exit=0 and stopped log
+PASS: GET /healthz status=200
+PASS: GET /readyz status=200
+PASS: GET /debug/pprof/ status=404
+PASS: GET /devices status=404
+PASS: HEAD/POST /healthz status=200/405
+PASS: HEAD/POST /readyz status=200/405
+PASS: control-SIGINT SIGINT exit=0 and stopped log
+PASS: control listener closed
+PASS: devicebridge-relay-SIGINT SIGINT exit=0 and stopped log
+PASS: devicebridge-agent-SIGINT SIGINT exit=0 and stopped log
+PASS: M01 probes, negative cases and SIGINT/SIGTERM lifecycle
+
+$ sh deploy/smoke.sh
+
++ expect failure: env -u POSTGRES_PASSWORD docker compose --project-directory /var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/tmp.d3uhTzW1vZ -p db005-smoke-72211 config --quiet
+error while interpolating services.db.environment.POSTGRES_PASSWORD: required variable POSTGRES_PASSWORD is missing a value: Set POSTGRES_PASSWORD in deploy/.env or the environment
+Expected failure observed
+
++ expect failure: env POSTGRES_PASSWORD= docker compose --project-directory /var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/tmp.d3uhTzW1vZ -p db005-smoke-72211 config --quiet
+error while interpolating services.db.environment.POSTGRES_PASSWORD: required variable POSTGRES_PASSWORD is missing a value: Set POSTGRES_PASSWORD in deploy/.env or the environment
+Expected failure observed
+
++ compose config --quiet
+
++ compose up -d --wait --wait-timeout 120
+ Volume db005-smoke-72211_pgdata Creating
+ Network db005-smoke-72211_default Creating
+ Volume db005-smoke-72211_pgdata Creating
+ Network db005-smoke-72211_default Creating
+ Volume db005-smoke-72211_pgdata Created
+ Volume db005-smoke-72211_pgdata Created
+ Network db005-smoke-72211_default Created
+ Network db005-smoke-72211_default Created
+ Container db005-smoke-72211-db-1 Creating
+ Container db005-smoke-72211-db-1 Created
+ Container db005-smoke-72211-db-1 Starting
+ Container db005-smoke-72211-db-1 Started
+ Container db005-smoke-72211-db-1 Waiting
+ Container db005-smoke-72211-db-1 Healthy
+
++ compose ps
+NAME                     IMAGE                  COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+db005-smoke-72211-db-1   postgres:17-bookworm   "docker-entrypoint.s…"   db        6 seconds ago   Up 5 seconds (healthy)   127.0.0.1:55435->5432/tcp
+
++ compose exec -T db id
+uid=999(postgres) gid=999(postgres) groups=999(postgres),101(ssl-cert)
+
++ compose exec -T db postgres --version
+postgres (PostgreSQL) 17.11 (Debian 17.11-1.pgdg12+2)
+
++ compose port db 5432
+127.0.0.1:55435
+
++ docker inspect --format health={{.State.Health.Status}} user={{.Config.User}} memory={{.HostConfig.Memory}} nanoCPUs={{.HostConfig.NanoCpus}} pids={{.HostConfig.PidsLimit}} capDrop={{.HostConfig.CapDrop}} security={{.HostConfig.SecurityOpt}} 4371b20a63b5b434e9fec80e485bec826ed4bfeee6a8d81a2a0607eaaedda81b
+health=healthy user=postgres memory=268435456 nanoCPUs=1000000000 pids=128 capDrop=[ALL] security=[no-new-privileges:true]
+
++ expect failure: compose exec -T -e PGPASSWORD= db psql -X -h 127.0.0.1 -U devicebridge -d devicebridge -w -c SELECT 1
+psql: error: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Expected failure observed
+
++ expect failure: migrate invalid
+Usage: sh /opt/devicebridge/migrate.sh {up|down|status}
+Expected failure observed
+
++ migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+INSERT 0 1
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:23.808357+00
+(1 row)
+
+COMMIT
+
++ migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+psql:/tmp/tmp.SjdMQIU9YV:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.SjdMQIU9YV:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:23.808357+00
+(1 row)
+
+COMMIT
+
++ migrate status
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.c8qjJRnVzy:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+psql:/tmp/tmp.c8qjJRnVzy:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:23.808357+00
+(1 row)
+
+COMMIT
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+PASS SQL: SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public' => 0
+
++ migrate down
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.LjzXN2QJw5:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+psql:/tmp/tmp.LjzXN2QJw5:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+DELETE 1
+ version | checksum | applied_at
+---------+----------+------------
+(0 rows)
+
+COMMIT
+
++ migrate down
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+psql:/tmp/tmp.R026mZ9Pkg:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.R026mZ9Pkg:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+ version | checksum | applied_at
+---------+----------+------------
+(0 rows)
+
+COMMIT
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 0
+
++ migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.Do0VGqpOOd:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+CREATE TABLE
+psql:/tmp/tmp.Do0VGqpOOd:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+INSERT 0 1
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:24.480002+00
+(1 row)
+
+COMMIT
+
++ expect failure: migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.AvAXRhWi2t:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+psql:/tmp/tmp.AvAXRhWi2t:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+psql:/tmp/tmp.AvAXRhWi2t:28: ERROR:  Applied migration missing or changed; restore original files
+CONTEXT:  PL/pgSQL function inline_code_block line 8 at RAISE
+Expected failure observed
+
++ cmp /var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/tmp.d3uhTzW1vZ/pair.before /var/folders/yr/dpkfvfhd4l5gktmrpgpd10yr0000gn/T/tmp.d3uhTzW1vZ/pair.after
+
++ expect failure: migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+psql:/tmp/tmp.3RVKKeJVBv:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.3RVKKeJVBv:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+psql:/tmp/tmp.3RVKKeJVBv:28: ERROR:  Applied migration missing or changed; restore original files
+CONTEXT:  PL/pgSQL function inline_code_block line 8 at RAISE
+Expected failure observed
+
++ expect failure: migrate up
+Missing rollback: 0001_baseline.down.sql
+Expected failure observed
+
++ expect failure: migrate up
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+CREATE SCHEMA
+psql:/tmp/tmp.itzgeRyo06:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.itzgeRyo06:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+DO
+CREATE TABLE
+psql:/tmp/tmp.itzgeRyo06:46: ERROR:  division by zero
+Expected failure observed
+PASS SQL: SELECT to_regclass('public.db005_failure_probe') IS NULL => t
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+
++ migrate down
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.QwEU5MoTur:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+psql:/tmp/tmp.QwEU5MoTur:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+DELETE 1
+ version | checksum | applied_at
+---------+----------+------------
+(0 rows)
+
+COMMIT
+
++ migrate up (two concurrent processes)
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.FUissVsyLh:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.FUissVsyLh:9: NOTICE:  relation "history" already exists, skipping
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+INSERT 0 1
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:25.182302+00
+(1 row)
+
+COMMIT
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.3AQKAIBBIO:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+psql:/tmp/tmp.3AQKAIBBIO:9: NOTICE:  relation "history" already exists, skipping
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+    version    |                             checksum                             |          applied_at
+---------------+------------------------------------------------------------------+-------------------------------
+ 0001_baseline | b9757f5c34038137e934d01162eb46d12a3a71c8f28ac9d8cb9e5185330b2ef6 | 2026-11-05 09:15:25.182302+00
+(1 row)
+
+COMMIT
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+
++ compose down
+ Container db005-smoke-72211-db-1 Stopping
+ Container db005-smoke-72211-db-1 Stopped
+ Container db005-smoke-72211-db-1 Removing
+ Container db005-smoke-72211-db-1 Removed
+ Network db005-smoke-72211_default Removing
+ Network db005-smoke-72211_default Removed
+
++ compose up -d --wait --wait-timeout 120
+ Network db005-smoke-72211_default Creating
+ Network db005-smoke-72211_default Creating
+ Network db005-smoke-72211_default Created
+ Network db005-smoke-72211_default Created
+ Container db005-smoke-72211-db-1 Creating
+ Container db005-smoke-72211-db-1 Created
+ Container db005-smoke-72211-db-1 Starting
+ Container db005-smoke-72211-db-1 Started
+ Container db005-smoke-72211-db-1 Waiting
+ Container db005-smoke-72211-db-1 Healthy
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 1
+
++ migrate down
+BEGIN
+ pg_advisory_xact_lock
+-----------------------
+
+(1 row)
+
+psql:/tmp/tmp.KW6n6Qt8kx:4: NOTICE:  schema "devicebridge_migrations" already exists, skipping
+CREATE SCHEMA
+psql:/tmp/tmp.KW6n6Qt8kx:9: NOTICE:  relation "history" already exists, skipping
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+DO
+COMMENT
+DELETE 1
+ version | checksum | applied_at
+---------+----------+------------
+(0 rows)
+
+COMMIT
+PASS SQL: SELECT count(*) FROM devicebridge_migrations.history => 0
+
++ compose down
+ Container db005-smoke-72211-db-1 Stopping
+ Container db005-smoke-72211-db-1 Stopped
+ Container db005-smoke-72211-db-1 Removing
+ Container db005-smoke-72211-db-1 Removed
+ Network db005-smoke-72211_default Removing
+ Network db005-smoke-72211_default Removed
+PASS: DB-005 smoke; cleanup will remove only the isolated test volume
+ Volume db005-smoke-72211_pgdata Removing
+ Volume db005-smoke-72211_pgdata Removed
+PASS: DB-008 process and isolated Compose smoke
+[exit 0]
