@@ -1,0 +1,7 @@
+$ bash ci/security.sh
+PASS: synthetic private key detected; console and JSON report redacted
+4:35PM INF 20 commits scanned.
+4:35PM INF scanned ~557155 bytes (557.16 KB) in 143ms
+4:35PM INF no leaks found
+
+[exit 0]

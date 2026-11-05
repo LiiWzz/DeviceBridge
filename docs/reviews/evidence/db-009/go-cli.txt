@@ -1,0 +1,153 @@
+$ bash ci/check.sh go cli
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go env GOOS GOARCH CGO_ENABLED GOTOOLCHAIN GOWORK
+darwin
+arm64
+1
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ check_go_format
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go vet ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go test -count=1 -v ./...
+=== RUN   TestRun
+=== RUN   TestRun/no_args
+=== RUN   TestRun/help
+=== RUN   TestRun/help_flag
+=== RUN   TestRun/version
+=== RUN   TestRun/version_flag
+=== RUN   TestRun/check
+=== RUN   TestRun/custom_settings
+=== RUN   TestRun/check_help
+=== RUN   TestRun/insecure_endpoint
+=== RUN   TestRun/credential_endpoint
+=== RUN   TestRun/bad_timeout
+=== RUN   TestRun/zero_timeout
+=== RUN   TestRun/unknown_flag
+=== RUN   TestRun/positional
+=== RUN   TestRun/extra_version_args
+=== RUN   TestRun/extra_help_args
+=== RUN   TestRun/connect_unavailable
+=== RUN   TestRun/shell_unavailable
+--- PASS: TestRun (0.00s)
+    --- PASS: TestRun/no_args (0.00s)
+    --- PASS: TestRun/help (0.00s)
+    --- PASS: TestRun/help_flag (0.00s)
+    --- PASS: TestRun/version (0.00s)
+    --- PASS: TestRun/version_flag (0.00s)
+    --- PASS: TestRun/check (0.00s)
+    --- PASS: TestRun/custom_settings (0.00s)
+    --- PASS: TestRun/check_help (0.00s)
+    --- PASS: TestRun/insecure_endpoint (0.00s)
+    --- PASS: TestRun/credential_endpoint (0.00s)
+    --- PASS: TestRun/bad_timeout (0.00s)
+    --- PASS: TestRun/zero_timeout (0.00s)
+    --- PASS: TestRun/unknown_flag (0.00s)
+    --- PASS: TestRun/positional (0.00s)
+    --- PASS: TestRun/extra_version_args (0.00s)
+    --- PASS: TestRun/extra_help_args (0.00s)
+    --- PASS: TestRun/connect_unavailable (0.00s)
+    --- PASS: TestRun/shell_unavailable (0.00s)
+=== RUN   TestMalformedArgumentsDoNotLeakValues
+--- PASS: TestMalformedArgumentsDoNotLeakValues (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/cli/cmd/devicebridge	0.534s
+=== RUN   TestValidateURL
+=== RUN   TestValidateURL/https://localhost:443
+=== RUN   TestValidateURL/https://relay.example
+=== RUN   TestValidateURL/https://relay.example.:65535
+=== RUN   TestValidateURL/https://127.0.0.1:8443/
+=== RUN   TestValidateURL/https://[::1]:443
+=== RUN   TestValidateURL/#00
+=== RUN   TestValidateURL/relay.example
+=== RUN   TestValidateURL/http://relay.example
+=== RUN   TestValidateURL/ssh://relay.example
+=== RUN   TestValidateURL/https:///
+=== RUN   TestValidateURL/https://user:password@relay.example
+=== RUN   TestValidateURL/https://relay.example?token=test
+=== RUN   TestValidateURL/https://relay.example?
+=== RUN   TestValidateURL/https://relay.example/#fragment
+=== RUN   TestValidateURL/https://relay.example#
+=== RUN   TestValidateURL/https://relay.example/api
+=== RUN   TestValidateURL/https://relay.example/%2f
+=== RUN   TestValidateURL/https://relay.example:0
+=== RUN   TestValidateURL/https://relay.example:65536
+=== RUN   TestValidateURL/https://relay.example:abc
+=== RUN   TestValidateURL/https://relay.example:
+=== RUN   TestValidateURL/https://relay.example/%zz
+=== RUN   TestValidateURL/https://relay.example_
+=== RUN   TestValidateURL/https:relay.example
+=== RUN   TestValidateURL/https://[::::]:443
+=== RUN   TestValidateURL/https://[relay.example]:443
+=== RUN   TestValidateURL/https://[fe80::1%25eth0]
+=== RUN   TestValidateURL/https://::1
+=== RUN   TestValidateURL/https://-relay.example
+=== RUN   TestValidateURL/https://relay..example
+=== RUN   TestValidateURL/https://relay_example
+=== RUN   TestValidateURL/https://.
+=== RUN   TestValidateURL/https://relay.example../
+=== RUN   TestValidateURL/https://例.example
+--- PASS: TestValidateURL (0.00s)
+    --- PASS: TestValidateURL/https://localhost:443 (0.00s)
+    --- PASS: TestValidateURL/https://relay.example (0.00s)
+    --- PASS: TestValidateURL/https://relay.example.:65535 (0.00s)
+    --- PASS: TestValidateURL/https://127.0.0.1:8443/ (0.00s)
+    --- PASS: TestValidateURL/https://[::1]:443 (0.00s)
+    --- PASS: TestValidateURL/#00 (0.00s)
+    --- PASS: TestValidateURL/relay.example (0.00s)
+    --- PASS: TestValidateURL/http://relay.example (0.00s)
+    --- PASS: TestValidateURL/ssh://relay.example (0.00s)
+    --- PASS: TestValidateURL/https:/// (0.00s)
+    --- PASS: TestValidateURL/https://user:password@relay.example (0.00s)
+    --- PASS: TestValidateURL/https://relay.example?token=test (0.00s)
+    --- PASS: TestValidateURL/https://relay.example? (0.00s)
+    --- PASS: TestValidateURL/https://relay.example/#fragment (0.00s)
+    --- PASS: TestValidateURL/https://relay.example# (0.00s)
+    --- PASS: TestValidateURL/https://relay.example/api (0.00s)
+    --- PASS: TestValidateURL/https://relay.example/%2f (0.00s)
+    --- PASS: TestValidateURL/https://relay.example:0 (0.00s)
+    --- PASS: TestValidateURL/https://relay.example:65536 (0.00s)
+    --- PASS: TestValidateURL/https://relay.example:abc (0.00s)
+    --- PASS: TestValidateURL/https://relay.example: (0.00s)
+    --- PASS: TestValidateURL/https://relay.example/%zz (0.00s)
+    --- PASS: TestValidateURL/https://relay.example_ (0.00s)
+    --- PASS: TestValidateURL/https:relay.example (0.00s)
+    --- PASS: TestValidateURL/https://[::::]:443 (0.00s)
+    --- PASS: TestValidateURL/https://[relay.example]:443 (0.00s)
+    --- PASS: TestValidateURL/https://[fe80::1%25eth0] (0.00s)
+    --- PASS: TestValidateURL/https://::1 (0.00s)
+    --- PASS: TestValidateURL/https://-relay.example (0.00s)
+    --- PASS: TestValidateURL/https://relay..example (0.00s)
+    --- PASS: TestValidateURL/https://relay_example (0.00s)
+    --- PASS: TestValidateURL/https://. (0.00s)
+    --- PASS: TestValidateURL/https://relay.example../ (0.00s)
+    --- PASS: TestValidateURL/https://例.example (0.00s)
+=== RUN   TestValidateTimeout
+--- PASS: TestValidateTimeout (0.00s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/cli/internal/config	0.942s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go test -race -count=1 ./...
+ok  	github.com/LiiWzz/DeviceBridge/cli/cmd/devicebridge	4.383s
+ok  	github.com/LiiWzz/DeviceBridge/cli/internal/config	4.800s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/cli]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/go-cli/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/go-cli]
+$ sha256sum bin/devicebridge SOURCE.txt
+d283d4be4d130f7369181002e1c11f1775da75afc0d96855bd6e2984d0f8f821  bin/devicebridge
+ca5f5d78ee95b24ab37bbb04bdf4db2ecb69287574a6ec1af1fd46d21c36ef40  SOURCE.txt
+[exit 0]
+
+[exit 0]

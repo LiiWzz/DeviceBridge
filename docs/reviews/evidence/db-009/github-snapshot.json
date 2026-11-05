@@ -1,0 +1,743 @@
+{
+  "captured_utc": "2026-11-05 09:37:37 UTC",
+  "repository": "LiiWzz/DeviceBridge",
+  "reviewed_commit": "75b445b20831a6f68a6425d9ced0a3cf9ce3d7b0",
+  "prerequisites": [
+    {
+      "number": 11,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/11",
+      "title": "[M01][DB-001] Establish repository foundation and architecture ADR",
+      "merged": true,
+      "head_sha": "c8fae1481fe657f385d7747878780d1f4485e986",
+      "merge_commit_sha": "c8fae1481fe657f385d7747878780d1f4485e986",
+      "base": "develop"
+    },
+    {
+      "number": 12,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/12",
+      "title": "[M01][DB-004] Add fail-closed relay and developer CLI skeletons",
+      "merged": true,
+      "head_sha": "4518fc8d3edb4a172cb763cca7222a8afdacb2cb",
+      "merge_commit_sha": "eea0c485b8ed3b43c46bd52990a6b13bc9c92c77",
+      "base": "develop"
+    },
+    {
+      "number": 13,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/13",
+      "title": "[M01][DB-002] Add Rust agent skeleton and ARM build evidence",
+      "merged": true,
+      "head_sha": "dcefd3b2f8b1de53bfd180d9613d49d6a2539b54",
+      "merge_commit_sha": "7627bcd837af474aca3bba83e0ce88a9e1913015",
+      "base": "develop"
+    },
+    {
+      "number": 14,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/14",
+      "title": "[M01][DB-003] Add loopback Control API foundation",
+      "merged": true,
+      "head_sha": "5fca32be4d6cb67d6a3e013be6be7b855c0c1475",
+      "merge_commit_sha": "b7290db230421b1e7d9a8fa530d5dcc2639f6185",
+      "base": "develop"
+    },
+    {
+      "number": 15,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/15",
+      "title": "[M01][DB-005] Add local PostgreSQL and tracked migration foundation",
+      "merged": true,
+      "head_sha": "b4cbbb3fdc4607508a7b65db88d98ca75d27394c",
+      "merge_commit_sha": "498f94d98bc40942cf967882d8119fe62591ecfc",
+      "base": "develop"
+    },
+    {
+      "number": 18,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/18",
+      "title": "[M01][DB-006] Add CI checks and traceable Linux ARM cross-builds",
+      "merged": true,
+      "head_sha": "b54c205451719525f5690d18a913a80d2b1201ca",
+      "merge_commit_sha": "74cda23736501463a15f95be20410c06e33bbba3",
+      "base": "develop"
+    },
+    {
+      "number": 21,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/21",
+      "title": "[DB-007] Security baseline, secret scan and safe config diagnostics",
+      "merged": true,
+      "head_sha": "c8e310e5e7a444292271e5620dc4c85f9bbfee26",
+      "merge_commit_sha": "af49bad5270988d533ebb9e50f925274c13d67b7",
+      "base": "develop"
+    },
+    {
+      "number": 22,
+      "url": "https://github.com/LiiWzz/DeviceBridge/pull/22",
+      "title": "[M01][DB-008] Linux integration smoke for probes, shutdown and Compose",
+      "merged": true,
+      "head_sha": "5a327b1e40efc74d9b7e3231e2b42c2b525c722a",
+      "merge_commit_sha": "75b445b20831a6f68a6425d9ced0a3cf9ce3d7b0",
+      "base": "develop"
+    }
+  ],
+  "workflow": {
+    "workflow_runs": [
+      {
+        "id": 42001206437,
+        "name": "M01 CI",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 13,
+        "jobs_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/runs/42001206437/jobs",
+        "logs_url": "https://api.github.com/repos/LiiWzz/DeviceBridge/actions/runs/42001206437/logs",
+        "workflow_id": 407397333
+      }
+    ]
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "id": 127156584685,
+        "name": "Workflow and shell lint",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh workflow",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      },
+      {
+        "id": 127156584841,
+        "name": "Security baseline",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run go install github.com/zricethezav/gitleaks/v8@v8.24.3",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bash ci/security.sh",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 127156584968,
+        "name": "Linux integration smoke",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run rustup toolchain install 1.89.0 --profile minimal",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bash tests/smoke.sh",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 127156585021,
+        "name": "Go (server/relay)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh go \"$MODULE\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      },
+      {
+        "id": 127156585031,
+        "name": "Linux cross-build (armv7)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install build-host GNU cross-linkers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bash ci/check.sh arm \"$ARCH\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 127156585043,
+        "name": "Linux cross-build (arm64)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install build-host GNU cross-linkers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bash ci/check.sh arm \"$ARCH\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 127156585103,
+        "name": "Rust agent",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run rustup toolchain install 1.89.0 --profile minimal --component rustfmt,clippy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh rust",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      },
+      {
+        "id": 127156585153,
+        "name": "Go (packaging)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh go \"$MODULE\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      },
+      {
+        "id": 127156585243,
+        "name": "Go (cli)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh go \"$MODULE\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      },
+      {
+        "id": 127156585253,
+        "name": "Go (server/control)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42001206437,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bash ci/check.sh go \"$MODULE\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      }
+    ]
+  },
+  "human_reviews_pr11": {
+    "reviews": []
+  },
+  "comments_pr11": {
+    "comments": [],
+    "url": "https://github.com/LiiWzz/DeviceBridge/pull/11",
+    "title": "LiiWzz/DeviceBridge PR #11 comments",
+    "display_url": "https://github.com/LiiWzz/DeviceBridge/pull/11",
+    "display_title": "LiiWzz/DeviceBridge PR #11 comments"
+  },
+  "repository_policy": {
+    "allow_auto_merge": false,
+    "branch_protections": "not verified; connector lacks protection/ruleset fields; gh API calls failed authentication"
+  },
+  "failed_cli_checks": [
+    {
+      "check": "develop protection",
+      "chunk_id": "49be27",
+      "wall_time_seconds": 0.048746834,
+      "exit_code": 4,
+      "original_token_count": 40,
+      "output": "To get started with GitHub CLI, please run:  gh auth login\nAlternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token.\n"
+    },
+    {
+      "check": "main protection",
+      "chunk_id": "3b8053",
+      "wall_time_seconds": 0.045329708,
+      "exit_code": 4,
+      "original_token_count": 40,
+      "output": "To get started with GitHub CLI, please run:  gh auth login\nAlternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token.\n"
+    },
+    {
+      "check": "rulesets",
+      "chunk_id": "53cbb1",
+      "wall_time_seconds": 0.049741125,
+      "exit_code": 4,
+      "original_token_count": 40,
+      "output": "To get started with GitHub CLI, please run:  gh auth login\nAlternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token.\n"
+    },
+    {
+      "check": "allow_auto_merge",
+      "chunk_id": "07eef2",
+      "wall_time_seconds": 0.049871667,
+      "exit_code": 4,
+      "original_token_count": 40,
+      "output": "To get started with GitHub CLI, please run:  gh auth login\nAlternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token.\n"
+    }
+  ]
+}

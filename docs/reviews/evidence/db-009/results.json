@@ -1,0 +1,99 @@
+{
+  "go-server-control": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "go",
+      "server/control"
+    ],
+    "exit": 0,
+    "seconds": 10.18
+  },
+  "go-server-relay": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "go",
+      "server/relay"
+    ],
+    "exit": 0,
+    "seconds": 8.82
+  },
+  "go-cli": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "go",
+      "cli"
+    ],
+    "exit": 0,
+    "seconds": 7.76
+  },
+  "go-packaging": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "go",
+      "packaging"
+    ],
+    "exit": 0,
+    "seconds": 92.99
+  },
+  "rust": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "rust"
+    ],
+    "exit": 0,
+    "seconds": 1.53
+  },
+  "integration": {
+    "command": [
+      "bash",
+      "tests/smoke.sh"
+    ],
+    "exit": 0,
+    "seconds": 20.32
+  },
+  "security": {
+    "command": [
+      "bash",
+      "ci/security.sh"
+    ],
+    "exit": 0,
+    "seconds": 0.27
+  },
+  "workflow": {
+    "command": [
+      "bash",
+      "ci/check.sh",
+      "workflow"
+    ],
+    "exit": 127,
+    "seconds": 2.81
+  },
+  "shellcheck-container": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "-v",
+      "/Users/liiwz/Documents/My works/DeviceBridge:/src:ro",
+      "-w",
+      "/src",
+      "koalaman/shellcheck:v0.10.0",
+      "ci/check.sh",
+      "ci/security.sh",
+      "tests/smoke.sh",
+      "deploy/smoke.sh",
+      "deploy/migrate.sh",
+      "packaging/install.sh",
+      "packaging/smoke-preview.sh"
+    ],
+    "exit": 1,
+    "seconds": 2.45
+  }
+}

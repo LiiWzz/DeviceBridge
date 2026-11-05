@@ -1,0 +1,106 @@
+$ bash ci/check.sh go packaging
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go version
+go version go1.23.4 darwin/arm64
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go env GOOS GOARCH CGO_ENABLED GOTOOLCHAIN GOWORK
+darwin
+arm64
+1
+local
+off
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ check_go_format
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go vet ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go test -count=1 -v ./...
+=== RUN   TestInstallLifecycle
+--- PASS: TestInstallLifecycle (0.70s)
+=== RUN   TestExplicitPrefixSpacesAndCleanUninstall
+--- PASS: TestExplicitPrefixSpacesAndCleanUninstall (0.25s)
+=== RUN   TestRejectsInvalidPackagesBeforeWriting
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/corruption
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/missing
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/symlink-bin
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/target
+=== RUN   TestRejectsInvalidPackagesBeforeWriting/invalid-version
+--- PASS: TestRejectsInvalidPackagesBeforeWriting (0.85s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/corruption (0.13s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/missing (0.13s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink (0.17s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/symlink-bin (0.14s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/target (0.14s)
+    --- PASS: TestRejectsInvalidPackagesBeforeWriting/invalid-version (0.14s)
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/unmanaged
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/relative
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/dotdot
+=== RUN   TestRejectsUnmanagedAndSymlinkDestinations/empty
+--- PASS: TestRejectsUnmanagedAndSymlinkDestinations (0.75s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/unmanaged (0.13s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/symlink (0.13s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/parent-symlink (0.13s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/relative (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/dotdot (0.12s)
+    --- PASS: TestRejectsUnmanagedAndSymlinkDestinations/empty (0.12s)
+=== RUN   TestManagedStateFailuresLeaveInstallation
+=== RUN   TestManagedStateFailuresLeaveInstallation/lock
+=== RUN   TestManagedStateFailuresLeaveInstallation/unrelated-bin
+=== RUN   TestManagedStateFailuresLeaveInstallation/foreign-link
+=== RUN   TestManagedStateFailuresLeaveInstallation/extra-release-file
+=== RUN   TestManagedStateFailuresLeaveInstallation/corrupt-previous
+=== RUN   TestManagedStateFailuresLeaveInstallation/version-reuse
+--- PASS: TestManagedStateFailuresLeaveInstallation (1.45s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/lock (0.20s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/unrelated-bin (0.21s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/foreign-link (0.21s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/extra-release-file (0.22s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/corrupt-previous (0.22s)
+    --- PASS: TestManagedStateFailuresLeaveInstallation/version-reuse (0.40s)
+=== RUN   TestPackageValidationAndNoOverwrite
+--- PASS: TestPackageValidationAndNoOverwrite (0.30s)
+=== RUN   TestArgumentsAndHelp
+--- PASS: TestArgumentsAndHelp (0.15s)
+=== RUN   TestInstallerHashUtilities
+=== RUN   TestInstallerHashUtilities/sha256sum
+=== RUN   TestInstallerHashUtilities/shasum
+=== RUN   TestInstallerHashUtilities/openssl
+=== RUN   TestInstallerHashUtilities/none
+--- PASS: TestInstallerHashUtilities (0.83s)
+    --- PASS: TestInstallerHashUtilities/sha256sum (0.18s)
+    --- PASS: TestInstallerHashUtilities/shasum (0.28s)
+    --- PASS: TestInstallerHashUtilities/openssl (0.23s)
+    --- PASS: TestInstallerHashUtilities/none (0.13s)
+=== RUN   TestFailedActivationPreservesRollback
+=== RUN   TestFailedActivationPreservesRollback/binary-directory
+=== RUN   TestFailedActivationPreservesRollback/history-rename
+--- PASS: TestFailedActivationPreservesRollback (2.07s)
+    --- PASS: TestFailedActivationPreservesRollback/binary-directory (0.72s)
+    --- PASS: TestFailedActivationPreservesRollback/history-rename (1.35s)
+=== RUN   TestUpgradeRefreshesInstalledManager
+--- PASS: TestUpgradeRefreshesInstalledManager (0.56s)
+PASS
+ok  	github.com/LiiWzz/DeviceBridge/packaging	10.565s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go test -race -count=1 ./...
+ok  	github.com/LiiWzz/DeviceBridge/packaging	80.447s
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/packaging]
+$ go build -trimpath -o /Users/liiwz/Documents/My\ works/DeviceBridge/dist/ci/go-packaging/bin/ ./...
+[exit 0]
+[cwd /Users/liiwz/Documents/My works/DeviceBridge/dist/ci/go-packaging]
+$ sha256sum bin/packaging SOURCE.txt
+f0753432e9ec7405eeb9b729171b8590123bb54268ca79d9eb7b25c28a1db2fb  bin/packaging
+e38bd2880a2b2ead5c57f6387850abef3f23ec9da4b9351a4e99d988aff4e0c9  SOURCE.txt
+[exit 0]
+
+[exit 0]
