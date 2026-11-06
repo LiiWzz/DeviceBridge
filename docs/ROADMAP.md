@@ -45,12 +45,20 @@ The owner approved its limited domain constraints, recorded in
 authentication, credential or transport mechanism; M01/M02, remaining D01 and
 web/browser security gates stay open.
 
-[Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md), tracked in
+[ADR-005](adr/ADR-005-credential-lifecycle-audit.md), tracked in
 [#51](https://github.com/LiiWzz/DeviceBridge/issues/51), scopes D02 lifecycle,
-time, outage and audit decisions. It remains unsigned and authorizes no credential
-implementation; D01 agreement, P00 and D03 remain prerequisites.
+time, outage and audit principles accepted by the owner, including #55's
+deployed-device recovery principles. Mechanisms and budgets remain pending;
+D01 agreement, P00 and D03 remain prerequisites to credential implementation.
 See [D02 document validation](evidence/m02-d02/validation.txt) and
 [secret-scan evidence](evidence/m02-d02/secrets.txt) for executed checks and limits.
+
+Deployed-device continuity [#55](https://github.com/LiiWzz/DeviceBridge/issues/55)
+adds accepted principles for automatic agent renewal, bounded safe rotation and independently
+authenticated remote recovery to ADR-005. Proof/custody, offline limits and
+recovery-service evidence still need approval before rollout; no perpetual-access
+guarantee is asserted. See [validation](evidence/m02-recovery/validation.txt) and
+[scan evidence](evidence/m02-recovery/secrets.txt).
 
 ## Status and boundaries
 
