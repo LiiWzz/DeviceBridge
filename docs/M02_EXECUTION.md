@@ -67,6 +67,15 @@ merge, push directly to `main`/`develop` or enable auto-merge.
 D01–D03 are design/review packages, not implied approvals or assigned ADR numbers.
 Their boundaries may require several ADRs. Resolve cross-document inconsistencies
 before approval; no package may implement an unresolved contract by inference.
+
+The first scoped D01 design slice is [#43](https://github.com/LiiWzz/DeviceBridge/issues/43):
+[Proposed ADR-002](adr/ADR-002-device-record-identity-binding.md) separates device
+records, identities and authorized enrollment binding, with
+[repository source findings](research/M02-D01a-sources.md) and a
+[domain glossary](../GLOSSARY.md). It remains pending Tech Lead approval and
+does not complete D01 or authorize P01/P03 or full WEB-01. Bootstrap mechanism,
+credential/lifecycle/audit and transport decisions remain separately gated.
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.

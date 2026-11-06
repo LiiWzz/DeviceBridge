@@ -31,6 +31,12 @@ new record from Devices or empty inventory, then hands off to agent onboarding.
 Its local synthetic prototype and field choices await detailed human review;
 backend creation, enrollment and authorization contracts remain gated.
 
+[Proposed ADR-002](adr/ADR-002-device-record-identity-binding.md), tracked in
+[#43](https://github.com/LiiWzz/DeviceBridge/issues/43), is the first M02-D01
+design slice for separating a device record from verified identity binding.
+It awaits explicit Tech Lead approval, leaves bootstrap/credential/API choices
+unresolved and does not clear M01/M02 acceptance or WEB-01 implementation gates.
+
 ## Status and boundaries
 
 The repository currently provides M01 foundations; enrollment, working tunnels,
