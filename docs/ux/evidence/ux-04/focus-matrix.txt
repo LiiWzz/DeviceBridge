@@ -1,0 +1,89 @@
+Issue #41: complete historical before/after matrix.
+Historical checks intentionally expect [true,false] to reproduce the defect; exit 0 confirms reproduction, not correct historical focus.
+Before: 8a58ea5e21199dcd3ce44363a40f4da0a89910e3; fixed: bb0fd7010dadda54da9ebd339f8846e378506ba9.
+Exact /tmp/devicebridge-ux04-focus-matrix.cjs source:
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const revision = process.argv[2];
+const before = revision === '8a58ea5e21199dcd3ce44363a40f4da0a89910e3';
+assert(before || revision === 'bb0fd7010dadda54da9ebd339f8846e378506ba9');
+const source = require('node:child_process').execFileSync('git', ['show', `${revision}:docs/ux/prototype/prototype.js`], {encoding: 'utf8'});
+function environment(variant = 'A', origin = 'http://127.0.0.1:8765/') {
+  const listeners = {}, nodes = {};
+  const node = id => nodes[id] ||= { innerHTML: '', textContent: '', hidden: true, open: false, value: 'Still unknown', focus() {}, setAttribute() {}, append(child) { this.innerHTML += child.textContent; }, addEventListener(type, fn) { this['on-' + type] = fn; }, showModal() { this.open = true; }, close() { this.open = false; this['on-close']?.(); }, querySelector() { return node('dialog-button'); } };
+  const context = vm.createContext({ URL, URLSearchParams, location: new URL(`${origin}?variant=${variant}&screen=devices`), history: { replaceState(_a, _b, next) { context.location = new URL(next); } }, document: { querySelector: node, getElementById: node, createElement: () => node('created'), addEventListener(type, fn) { listeners[type] = fn; } } });
+  vm.runInContext(source, context);
+  return { run: code => vm.runInContext(code, context), nodes, listeners, html: () => nodes['#app'].innerHTML,
+    click(action, extra = {}) { listeners.click({ target: { closest() { return { dataset: { action, ...extra } }; } } }); },
+    input(key, value) { listeners.input({ target: { dataset: { draft: key }, value } }); },
+    result(value) { listeners.change({ target: { id: 'create-result', value } }); },
+    submit() { listeners.submit({ target: { id: 'create-device' }, preventDefault() {} }); }
+  };
+}
+
+for (const variant of ['A', 'B', 'C']) {
+  for (const reconcile of [false, true]) {
+    const e = environment(variant);
+    e.click('new-device'); e.input('name', 'Focus review fixture');
+    if (reconcile) { e.result('Unknown'); e.submit(); e.run("document.querySelector('#reconcile-result').value='Created'"); }
+    e.run('var renderCalls = []; var renderBeforeDiagnostic = render; render = function(focus = false) { renderCalls.push(focus); return renderBeforeDiagnostic(focus); }');
+    if (reconcile) e.click('reconcile-create'); else e.submit();
+    const calls = JSON.parse(e.run('JSON.stringify(renderCalls)'));
+    console.log(`${variant} ${reconcile ? 'reconciled' : 'direct'}: renders=${calls.length}, focus flags=${JSON.stringify(calls)}`);
+    assert.deepEqual(calls, before ? [true, false] : [true], 'historical defect or corrected render sequence must match');
+    assert(e.html().includes('Device record created in this local demo.'));
+    assert.equal(e.run('state.screen'), 'detail');
+    assert.equal(e.run('state.scenario'), 'ready');
+    assert.equal(e.run('new URL(location.href).searchParams.get("screen")'), 'detail');
+  }
+}
+console.log(`PASS: six ${before ? 'historical defect reproductions [true,false]' : 'corrected sequences [true]'}; status and URL retained. VM only; no actual browser focus validation.`);
+
+$ node /tmp/devicebridge-ux04-focus-matrix.cjs 8a58ea5e21199dcd3ce44363a40f4da0a89910e3
+A direct: renders=2, focus flags=[true,false]
+A reconciled: renders=2, focus flags=[true,false]
+B direct: renders=2, focus flags=[true,false]
+B reconciled: renders=2, focus flags=[true,false]
+C direct: renders=2, focus flags=[true,false]
+C reconciled: renders=2, focus flags=[true,false]
+PASS: six historical defect reproductions [true,false]; status and URL retained. VM only; no actual browser focus validation.
+
+exit=0
+$ node /tmp/devicebridge-ux04-focus-matrix.cjs bb0fd7010dadda54da9ebd339f8846e378506ba9
+A direct: renders=1, focus flags=[true]
+A reconciled: renders=1, focus flags=[true]
+B direct: renders=1, focus flags=[true]
+B reconciled: renders=1, focus flags=[true]
+C direct: renders=1, focus flags=[true]
+C reconciled: renders=1, focus flags=[true]
+PASS: six corrected sequences [true]; status and URL retained. VM only; no actual browser focus validation.
+
+exit=0
+
+Exact /tmp/devicebridge-ux04-matrix-docs.py source:
+from pathlib import Path
+import re
+import subprocess
+base = 'ced9b47e2c270d63abe3cc653437d0b13a2a39fe'
+p = Path('docs/ux/UX-04.md')
+count = 0
+for target in re.findall(r'\]\(([^)]+)\)',p.read_text()):
+ if '://' in target or target.startswith('#'): continue
+ assert (p.parent / target.split('#')[0].split('?')[0]).is_file(),target
+ count += 1
+changed = set(subprocess.check_output(['git','diff',base,'--name-only'],text=True).splitlines())
+changed.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines())
+assert changed <= {'docs/ux/UX-04.md','docs/ux/evidence/ux-04/focus-matrix.txt'},changed
+subprocess.run(['git','diff','--check',base],check=True)
+subprocess.run(['git','diff','--exit-code',base,'--','docs/ux/prototype','agent','server','cli','docs/adr'],check=True)
+print(f'PASS: {count} local file links, scope and whitespace; runtime prototype, applications and ADRs unchanged. External links/fragments unverified.')
+
+$ python3 /tmp/devicebridge-ux04-matrix-docs.py
+PASS: 10 local file links, scope and whitespace; runtime prototype, applications and ADRs unchanged. External links/fragments unverified.
+exit=0
+
+$ /Users/liiwz/go/bin/gitleaks dir --no-banner --redact=100 docs/ux
+3:32PM INF scanned ~125854 bytes (125.85 KB) in 14.4ms
+3:32PM INF no leaks found
+exit=0
