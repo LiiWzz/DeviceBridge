@@ -83,10 +83,11 @@ context as limited domain constraints, with owner approval recorded in
 [PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). Remaining D01 trust and
 enforcement mechanisms, D02/D03 approvals and P00 remain prerequisites to implementation.
 
-[D02 / Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md),
-[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), proposes lifecycle,
-trusted-time, revocation, uncertain-outcome and audit obligations. It selects no
-credential or storage mechanism; approval and measured budgets remain required.
+[D02 / ADR-005](adr/ADR-005-credential-lifecycle-audit.md),
+[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), records owner-accepted
+domain principles for lifecycle, trusted-time, revocation, uncertain outcomes and
+audit, including the recovery extension in #55. Credential/storage mechanisms,
+remaining design decisions and measured budgets still require approval.
 Executed document checks and scan output are in
 [D02 validation](evidence/m02-d02/validation.txt) and
 [D02 secret scan](evidence/m02-d02/secrets.txt).

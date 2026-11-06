@@ -1,11 +1,11 @@
 # ADR-005: Propose credential lifecycle and authoritative audit outcomes
 
-**Status: Proposed — Tech Lead approval required.** Issue [#51](https://github.com/LiiWzz/DeviceBridge/issues/51).
+**Status: Accepted (domain principles only); mechanisms, budgets and implementation gates remain pending.** Issue [#51](https://github.com/LiiWzz/DeviceBridge/issues/51).
 Source baseline: `4e74760eaf7080f07bdb01f1740a8d94c1ac6b0f`.
 
 Propose treating credential changes and access decisions as recoverable, attributable operations whose authoritative outcome is durably auditable before success is exposed. This costs storage, availability and coordination during outages. It avoids reporting access as successful when the credential/grant state or required audit evidence is uncertain. The owner approved ADR-004's limited session-authority domain constraints in the project conversation; the provenance and scope are recorded in [PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). No lifecycle, storage or audit mechanism is approved here.
 
-## Proposed lifecycle
+## Accepted lifecycle principles
 
 | Operation | Proposed domain rule | Decisions still open |
 | --- | --- | --- |
@@ -54,12 +54,12 @@ timeouts alone do not establish trusted credential age across processes or
 devices. Source, synchronization, monotonic/wall-clock roles and safe behavior
 remain unselected pending design evidence.
 
-## Deployed-device continuity and recovery proposal
+## Accepted deployed-device continuity and recovery principles
 
 Follow-up [#55](https://github.com/LiiWzz/DeviceBridge/issues/55) captures the
 owner's selected direction: devices already installed must have an engineered
-remote recovery path. This is selection of a design direction, not acceptance of
-this ADR, a recovery credential scheme or a guarantee of perpetual reachability.
+remote recovery path. The owner subsequently approved the domain principles in
+PR #56; this approves no recovery credential scheme or guarantee of perpetual reachability.
 
 1. **Agent renewal runs independently of an SSH session.** Schedule authenticated
    renewal sufficiently before expiry, with bounded retry/backoff and early
@@ -193,6 +193,20 @@ claimed. Revert/supersede through a reviewed PR; there is no deployed state to
 recover now. Future rollback must preserve revocation, operation history and
 audit integrity; reverting code cannot undo remote commands or restore secrets.
 
-**Human decision: PENDING; intentionally unsigned.** Tech Lead records exact
-reviewed commit, accept/revise/reject, decision scope, remaining owners, identity
-and authoritative UTC reference. Merge and agent review are not approval.
+**Human decision: accepted limited domain principles.** In the project
+conversation on 2026-11-07 (Asia/Bangkok), the owner replied “อนุมัติ” after the
+summary of [PR #56](https://github.com/LiiWzz/DeviceBridge/pull/56), reviewed text
+at `dc51bb4af6768273748d6538bdfa6d5cf6cd2261`. The approval covers lifecycle,
+invalidation precedence, uncertain-outcome/audit obligations, automatic agent
+renewal, agent/user authority separation, bounded verified rotation, independently
+authenticated deployed-device recovery and its explicit physical-service limits.
+No signing identity, exact approval time or external signature was captured;
+none is invented here. This records the owner's conversation approval, not an
+agent signature or a GitHub approval/merge action.
+
+Credential/provider/proof/custody choices, time bootstrap, protocols/API/schema,
+crypto, atomicity/audit implementation, numeric lifetimes/offline/retry/overlap/
+revocation/resource budgets and active-session behavior still need explicit
+decisions and approval. Remaining D01, D03, P00/M01/M02 and web/browser rollout
+gates remain open. No credential or remote-access implementation is authorized
+solely by this domain approval. Future mechanisms must satisfy these principles.
