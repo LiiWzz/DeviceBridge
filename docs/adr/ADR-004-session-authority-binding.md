@@ -10,7 +10,7 @@ context. This adds authoritative admission/reconciliation work, but prevents
 inventory visibility, enrollment or a reusable device-wide permission from being
 mistaken for authority to attach to any session/account. Retrofitting that boundary
 after issuing access credentials would require credential and audit migration.
-No policy or contract is implemented or approved by this document.
+Only the domain constraints below are accepted; no implementation mechanism is approved.
 
 ## Source context and alternatives
 
@@ -34,10 +34,10 @@ always rejects. This is source inspection, not live authentication evidence.
 | Reusable broad device access with caller-selected account/session | Easier reconnect, but a copied authority can be retargeted or survive changes without an explicit session decision; account/resource scope and attribution become ambiguous. |
 | Proposed explicitly bound per-session decision | Adds admission, freshness, replay/concurrency and recovery obligations; makes the authorized target and attachment context explicit. Credential representation and enforcement mechanisms still need approval. |
 
-## Proposed domain constraints
+## Accepted domain constraints
 
-All constraints below are proposals for review, not API fields, roles or selected
-proof/credential algorithms. The [glossary](../../GLOSSARY.md) meanings stand.
+All constraints below are accepted at domain level only, not API fields, roles or
+selected proof/credential algorithms. The [glossary](../../GLOSSARY.md) meanings stand.
 
 1. **Authenticate the operator independently.** An approved trusted identity
    source must establish the operator; a display name, submitted user ID, device

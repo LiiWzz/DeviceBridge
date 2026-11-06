@@ -1,7 +1,7 @@
 # ADR-005: Propose credential lifecycle and authoritative audit outcomes
 
 **Status: Proposed — Tech Lead approval required.** Issue [#51](https://github.com/LiiWzz/DeviceBridge/issues/51).
-Source baseline: `1b6d50ffa7914574f1b9a0277393288a2dbe7617`.
+Source baseline: `4e74760eaf7080f07bdb01f1740a8d94c1ac6b0f`.
 
 Propose treating credential changes and access decisions as recoverable, attributable operations whose authoritative outcome is durably auditable before success is exposed. This costs storage, availability and coordination during outages. It avoids reporting access as successful when the credential/grant state or required audit evidence is uncertain. The owner approved ADR-004's limited session-authority domain constraints in the project conversation; the provenance and scope are recorded in [PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). No lifecycle, storage or audit mechanism is approved here.
 

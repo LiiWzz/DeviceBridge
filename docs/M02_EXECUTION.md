@@ -76,11 +76,12 @@ records, identities and authorized enrollment binding, with
 does not complete D01 or authorize P01/P03 or full WEB-01. Bootstrap mechanism,
 credential/lifecycle/audit and transport decisions remain separately gated.
 
-The separate [D01b / Proposed ADR-004](adr/ADR-004-session-authority-binding.md),
-[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), proposes binding session
+The separate [D01b / ADR-004](adr/ADR-004-session-authority-binding.md),
+[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), accepts binding session
 authority to the user, current intended device, SSH account and session/client
-context. It is a review input only: explicit approval, remaining D01 trust and
-enforcement mechanisms, D02/D03 and P00 remain prerequisites to implementation.
+context as limited domain constraints, with owner approval recorded in
+[PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). Remaining D01 trust and
+enforcement mechanisms, D02/D03 approvals and P00 remain prerequisites to implementation.
 
 [D02 / Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md),
 [#51](https://github.com/LiiWzz/DeviceBridge/issues/51), proposes lifecycle,

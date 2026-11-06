@@ -1,0 +1,30 @@
+$ python3 -c 'from pathlib import Path
+import re,subprocess
+files=['"'"'docs/adr/ADR-004-session-authority-binding.md'"'"','"'"'docs/adr/ADR-005-credential-lifecycle-audit.md'"'"','"'"'docs/M02_EXECUTION.md'"'"','"'"'docs/ROADMAP.md'"'"']
+n=0
+for f in files:
+ p=Path(f)
+ for t in re.findall(r'"'"'\]\(([^)]+)\)'"'"',p.read_text()):
+  if '"'"'://'"'"' in t or t.startswith('"'"'#'"'"'): continue
+  t=t.split('"'"'#'"'"')[0]
+  if t: assert (p.parent/t).exists(),(f,t); n+=1
+print(f'"'"'PASS: {n} local file targets; external URLs/fragments unverified.'"'"')
+assert '"'"'Status: Accepted (limited domain constraints only)'"'"' in Path(files[0]).read_text()
+assert '"'"'Status: Proposed'"'"' in Path(files[1]).read_text()
+assert '"'"'Proposed ADR-004'"'"' not in Path(files[2]).read_text()+Path(files[3]).read_text()
+print('"'"'PASS: ADR-004 accepted domain scope, ADR-005 pending; handoffs aligned.'"'"')
+protected=['"'"'agent'"'"','"'"'cli'"'"','"'"'server'"'"','"'"'deploy'"'"','"'"'packaging'"'"','"'"'ci'"'"','"'"'security'"'"','"'"'docs/ux'"'"','"'"'docs/M01_EXECUTION.md'"'"','"'"'docs/adr/ADR-001-foundation.md'"'"','"'"'docs/adr/ADR-002-device-record-identity-binding.md'"'"','"'"'docs/adr/ADR-003-browser-terminal-scope.md'"'"']
+assert not subprocess.check_output(['"'"'git'"'"','"'"'diff'"'"','"'"'4e74760eaf7080f07bdb01f1740a8d94c1ac6b0f'"'"','"'"'--'"'"',*protected])
+print('"'"'PASS: runtime/prototype/security/ADR001-003/M01 unchanged.'"'"')
+'
+PASS: 57 local file targets; external URLs/fragments unverified.
+PASS: ADR-004 accepted domain scope, ADR-005 pending; handoffs aligned.
+PASS: runtime/prototype/security/ADR001-003/M01 unchanged.
+
+exit 0
+
+$ git diff --cached --check
+
+exit 0
+
+Documentation consistency only. No runtime/build/security/crypto/browser/SSH/PTY/Windows/ARM/hardware/hosted CI test claimed.
