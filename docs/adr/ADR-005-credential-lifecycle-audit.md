@@ -28,8 +28,24 @@ admission and attachment. Do not invent a grace period or fall back to local
 cached authority when control, trusted time or required audit storage is
 unavailable. Existing session handling must be explicitly chosen and measured;
 this ADR does not promise immediate termination, command rollback or descendant
-cleanup. A missing/uncertain outcome blocks a new conflicting lifecycle action
-until reconciled under current authority.
+cleanup. A missing/uncertain outcome blocks a conflicting action that creates,
+extends or restores authority until reconciled under current authority.
+
+**Invalidation takes precedence over unresolved issuance or rotation.** An
+independently authorized revoke or decommission request must not wait for an
+uncertain rotation to finish. It must establish an authoritative denial for the
+affected identity/grant scope covering both existing credentials and any pending
+replacement authority. A late rotation result, retry, restart or reconciliation
+must preserve that denial and cannot activate a replacement or revive retired
+material. Decommission's invalidation step takes precedence; destructive cleanup
+and removal of attribution still require safe reconciliation and retention rules.
+
+This is no outage or audit bypass: invalidation still requires current authority
+and the required durable outcome/audit evidence. If those dependencies prevent
+confirmation, report the outcome as unknown, withhold new access while validity
+is uncertain, and never claim revocation completed. D02/D03 must approve the
+serialization, durable denial, propagation and recovery mechanisms before
+implementation; active-session behavior and numerical deadlines remain open.
 
 The system needs a trusted time basis and explicit skew/rollback behavior before
 expiry can be meaningful. Decisions must account for clock rollback, reboot,
@@ -71,7 +87,11 @@ Security/Backend/Agent define approved mechanisms and named owners before
 implementation. QA must later cover concurrent issue/renew/revoke, expired and
 replayed credentials, rotation crash at every boundary, clock rollback/skew,
 restore/decommission, lost responses, control/audit outage and recovery, duplicate
-events, disk full, redaction and unauthorized audit reads. Hardware QA measures
+events, disk full, redaction and unauthorized audit reads. Include lost rotation
+response followed by compromise/revoke or decommission: existing and pending
+replacement credentials must remain denied through late responses, retries,
+restart and restore, with authorized reconciliation and durable audit attribution.
+Hardware QA measures
 flash writes and endurance on supported ARM devices. Values for lifetimes,
 overlap, revocation delay, retries, storage retention and resource budgets require
 Tech Lead-approved measured profiles; none are selected here.
