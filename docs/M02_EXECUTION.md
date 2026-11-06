@@ -155,6 +155,13 @@ dispositions under the approved process, never cross-build-derived passes.
 
 ## Recovery, review and human decision
 
+[Proposed ADR-003](adr/ADR-003-browser-terminal-scope.md), issue
+[#45](https://github.com/LiiWzz/DeviceBridge/issues/45), requests browser terminal
+as a separately gated M03 extension. It changes no M02 deliverable or approval:
+M02 retains SSH-native device transport and independent host-key/per-session
+checks. Browser production integration requires accepted M02 and the additional
+architecture, web-session, credential-custody, audit and UX decisions in ADR-003.
+
 P08's runbook must cover disabling new access safely, restoring an approved
 deployment, compatible schema/state recovery, interrupted identity updates and
 audit preservation. Rollback must never revive revoked credentials, bypass

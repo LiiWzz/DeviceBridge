@@ -30,3 +30,8 @@ _Avoid_: Enrollment success, SSH authorization
 Permission for a particular user to request access to a particular device in a
 particular session context.
 _Avoid_: Inventory visibility, enrollment authority
+
+**Browser terminal**:
+An interactive command-line view inside the dashboard for an authorized device
+session. The view itself grants no device or account permissions.
+_Avoid_: One-command form, local computer shell

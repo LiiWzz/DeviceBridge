@@ -19,6 +19,11 @@ See the [product roadmap and UX/UI plan](docs/ROADMAP.md) for screens, work
 packages, dependencies and acceptance gates. M02/M03 are planned work, not
 implemented capabilities.
 
+An [in-page interactive SSH terminal proposal](docs/adr/ADR-003-browser-terminal-scope.md)
+is tracked separately for M03 following the owner's request. It is unimplemented
+and awaits scope/security approval; the existing native CLI plan remains the
+baseline until the relevant decisions and acceptance gates are satisfied.
+
 - `agent/`: Rust embedded agent (DB-002)
 - `server/control/`: Go control API (DB-003)
 - `server/relay/` and `cli/`: Go relay and CLI (DB-004)

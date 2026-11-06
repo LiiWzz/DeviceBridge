@@ -39,6 +39,14 @@ unresolved and does not clear M01/M02 acceptance or WEB-01 implementation gates.
 
 ## Status and boundaries
 
+The owner requested a terminal directly inside the dashboard.
+[Proposed ADR-003](adr/ADR-003-browser-terminal-scope.md), tracked in
+[#45](https://github.com/LiiWzz/DeviceBridge/issues/45), proposes a separately
+gated M03 extension: device -> Connect -> interactive terminal -> Disconnect.
+Scope/security approval, architecture and a UX-03 extension are pending. Existing
+native CLI-only screens and the browser-terminal deferral below remain the
+baseline until explicit approval; this proposal does not implement a terminal.
+
 The repository currently provides M01 foundations; enrollment, working tunnels,
 remote SSH and a management dashboard are not implemented. This document adds
 explicit UX/UI and dashboard delivery work. It does not certify M01 completion
@@ -86,6 +94,13 @@ integration and rollout wait for M01/M02 acceptance and the web contract gate.
 Browser terminal/SSH key custody is outside the MVP. Remote access continues
 through OpenSSH/Dropbear and the native CLI; the web interface must not introduce
 a custom shell protocol or move private SSH keys onto the control service/relay.
+
+ADR-003 proposes changing the browser-terminal scope through explicit review.
+It grants no SSH key custody or security-policy exception. Its BTERM-DESIGN,
+BTERM-UX, BTERM-SERVICE, BTERM-UI and BTERM-ACCEPT packages are proposed follow-up
+references, not created implementation issues. Production integration retains
+M01/M02 acceptance, approved WEB-01/architecture/security decisions and matching
+backend/UX evidence before exposing interactive access.
 
 ## UX/UI and implementation work packages
 
@@ -141,6 +156,9 @@ contract decisions remain visible blockers to production integration.
 
 P2P, QUIC, video streaming, browser terminal, bulk remote command execution,
 firmware/OTA management and advanced analytics are outside this dashboard MVP.
+Browser terminal alone has a pending scope-extension proposal in ADR-003; it
+remains deferred until explicitly approved and its dependent implementation and
+acceptance gates are met. The other exclusions remain unchanged.
 They need separately scoped issues and, where contracts or security change,
 approved ADRs. No frontend framework, identity provider, production deployment
 configuration or delivery date is selected by this planning change.
