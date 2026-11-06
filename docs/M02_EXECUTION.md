@@ -76,11 +76,20 @@ records, identities and authorized enrollment binding, with
 does not complete D01 or authorize P01/P03 or full WEB-01. Bootstrap mechanism,
 credential/lifecycle/audit and transport decisions remain separately gated.
 
-The separate [D01b / Proposed ADR-004](adr/ADR-004-session-authority-binding.md),
-[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), proposes binding session
+The separate [D01b / ADR-004](adr/ADR-004-session-authority-binding.md),
+[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), accepts binding session
 authority to the user, current intended device, SSH account and session/client
-context. It is a review input only: explicit approval, remaining D01 trust and
-enforcement mechanisms, D02/D03 and P00 remain prerequisites to implementation.
+context as limited domain constraints, with owner approval recorded in
+[PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). Remaining D01 trust and
+enforcement mechanisms, D02/D03 approvals and P00 remain prerequisites to implementation.
+
+[D02 / Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md),
+[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), proposes lifecycle,
+trusted-time, revocation, uncertain-outcome and audit obligations. It selects no
+credential or storage mechanism; approval and measured budgets remain required.
+Executed document checks and scan output are in
+[D02 validation](evidence/m02-d02/validation.txt) and
+[D02 secret scan](evidence/m02-d02/secrets.txt).
 
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,

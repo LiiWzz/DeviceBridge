@@ -37,11 +37,20 @@ design slice for separating a device record from verified identity binding.
 It awaits explicit Tech Lead approval, leaves bootstrap/credential/API choices
 unresolved and does not clear M01/M02 acceptance or WEB-01 implementation gates.
 
-[Proposed ADR-004](adr/ADR-004-session-authority-binding.md), tracked in
+[ADR-004](adr/ADR-004-session-authority-binding.md), tracked in
 [#49](https://github.com/LiiWzz/DeviceBridge/issues/49), is a separate M02-D01
-review input for user/device/SSH-account/session authority and reconciliation.
-It selects no authentication, credential or transport mechanism and remains
-unsigned; M01/M02, remaining D01 and web/browser security gates stay open.
+decision for user/device/SSH-account/session authority and reconciliation.
+The owner approved its limited domain constraints, recorded in
+[PR #53](https://github.com/LiiWzz/DeviceBridge/pull/53). It selects no
+authentication, credential or transport mechanism; M01/M02, remaining D01 and
+web/browser security gates stay open.
+
+[Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md), tracked in
+[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), scopes D02 lifecycle,
+time, outage and audit decisions. It remains unsigned and authorizes no credential
+implementation; D01 agreement, P00 and D03 remain prerequisites.
+See [D02 document validation](evidence/m02-d02/validation.txt) and
+[secret-scan evidence](evidence/m02-d02/secrets.txt) for executed checks and limits.
 
 ## Status and boundaries
 
