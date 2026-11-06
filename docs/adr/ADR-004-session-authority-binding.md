@@ -1,6 +1,6 @@
 # ADR-004: Bind session authority to the intended user, device and SSH account
 
-**Status: Proposed — explicit human Tech Lead approval required.**
+**Status: Accepted (limited domain constraints only); implementation remains blocked by unresolved design and M01/M02 gates.**
 Issue: [#49](https://github.com/LiiWzz/DeviceBridge/issues/49).
 Source baseline: `c3f4c99e508a6466f48bd3efd31c6eb1a1ec64dc`.
 
@@ -143,9 +143,22 @@ credential or data needs recovery now. Future rollback must preserve invalidated
 authority, original outcomes and audit history; reverting code cannot undo remote
 commands or revive revoked credentials. ADR-001/002/003 and M01/M02 stay unchanged.
 
-**Human decision: PENDING; intentionally unsigned.** Tech Lead records the exact
-reviewed commit, accept/revise/reject, approved domain scope, remaining owners,
-identity and authoritative UTC reference. Approval of this ADR would cover only
-the proposed domain constraints, not unresolved mechanisms or implementation.
-The instruction to continue, agent review and document merge supply no approval
-under [AGENTS.md rule 9](../../AGENTS.md).
+## Human decision record
+
+**Accepted with limited scope by the project owner in the conversation on
+2026-11-07 (Asia/Bangkok).** The approval covers only these proposed domain
+constraints: bind a session authorization decision to the authenticated operator,
+intended/current device identity, approved SSH account and session/client
+context; keep management/enrollment/session/SSH/OS authority separate; recheck
+the binding at admission/attachment; reconcile the original operation without
+retargeting or replay; fail closed for new access when required authority is
+invalid or uncertain. The exact approved text is this ADR at the commit linked
+from the review PR for issue #52. The user explicitly confirmed the limited
+scope and that unresolved credential/provider/mechanism details still require
+separate decisions. No verbatim signing identity, UTC timestamp or external
+signature was captured, so none is asserted here.
+
+This approval does **not** approve credentials, protocols, providers, account
+provisioning/restrictions, API/schema, cryptography, numeric budgets, active
+session termination, audit implementation, or production access. Those remain
+separate D01/D02/D03 and M01/M02 gates under [AGENTS.md rule 9](../../AGENTS.md).
