@@ -82,6 +82,11 @@ authority to the user, current intended device, SSH account and session/client
 context. It is a review input only: explicit approval, remaining D01 trust and
 enforcement mechanisms, D02/D03 and P00 remain prerequisites to implementation.
 
+[D02 / Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md),
+[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), proposes lifecycle,
+trusted-time, revocation, uncertain-outcome and audit obligations. It selects no
+credential or storage mechanism; approval and measured budgets remain required.
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.

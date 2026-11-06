@@ -43,6 +43,11 @@ review input for user/device/SSH-account/session authority and reconciliation.
 It selects no authentication, credential or transport mechanism and remains
 unsigned; M01/M02, remaining D01 and web/browser security gates stay open.
 
+[Proposed ADR-005](adr/ADR-005-credential-lifecycle-audit.md), tracked in
+[#51](https://github.com/LiiWzz/DeviceBridge/issues/51), scopes D02 lifecycle,
+time, outage and audit decisions. It remains unsigned and authorizes no credential
+implementation; D01 agreement, P00 and D03 remain prerequisites.
+
 ## Status and boundaries
 
 The owner requested a terminal directly inside the dashboard.
