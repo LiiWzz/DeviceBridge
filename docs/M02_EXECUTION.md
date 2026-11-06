@@ -76,6 +76,12 @@ records, identities and authorized enrollment binding, with
 does not complete D01 or authorize P01/P03 or full WEB-01. Bootstrap mechanism,
 credential/lifecycle/audit and transport decisions remain separately gated.
 
+The separate [D01b / Proposed ADR-004](adr/ADR-004-session-authority-binding.md),
+[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), proposes binding session
+authority to the user, current intended device, SSH account and session/client
+context. It is a review input only: explicit approval, remaining D01 trust and
+enforcement mechanisms, D02/D03 and P00 remain prerequisites to implementation.
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.

@@ -37,6 +37,12 @@ design slice for separating a device record from verified identity binding.
 It awaits explicit Tech Lead approval, leaves bootstrap/credential/API choices
 unresolved and does not clear M01/M02 acceptance or WEB-01 implementation gates.
 
+[Proposed ADR-004](adr/ADR-004-session-authority-binding.md), tracked in
+[#49](https://github.com/LiiWzz/DeviceBridge/issues/49), is a separate M02-D01
+review input for user/device/SSH-account/session authority and reconciliation.
+It selects no authentication, credential or transport mechanism and remains
+unsigned; M01/M02, remaining D01 and web/browser security gates stay open.
+
 ## Status and boundaries
 
 The owner requested a terminal directly inside the dashboard.

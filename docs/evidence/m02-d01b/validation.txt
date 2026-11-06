@@ -1,0 +1,23 @@
+$ git rev-parse HEAD
+c3f4c99e508a6466f48bd3efd31c6eb1a1ec64dc
+
+exit 0
+
+$ python3 --version
+Python 3.14.5
+
+exit 0
+
+$ python3 docs/evidence/m02-d01b/validate.py
+PASS: 55 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly six scoped documentation/evidence files; whitespace clean.
+PASS: runtime, prototype, security baseline, ADR-001/002/003 and M01 unchanged.
+PASS: proposed unsigned status and navigable handoffs retained; no approval inferred.
+
+exit 0
+
+$ git diff --cached --check
+
+exit 0
+
+Documentation checks only. No authorization/security/crypto runtime, live browser/SSH/PTY, application build, Windows/ARM toolchain, physical ARM or hosted CI validation executed. External URLs/fragments unverified; no external provider/library/API selected. ADR approval and M01/M02 acceptance remain pending.
