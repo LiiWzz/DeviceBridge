@@ -49,6 +49,8 @@ web/browser security gates stay open.
 [#51](https://github.com/LiiWzz/DeviceBridge/issues/51), scopes D02 lifecycle,
 time, outage and audit decisions. It remains unsigned and authorizes no credential
 implementation; D01 agreement, P00 and D03 remain prerequisites.
+See [D02 document validation](evidence/m02-d02/validation.txt) and
+[secret-scan evidence](evidence/m02-d02/secrets.txt) for executed checks and limits.
 
 ## Status and boundaries
 

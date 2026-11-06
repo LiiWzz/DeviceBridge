@@ -84,6 +84,11 @@ WEB-01 and browser-specific decisions remain separate prerequisites.
 
 ## Impact, rollback and decision record
 
+Executed documentation checks and limitations are captured in
+[validation.txt](../evidence/m02-d02/validation.txt); scan commands/output are in
+[secrets.txt](../evidence/m02-d02/secrets.txt). Pattern scans cannot certify absence
+of every secret.
+
 This proposal changes documentation only. Future trusted time, durable audit,
 credential state and reconciliation add flash/storage, memory, CPU, latency and
 availability costs. Device database/web runtimes, root and unmeasured flash

@@ -87,6 +87,9 @@ enforcement mechanisms, D02/D03 approvals and P00 remain prerequisites to implem
 [#51](https://github.com/LiiWzz/DeviceBridge/issues/51), proposes lifecycle,
 trusted-time, revocation, uncertain-outcome and audit obligations. It selects no
 credential or storage mechanism; approval and measured budgets remain required.
+Executed document checks and scan output are in
+[D02 validation](evidence/m02-d02/validation.txt) and
+[D02 secret scan](evidence/m02-d02/secrets.txt).
 
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
