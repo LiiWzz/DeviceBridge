@@ -1,0 +1,24 @@
+$ python3 -c 'from pathlib import Path
+import re,subprocess
+files=['"'"'docs/adr/ADR-005-credential-lifecycle-audit.md'"'"','"'"'docs/M02_EXECUTION.md'"'"','"'"'docs/ROADMAP.md'"'"']
+n=0
+for f in files:
+ p=Path(f)
+ for t in re.findall(r'"'"'\]\(([^)]+)\)'"'"',p.read_text()):
+  if '"'"'://'"'"' in t or t.startswith('"'"'#'"'"'):continue
+  t=t.split('"'"'#'"'"')[0]
+  if t:assert (p.parent/t).exists(),(f,t);n+=1
+print(f'"'"'PASS: {n} local targets; external URLs/fragments unverified.'"'"')
+assert '"'"'Status: Proposed'"'"' in Path(files[0]).read_text()
+protected=['"'"'agent'"'"','"'"'cli'"'"','"'"'server'"'"','"'"'security'"'"','"'"'deploy'"'"','"'"'packaging'"'"','"'"'ci'"'"','"'"'docs/ux'"'"','"'"'docs/M01_EXECUTION.md'"'"','"'"'docs/adr/ADR-001-foundation.md'"'"','"'"'docs/adr/ADR-002-device-record-identity-binding.md'"'"','"'"'docs/adr/ADR-003-browser-terminal-scope.md'"'"','"'"'docs/adr/ADR-004-session-authority-binding.md'"'"']
+assert not subprocess.check_output(['"'"'git'"'"','"'"'diff'"'"','"'"'7c2d6090534c135258f925a37f5c8a952d4a5cde'"'"','"'"'--'"'"',*protected])
+print('"'"'PASS: Proposed status retained; runtime/security/prototype/prior ADRs/M01 unchanged.'"'"')
+'
+PASS: 57 local targets; external URLs/fragments unverified.
+PASS: Proposed status retained; runtime/security/prototype/prior ADRs/M01 unchanged.
+
+exit 0
+$ git diff --check
+
+exit 0
+No runtime/build/security/crypto/browser/SSH/PTY/Windows/ARM/physical-hardware/hosted CI validation. Document checks only.

@@ -52,6 +52,13 @@ implementation; D01 agreement, P00 and D03 remain prerequisites.
 See [D02 document validation](evidence/m02-d02/validation.txt) and
 [secret-scan evidence](evidence/m02-d02/secrets.txt) for executed checks and limits.
 
+Deployed-device continuity [#55](https://github.com/LiiWzz/DeviceBridge/issues/55)
+adds proposed automatic agent renewal, bounded safe rotation and independently
+authenticated remote recovery to ADR-005. Proof/custody, offline limits and
+recovery-service evidence still need approval before rollout; no perpetual-access
+guarantee is asserted. See [validation](evidence/m02-recovery/validation.txt) and
+[scan evidence](evidence/m02-recovery/secrets.txt).
+
 ## Status and boundaries
 
 The owner requested a terminal directly inside the dashboard.

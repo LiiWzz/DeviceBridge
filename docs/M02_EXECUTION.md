@@ -91,6 +91,14 @@ Executed document checks and scan output are in
 [D02 validation](evidence/m02-d02/validation.txt) and
 [D02 secret scan](evidence/m02-d02/secrets.txt).
 
+Follow-up [#55](https://github.com/LiiWzz/DeviceBridge/issues/55) extends ADR-005
+with deployed-device renewal, credential separation, bounded verified rotation
+and independently authenticated recovery. Approved offline/recovery limits,
+pre-provisioned trust and tested outage/power-loss paths are rollout blockers.
+No recovery credential or protocol is selected. Evidence:
+[validation](evidence/m02-recovery/validation.txt),
+[secret scan](evidence/m02-recovery/secrets.txt).
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.
