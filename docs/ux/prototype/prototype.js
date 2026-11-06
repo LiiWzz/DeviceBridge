@@ -85,9 +85,7 @@ function finishCreate(draft) {
   state.filter = 'all';
   state.page = Math.floor((devices.length - 1) / 3);
   state.draft = { name: '', site: '', model: '', result: 'Created', message: '', pending: null };
-  navigate('detail');
-  state.outcome = 'Device record created in this local demo. Next: enroll its agent. No enrollment or connectivity is confirmed.';
-  render();
+  navigate('detail', 'Device record created in this local demo. Next: enroll its agent. No enrollment or connectivity is confirmed.');
   announce(state.outcome);
 }
 document.addEventListener('submit', event => {
@@ -146,10 +144,10 @@ function syncURL() {
   url.searchParams.set('screen', state.screen);
   history.replaceState(null, '', url);
 }
-function navigate(screen) {
+function navigate(screen, outcome = '') {
   state.screen = screen;
   state.scenario = 'ready';
-  state.outcome = '';
+  state.outcome = outcome;
   render(true);
   syncURL();
 }

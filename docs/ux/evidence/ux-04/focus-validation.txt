@@ -1,0 +1,124 @@
+Issue #39 focus follow-up; baseline 8a58ea5e21199dcd3ce44363a40f4da0a89910e3.
+VM stub diagnostic: render call/focus flag evidence only, not browser focus.
+Exact /tmp/devicebridge-ux04-focus.cjs source:
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const source = fs.readFileSync('docs/ux/prototype/prototype.js', 'utf8');
+function environment(variant = 'A', origin = 'http://127.0.0.1:8765/') {
+  const listeners = {}, nodes = {};
+  const node = id => nodes[id] ||= { innerHTML: '', textContent: '', hidden: true, open: false, value: 'Still unknown', focus() {}, setAttribute() {}, append(child) { this.innerHTML += child.textContent; }, addEventListener(type, fn) { this['on-' + type] = fn; }, showModal() { this.open = true; }, close() { this.open = false; this['on-close']?.(); }, querySelector() { return node('dialog-button'); } };
+  const context = vm.createContext({ URL, URLSearchParams, location: new URL(`${origin}?variant=${variant}&screen=devices`), history: { replaceState(_a, _b, next) { context.location = new URL(next); } }, document: { querySelector: node, getElementById: node, createElement: () => node('created'), addEventListener(type, fn) { listeners[type] = fn; } } });
+  vm.runInContext(source, context);
+  return { run: code => vm.runInContext(code, context), nodes, listeners, html: () => nodes['#app'].innerHTML,
+    click(action, extra = {}) { listeners.click({ target: { closest() { return { dataset: { action, ...extra } }; } } }); },
+    input(key, value) { listeners.input({ target: { dataset: { draft: key }, value } }); },
+    result(value) { listeners.change({ target: { id: 'create-result', value } }); },
+    submit() { listeners.submit({ target: { id: 'create-device' }, preventDefault() {} }); }
+  };
+}
+
+for (const variant of ['A', 'B', 'C']) {
+  for (const reconcile of [false, true]) {
+    const e = environment(variant);
+    e.click('new-device'); e.input('name', 'Focus review fixture');
+    if (reconcile) { e.result('Unknown'); e.submit(); e.run("document.querySelector('#reconcile-result').value='Created'"); }
+    e.run('var renderCalls = []; var renderBeforeDiagnostic = render; render = function(focus = false) { renderCalls.push(focus); return renderBeforeDiagnostic(focus); }');
+    if (reconcile) e.click('reconcile-create'); else e.submit();
+    const calls = JSON.parse(e.run('JSON.stringify(renderCalls)'));
+    console.log(`${variant} ${reconcile ? 'reconciled' : 'direct'}: renders=${calls.length}, focus flags=${JSON.stringify(calls)}`);
+    assert.deepEqual(calls, [true], 'creation must render its final view once with focus requested');
+    assert(e.html().includes('Device record created in this local demo.'));
+    assert.equal(e.run('state.screen'), 'detail');
+    assert.equal(e.run('state.scenario'), 'ready');
+    assert.equal(e.run('new URL(location.href).searchParams.get("screen")'), 'detail');
+  }
+}
+console.log('PASS: one final focused render for direct and reconciled creation in A/B/C; status and URL retained. VM only, no actual browser focus validation.');
+
+Before diagnostic substitutes baseline git show for the working-tree JS read.
+$ node --version
+v24.18.0
+
+exit=0
+$ node /tmp/devicebridge-ux04-focus-before.cjs
+A direct: renders=2, focus flags=[true,false]
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: creation must render its final view once with focus requested
++ actual - expected
+
+  [
+    true,
++   false
+  ]
+
+    at Object.<anonymous> (/private/tmp/devicebridge-ux04-focus-before.cjs:27:12)
+    at Module._compile (node:internal/modules/cjs/loader:1871:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:2002:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ true, false ],
+  expected: [ true ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
+
+exit=1
+$ node --check docs/ux/prototype/prototype.js
+
+exit=0
+$ node /tmp/devicebridge-ux04-focus.cjs
+A direct: renders=1, focus flags=[true]
+A reconciled: renders=1, focus flags=[true]
+B direct: renders=1, focus flags=[true]
+B reconciled: renders=1, focus flags=[true]
+C direct: renders=1, focus flags=[true]
+C reconciled: renders=1, focus flags=[true]
+PASS: one final focused render for direct and reconciled creation in A/B/C; status and URL retained. VM only, no actual browser focus validation.
+
+exit=0
+$ node /tmp/devicebridge-ux04-smoke.cjs
+PASS A: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS B: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS C: form, whitespace, cancel, failure/deny/expiry, create/detail/list/counts, unknown locking/navigation/lookup/retry, zero inventory, escaped fields, input arrows (VM stub).
+PASS: 189 layout/screen/scenario render combinations (VM stub).
+PASS: nonlocal origin withholds prototype. LIMIT: no real browser/DOM, native validation, focus, CSP, responsive, accessibility or human-flow acceptance.
+
+exit=0
+$ git diff --check
+
+exit=0
+
+Exact /tmp/devicebridge-ux04-focus-docs.py source:
+from pathlib import Path
+import re
+import subprocess
+base = '8a58ea5e21199dcd3ce44363a40f4da0a89910e3'
+count = 0
+p = Path('docs/ux/UX-04.md')
+for target in re.findall(r'\]\(([^)]+)\)', p.read_text()):
+ if '://' in target or target.startswith('#'): continue
+ assert (p.parent / target.split('#')[0].split('?')[0]).is_file(), target
+ count += 1
+print(f'PASS: {count} local document links; external URLs/fragments unverified.')
+changed = set(subprocess.check_output(['git','diff',base,'--name-only'],text=True).splitlines())
+changed.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines())
+allowed = {'docs/ux/prototype/prototype.js','docs/ux/UX-04.md','docs/ux/evidence/ux-04/focus-validation.txt','docs/ux/evidence/ux-04/focus-secrets.txt'}
+assert changed <= allowed, changed
+subprocess.run(['git','diff','--check',base],check=True)
+print('PASS: diff limited to creation prototype, its documentation and evidence; whitespace clean.')
+
+$ python3 /tmp/devicebridge-ux04-focus-docs.py
+PASS: 9 local document links; external URLs/fragments unverified.
+PASS: diff limited to creation prototype, its documentation and evidence; whitespace clean.
+exit=0
