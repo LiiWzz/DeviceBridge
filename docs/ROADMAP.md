@@ -19,6 +19,12 @@ to dashboard needs and records contract prerequisites. This discovery slice
 does not satisfy WEB-01's agreed M02 identity/authorization dependency or select
 API/security contracts. UX-03 review and all implementation gates remain open.
 
+[Proposed ADR-006](adr/ADR-006-transport-trust-and-bounds.md),
+[#57](https://github.com/LiiWzz/DeviceBridge/issues/57), is the next M02-D03
+design input: separate relay/device/session/SSH trust, native handoff and
+aggregate transport bounds. It selects no protocol, mechanism or numerical
+budget; Tech Lead approval and remaining D01/D02/P00 gates still precede coding.
+
 The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
 [#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
 into dependency-ordered planning packages and approval/evidence gates. It is
