@@ -1,0 +1,19 @@
+Issue #45 browser-terminal proposal evidence.
+
+$ git rev-parse HEAD
+1090dbdfd401bfb07d85d8fdb12dec08b4a1045c
+exit=0
+
+$ python3 --version
+Python 3.14.5
+exit=0
+
+$ python3 docs/evidence/browser-terminal/validate.py
+PASS: 66 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly eight documentation/evidence files; whitespace clean.
+PASS: runtime/prototype/security baseline, ADR-001/002 and M01 contract unchanged.
+PASS: proposal status and navigable handoffs retained; no approval/runtime acceptance inferred.
+exit=0
+
+$ git diff --cached --check
+exit=0
