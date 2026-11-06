@@ -6,6 +6,16 @@ do not approve a protocol, credential mechanism or permission model.
 
 ## Language
 
+**Operator identity**:
+The distinct human principal responsible for a maintenance action within an
+authoritative identity domain. Its recognition does not itself grant permission.
+_Avoid_: Display name, device identity, SSH account
+
+**Maintenance authority**:
+Permission for an operator to perform specified maintenance actions on specified
+resources within an authoritative scope.
+_Avoid_: Online status, authenticated identity, unrestricted administrator
+
 **Device record**:
 The administrative entry describing an intended device. Its presence or display
 metadata does not establish which device is present or whether it can be reached.

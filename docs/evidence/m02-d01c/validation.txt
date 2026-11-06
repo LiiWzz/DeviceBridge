@@ -1,0 +1,16 @@
+Documentation-only checks; no authorization/security runtime validation.
+$ python3 --version
+Python 3.14.5
+Exit: 0
+$ git rev-parse HEAD
+168578d8e9e0ff5ecada58b282d69fdf32852fc7
+Exit: 0
+$ python3 docs/evidence/m02-d01c/validate.py
+PASS: 73 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly seven scoped document/evidence files; whitespace clean.
+PASS: runtime, prototype, security baseline, prior ADRs and M01 unchanged.
+PASS: proposed unsigned status and linked M02/roadmap handoffs retained.
+Exit: 0
+$ git diff --check 168578d8e9e0ff5ecada58b282d69fdf32852fc7
+Exit: 0
+Limits: external URLs/fragments/provider facts, application build/lint, live auth/policy/security/SSH/browser, Windows/ARM toolchains, physical ARM hardware and hosted CI unexecuted.

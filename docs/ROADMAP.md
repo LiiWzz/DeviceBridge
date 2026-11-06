@@ -25,6 +25,12 @@ design input: separate relay/device/session/SSH trust, native handoff and
 aggregate transport bounds. It selects no protocol, mechanism or numerical
 budget; Tech Lead approval and remaining D01/D02/P00 gates still precede coding.
 
+[Proposed ADR-007](adr/ADR-007-operator-trust-and-authority.md),
+[#59](https://github.com/LiiWzz/DeviceBridge/issues/59), addresses remaining D01
+operator trust, scoped maintenance authority and delegation review inputs.
+It selects no identity provider, role/tenant model or policy mechanism and
+retains all explicit human approval and M01/M02 implementation gates.
+
 The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
 [#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
 into dependency-ordered planning packages and approval/evidence gates. It is

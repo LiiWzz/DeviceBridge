@@ -108,6 +108,14 @@ framing, active-session policies and measured budgets remain approval blockers;
 this design input completes no D03 or implementation gate. Evidence:
 [validation](evidence/m02-d03/validation.txt), [scan](evidence/m02-d03/secrets.txt).
 
+[D01c / Proposed ADR-007](adr/ADR-007-operator-trust-and-authority.md),
+[#59](https://github.com/LiiWzz/DeviceBridge/issues/59), proposes trusted operator
+identity mapping, explicit resource/action scope and non-amplifying delegation,
+including initial trust/audit bootstrap obligations. Identity/provider, policy,
+delegation and provisioning mechanisms remain approval blockers; it completes
+no D01 or implementation gate. Evidence:
+[validation](evidence/m02-d01c/validation.txt), [scan](evidence/m02-d01c/secrets.txt).
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.
