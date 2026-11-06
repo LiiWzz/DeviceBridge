@@ -100,6 +100,14 @@ No recovery credential or protocol is selected. Evidence:
 [validation](evidence/m02-recovery/validation.txt),
 [secret scan](evidence/m02-recovery/secrets.txt).
 
+[D03 / Proposed ADR-006](adr/ADR-006-transport-trust-and-bounds.md),
+[#57](https://github.com/LiiWzz/DeviceBridge/issues/57), proposes separate TLS,
+device/session and SSH host-key trust, opaque authorized stream handling,
+native handoff and aggregate admission/backpressure obligations. Mechanisms,
+framing, active-session policies and measured budgets remain approval blockers;
+this design input completes no D03 or implementation gate. Evidence:
+[validation](evidence/m02-d03/validation.txt), [scan](evidence/m02-d03/secrets.txt).
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.
