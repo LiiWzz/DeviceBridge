@@ -24,6 +24,10 @@ is tracked separately for M03 following the owner's request. It is unimplemented
 and awaits scope/security approval; the existing native CLI plan remains the
 baseline until the relevant decisions and acceptance gates are satisfied.
 
+Try the [local browser-terminal state demo](docs/ux/UX-05.md) by opening its single
+HTML file. It simulates typing, paste and session outcomes; it connects to no device
+and executes no commands. Human flow review and production approval remain pending.
+
 - `agent/`: Rust embedded agent (DB-002)
 - `server/control/`: Go control API (DB-003)
 - `server/relay/` and `cli/`: Go relay and CLI (DB-004)

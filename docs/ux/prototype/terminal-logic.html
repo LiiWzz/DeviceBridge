@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>DeviceBridge — terminal state demo (no connection)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f7f5; color: #173d36; font: 1rem/1.5 system-ui, sans-serif; }
+  main { max-width: 68rem; margin: auto; padding: 1rem; }
+  section { margin: 1rem 0; padding: 1rem; background: white; border: 1px solid #50605b; border-radius: .75rem; }
+  h1, h2, p { margin-top: 0; }
+  button, input, textarea { font: inherit; color: inherit; background: white; border: 2px solid #50605b; border-radius: .5rem; padding: .5rem; }
+  button { min-height: 44px; cursor: pointer; }
+  button[aria-selected="true"] { background: #145d52; color: white; }
+  button:disabled { cursor: default; border-style: dashed; }
+  :focus-visible { outline: 3px solid #145d52; outline-offset: 3px; }
+  .row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  dl { display: grid; grid-template-columns: minmax(8rem, 1fr) 3fr; gap: .5rem; }
+  dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+  dt, label { font-weight: 650; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 1rem; border: 1px solid #50605b; max-height: 18rem; overflow: auto; }
+  textarea, input { display: block; width: 100%; margin: .5rem 0; }
+  .notice { border-left: .4rem solid #145d52; padding-left: 1rem; }
+  @media (max-width: 35rem) { dl { grid-template-columns: 1fr; } dd { margin-bottom: .5rem; } }
+</style>
+<main>
+  <h1>Terminal session explorer</h1>
+  <p class="notice"><strong>THROWAWAY DEMO — no device connection.</strong> Can an operator distinguish preparing,
+    attached, uncertain and closed sessions without duplicate starts or replaying input? All outcomes are simulated;
+    typing never executes commands. Open this file directly; nothing is saved or sent.</p>
+  <p>Proposed BTERM-UX / issue #47. This explores session logic, not final visual design or approved security policy.
+    SSH, PTY, real <code>top</code>/<code>vi</code>, host-key verification and authorization are absent.</p>
+
+  <section aria-labelledby="state-title">
+    <h2 id="state-title">Current simulated state</h2>
+    <dl id="state"></dl>
+    <p id="notice" role="status" aria-live="polite" aria-atomic="true"></p>
+  </section>
+  <section aria-labelledby="terminal-title">
+    <h2 id="terminal-title">Simulated command line</h2>
+    <p>Device: Demo pump 01 · Account: demo-operator · Local synthetic session only.</p>
+    <pre id="output" tabindex="0" aria-label="Synthetic output, inert text"></pre>
+    <label for="command">Command text (inert; up to 1,024 characters)</label>
+    <input id="command" maxlength="1024" autocomplete="off" spellcheck="false" aria-describedby="input-help">
+    <p id="input-help">Enter simulates sending. Ctrl+C simulates an interrupt only while this field has focus.
+      Paste is intercepted and staged for confirmation. No clipboard is read automatically. All responses are canned.</p>
+    <div class="row"><button id="send" type="button">Simulate Enter</button><button id="interrupt" type="button">Simulate Ctrl+C</button></div>
+    <label for="paste">Paste preview (inert; up to 1,024 characters)</label>
+    <textarea id="paste" rows="3" maxlength="1024" spellcheck="false" aria-describedby="paste-help"></textarea>
+    <p id="paste-help">Stage the text, inspect it in Current state, then confirm explicitly. Any edit cancels the staged version.
+      Newlines could execute multiple commands in a real terminal. Use sample text only; do not enter secrets.</p>
+    <div class="row"><button id="stage" type="button">Stage paste</button><button id="confirm" type="button">Confirm simulated paste</button><button id="cancel" type="button">Cancel paste</button></div>
+    <div class="row"><label for="columns">Columns</label><input id="columns" type="number" min="20" max="240" value="80">
+      <label for="rows">Rows</label><input id="rows" type="number" min="5" max="80" value="24"><button id="resize" type="button">Simulate resize</button></div>
+    <p>Dimensions are a local label, not a PTY resize. Input is available only in the simulated attached state.</p>
+  </section>
+  <section aria-labelledby="actions-title">
+    <h2 id="actions-title">Free play</h2>
+    <p>Outcome buttons deliberately remain available in every state. Invalid transitions explain why they are ignored.
+      Reset erases this local demonstration only; it cannot close a real session or undo commands.</p>
+    <div id="actions" class="row"></div>
+  </section>
+  <section aria-labelledby="walk-title">
+    <h2 id="walk-title">Guided walkthroughs</h2>
+    <p>Selecting a walkthrough resets the entire demo. Follow its buttons in order. Arrow keys, Home and End move between tabs.</p>
+    <div id="tabs" class="row" role="tablist" aria-label="Terminal scenarios"></div>
+    <div id="walk" role="tabpanel" tabindex="0"></div>
+  </section>
+  <p>Human flow review pending. Closing SSH cannot guarantee stopping background processes or undoing remote commands.
+    Production needs approved ADRs, backend contracts, accepted M01/M02 and real browser/device testing.</p>
+</main>
+<script id="terminal-model">
+// Pure, local exploration model. No DOM, network, persistence, credentials or interpreter.
+const TerminalDemo = (() => {
+  const initial = () => ({ phase: 'idle', authority: 'Not checked', session: null, starts: 0, draft: '', paste: '', staged: '',
+    columns: 80, rows: 24, output: [], notice: 'Choose Connect or start a walkthrough.' });
+  const restartable = new Set(['idle', 'closed', 'denied', 'hostkey', 'unavailable']);
+  const labels = { idle: 'Not started', preparing: 'Preparing — simulated checks pending', attached: 'Attached — simulated only',
+    unknown: 'Start outcome unknown — reconcile original', lost: 'Transport lost — original session unresolved',
+    closing: 'Disconnect requested — cleanup unconfirmed', closed: 'Closure confirmed — simulated', denied: 'Access denied — simulated',
+    expired: 'Authorization expired — simulated', revoked: 'Authorization revoked — simulated',
+    hostkey: 'SSH host-key failure — simulated', unavailable: 'Service unavailable — simulated' };
+  const clearInput = s => ({ ...s, draft: '', paste: '', staged: '' });
+  const append = (s, ...lines) => ({ ...s, output: [...s.output, ...lines.map(line => line.slice(0, 1200))].slice(-40) });
+  function reduce(state, action) {
+    let s = { ...state, notice: 'This action is unavailable in the current state; nothing was sent.' };
+    const attached = s.phase === 'attached';
+    switch (action.type) {
+      case 'reset': return initial();
+      case 'connect':
+        if (!restartable.has(s.phase)) return { ...s, notice: 'Reconcile or confirm closure of the original session before another start.' };
+        return { ...initial(), starts: s.starts + 1, session: `demo-${s.starts + 1}`, phase: 'preparing', notice: 'Simulated start requested; no input until simulated checks succeed.' };
+      case 'attach':
+        if (s.phase !== 'preparing') return s;
+        return append({ ...s, phase: 'attached', authority: 'Simulated checks succeeded', notice: 'Simulated authorization and host-key checks succeeded. No real checks occurred.' }, '[DEMO] Attached. Commands are inert; responses are canned.');
+      case 'unknown':
+        if (s.phase !== 'preparing') return s;
+        return { ...clearInput(s), phase: 'unknown', notice: 'No start response. Do not start a duplicate session.' };
+      case 'loss':
+        if (!attached) return s;
+        return { ...clearInput(s), phase: 'lost', notice: 'Transport lost. Unsent input and staged paste discarded; no automatic replay.' };
+      case 'reconcile-attached':
+        if (!['unknown', 'lost'].includes(s.phase)) return s;
+        return append({ ...clearInput(s), phase: 'attached', authority: 'Simulated fresh checks succeeded', notice: 'Original session attached by a simulated authoritative result with fresh checks. No input replayed.' }, '[DEMO] Original session reconciled; no input replayed.');
+      case 'disconnect':
+        if (!['preparing', 'attached', 'unknown', 'lost'].includes(s.phase)) return s;
+        return { ...clearInput(s), phase: 'closing', notice: 'Disconnect requested. Waiting for simulated server confirmation; no new start yet.' };
+      case 'closed':
+        if (!['closing', 'unknown', 'lost'].includes(s.phase)) return s;
+        return { ...clearInput(s), phase: 'closed', notice: 'Simulated authority confirms the original session closed. Background commands could outlive SSH.' };
+      case 'denied': case 'hostkey': case 'unavailable':
+        if (s.phase !== 'preparing') return s;
+        return { ...clearInput(s), phase: action.type, authority: labels[action.type], output: [], notice: 'Simulated rejection before attachment. No usable terminal or bypass.' };
+      case 'expired': case 'revoked':
+        if (!['preparing', 'attached', 'unknown', 'lost', 'closing'].includes(s.phase)) return s;
+        return { ...clearInput(s), phase: 'closing', authority: labels[action.type], output: [], notice: `${labels[action.type]}. Input/output withheld; closure still needs confirmation. A new start needs fresh checks.` };
+      case 'draft':
+        return attached ? { ...s, draft: action.text.slice(0, 1024), notice: 'Command draft changed locally; nothing sent.' } : s;
+      case 'paste-edit':
+        return attached ? { ...s, paste: action.text.slice(0, 1024), staged: '', notice: 'Paste preview edited; confirm only after staging again.' } : s;
+      case 'stage':
+        return attached && s.paste ? { ...s, staged: s.paste, notice: 'Inspect staged text in Current state before confirming simulated paste.' } : s;
+      case 'cancel': return { ...s, paste: '', staged: '', notice: 'Local staged paste discarded.' };
+      case 'confirm':
+        if (!attached || !s.staged) return s;
+        return append({ ...s, paste: '', staged: '', notice: 'Paste simulated once. No commands executed.' }, `[DEMO paste] ${s.staged}`, '[DEMO] Canned acknowledgement; nothing executed.');
+      case 'send':
+        if (!attached || !s.draft.trim()) return s;
+        return append({ ...s, draft: '', notice: 'Enter simulated; no command interpreter exists.' }, `demo-operator@demo-pump $ ${s.draft}`, '[DEMO] Canned acknowledgement. Real output / top / vi are unavailable.');
+      case 'interrupt':
+        return attached ? append({ ...s, draft: '', staged: '', paste: '', notice: 'Ctrl+C simulated; no signal sent to any process.' }, '[DEMO] ^C — simulated only') : s;
+      case 'resize':
+        if (!attached) return s;
+        if (!Number.isInteger(action.columns) || !Number.isInteger(action.rows) || action.columns < 20 || action.columns > 240 || action.rows < 5 || action.rows > 80)
+          return { ...s, notice: 'Demo dimensions must be whole numbers: columns 20–240, rows 5–80.' };
+        return { ...s, columns: action.columns, rows: action.rows, notice: 'Dimensions changed locally; no real PTY resize.' };
+      default: return s;
+    }
+  }
+  return { initial, reduce, labels };
+})();
+</script>
+<script id="terminal-page">
+const $ = id => document.getElementById(id);
+let state = TerminalDemo.initial();
+const actions = [ ['connect', 'Connect (simulated)'], ['attach', 'Checks succeed / attach'], ['unknown', 'Lose start response'],
+  ['loss', 'Lose transport'], ['reconcile-attached', 'Reconcile original: attached'], ['disconnect', 'Disconnect'],
+  ['closed', 'Confirm original closed'], ['denied', 'Deny access'], ['expired', 'Expire authorization'],
+  ['revoked', 'Revoke authorization'], ['hostkey', 'Reject SSH host key'], ['unavailable', 'Service unavailable'], ['reset', 'Reset demo'] ];
+const scenarios = [
+  { name: 'Connect and close', description: 'No input before checks. Disconnect requests closure; only confirmation finishes it.', steps: [
+    ['Connect', {type:'connect'}], ['Checks succeed', {type:'attach'}], ['Draft sample text', {type:'draft',text:'whoami'}],
+    ['Simulate Enter', {type:'send'}], ['Simulate Ctrl+C', {type:'interrupt'}], ['Simulate resize', {type:'resize',columns:100,rows:30}],
+    ['Disconnect', {type:'disconnect'}], ['Confirm cleanup', {type:'closed'}] ] },
+  { name: 'Uncertain start', description: 'A lost response does not mean failure. A second start is blocked; reconcile the original.', steps: [
+    ['Connect', {type:'connect'}], ['Lose response', {type:'unknown'}], ['Attempt duplicate', {type:'connect'}],
+    ['Reconcile original with fresh checks', {type:'reconcile-attached'}], ['Disconnect', {type:'disconnect'}], ['Confirm closed', {type:'closed'}] ] },
+  { name: 'Loss and paste', description: 'Stage multiline text, lose transport and recover. The staged paste is discarded and cannot replay.', steps: [
+    ['Connect', {type:'connect'}], ['Attach', {type:'attach'}], ['Preview sample paste', {type:'paste-edit',text:'echo sample\necho second'}],
+    ['Stage paste', {type:'stage'}], ['Lose transport', {type:'loss'}], ['Attempt sending while lost', {type:'send'}],
+    ['Reconcile original', {type:'reconcile-attached'}], ['Attempt stale confirmation', {type:'confirm'}] ] },
+  { name: 'Revocation', description: 'Authority is lost while attached. Input/output disappear; closing remains pending until confirmed.', steps: [
+    ['Connect', {type:'connect'}], ['Attach', {type:'attach'}], ['Revoke', {type:'revoked'}],
+    ['Attempt premature new start', {type:'connect'}], ['Confirm closure', {type:'closed'}] ] },
+  { name: 'Reject host key', description: 'A host-key failure never offers an unsafe bypass. A later attempt starts from fresh checks.', steps: [
+    ['Connect', {type:'connect'}], ['Reject key', {type:'hostkey'}], ['Attempt typing', {type:'draft',text:'ignored'}],
+    ['New request', {type:'connect'}], ['Deny access', {type:'denied'}] ] }
+];
+let selected = 0, step = 0, guided = true;
+function dispatch(action) { state = TerminalDemo.reduce(state, action); render(); }
+function render() {
+  const fields = [ ['Device / account', 'Demo pump 01 / demo-operator (synthetic)'], ['Session state', TerminalDemo.labels[state.phase]],
+    ['Checks / authority', state.authority], ['Original session', state.session || 'None'], ['Simulated starts', String(state.starts)], ['Input allowed', state.phase === 'attached' ? 'Yes — inert simulation only' : 'No'],
+    ['Command draft', state.draft || '(empty)'], ['Paste preview', state.paste || '(empty)'], ['Staged paste', state.staged || '(empty)'],
+    ['Dimensions', `${state.columns} columns × ${state.rows} rows (demo)`], ['Output buffer', `${state.output.length} / 40 entries, up to 1,200 characters each (demo limits only)`] ];
+  $('state').replaceChildren(...fields.flatMap(([label, value]) => {
+    const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = label; dd.textContent = value; return [dt, dd];
+  }));
+  $('notice').textContent = state.notice;
+  $('output').textContent = state.output.join('\n') || '[DEMO] No synthetic output.';
+  $('command').value = state.draft; $('paste').value = state.paste;
+  $('columns').value = state.columns; $('rows').value = state.rows;
+  for (const id of ['command','paste','send','interrupt','stage','resize','columns','rows']) $(id).disabled = state.phase !== 'attached';
+  $('confirm').disabled = state.phase !== 'attached' || !state.staged;
+  $('cancel').disabled = !state.paste && !state.staged;
+}
+function renderWalk() {
+  const scenario = scenarios[selected];
+  for (const [i, tab] of [...$('tabs').children].entries()) { tab.setAttribute('aria-selected', String(i === selected)); tab.tabIndex = i === selected ? 0 : -1; }
+  $('walk').setAttribute('aria-labelledby', `tab-${selected}`);
+  const description = document.createElement('p'); description.textContent = scenario.description;
+  const progress = document.createElement('p'); progress.textContent = !guided ? 'Free play changed the state. Select a walkthrough tab to reset before following its steps.' : step === scenario.steps.length ? 'Walkthrough complete. Explore freely or select a tab to reset.' : `Next: step ${step + 1} of ${scenario.steps.length}.`;
+  const buttons = scenario.steps.map(([label, action], index) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = `${index + 1}. ${label}`; b.disabled = !guided || index !== step;
+    b.onclick = () => { dispatch(action); step++; renderWalk(); const next = $('walk').querySelector('button:not(:disabled)'); (next || $('walk')).focus(); }; return b;
+  });
+  const row = document.createElement('div'); row.className = 'row'; row.append(...buttons);
+  $('walk').replaceChildren(description, progress, row);
+}
+for (const [type, label] of actions) {
+  const button = document.createElement('button'); button.type = 'button'; button.textContent = label;
+  button.onclick = () => { dispatch({type}); guided = false; renderWalk(); }; $('actions').append(button);
+}
+scenarios.forEach((scenario, i) => {
+  const tab = document.createElement('button'); tab.type = 'button'; tab.id = `tab-${i}`; tab.setAttribute('role','tab'); tab.setAttribute('aria-controls','walk'); tab.textContent = scenario.name;
+  tab.onclick = () => { selected = i; step = 0; guided = true; dispatch({type:'reset'}); renderWalk(); };
+  tab.onkeydown = event => {
+    const keyIndex = {ArrowRight:(i+1)%scenarios.length,ArrowLeft:(i+scenarios.length-1)%scenarios.length,Home:0,End:scenarios.length-1}[event.key];
+    if (keyIndex !== undefined) { event.preventDefault(); const next = $('tabs').children[keyIndex]; next.click(); next.focus(); }
+  }; $('tabs').append(tab);
+});
+$('command').oninput = event => dispatch({type:'draft',text:event.target.value});
+$('command').onkeydown = event => {
+  if (event.isComposing) return;
+  if (event.key === 'Enter') { event.preventDefault(); dispatch({type:'send'}); }
+  if (event.ctrlKey && event.key.toLowerCase() === 'c') { event.preventDefault(); dispatch({type:'interrupt'}); }
+};
+$('command').onpaste = event => {
+  event.preventDefault(); dispatch({type:'paste-edit',text:event.clipboardData.getData('text/plain')}); $('paste').focus();
+};
+$('paste').oninput = event => dispatch({type:'paste-edit',text:event.target.value});
+for (const id of ['send','interrupt','stage','confirm','cancel']) $(id).onclick = () => dispatch({type:id});
+$('resize').onclick = () => dispatch({type:'resize',columns:Number($('columns').value),rows:Number($('rows').value)});
+render(); renderWalk();
+</script>
+</html>

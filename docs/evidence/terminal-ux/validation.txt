@@ -1,0 +1,122 @@
+Initial link-check attempt exited 1 because validation.txt had not yet been generated (AssertionError: docs/ux/UX-05.md -> ../evidence/terminal-ux/validation.txt). Evidence files created; complete rerun below. Model exploration had exited 0.
+
+$ git rev-parse HEAD
+c3f4c99e508a6466f48bd3efd31c6eb1a1ec64dc
+
+exit 0
+
+$ node --version
+v24.18.0
+
+exit 0
+
+$ python3 --version
+Python 3.14.5
+
+exit 0
+
+$ node docs/evidence/terminal-ux/inspect.mjs
+Syntax compiled: terminal-model
+Syntax compiled: terminal-page
+
+Walkthrough: Connect and close
+{"action":"Connect","phase":"preparing","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Checks succeed","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Simulated authorization and host-key checks succeeded. No real checks occurred."}
+{"action":"Draft sample text","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"whoami","staged":"","outputEntries":1,"notice":"Command draft changed locally; nothing sent."}
+{"action":"Simulate Enter","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":3,"notice":"Enter simulated; no command interpreter exists."}
+{"action":"Simulate Ctrl+C","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":4,"notice":"Ctrl+C simulated; no signal sent to any process."}
+{"action":"Simulate resize","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":4,"notice":"Dimensions changed locally; no real PTY resize."}
+{"action":"Disconnect","phase":"closing","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":4,"notice":"Disconnect requested. Waiting for simulated server confirmation; no new start yet."}
+{"action":"Confirm cleanup","phase":"closed","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":4,"notice":"Simulated authority confirms the original session closed. Background commands could outlive SSH."}
+
+Walkthrough: Uncertain start
+{"action":"Connect","phase":"preparing","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Lose response","phase":"unknown","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"No start response. Do not start a duplicate session."}
+{"action":"Attempt duplicate","phase":"unknown","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Reconcile or confirm closure of the original session before another start."}
+{"action":"Reconcile original with fresh checks","phase":"attached","authority":"Simulated fresh checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Original session attached by a simulated authoritative result with fresh checks. No input replayed."}
+{"action":"Disconnect","phase":"closing","authority":"Simulated fresh checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Disconnect requested. Waiting for simulated server confirmation; no new start yet."}
+{"action":"Confirm closed","phase":"closed","authority":"Simulated fresh checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Simulated authority confirms the original session closed. Background commands could outlive SSH."}
+
+Walkthrough: Loss and paste
+{"action":"Connect","phase":"preparing","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Attach","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Simulated authorization and host-key checks succeeded. No real checks occurred."}
+{"action":"Preview sample paste","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Paste preview edited; confirm only after staging again."}
+{"action":"Stage paste","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"echo sample\necho second","outputEntries":1,"notice":"Inspect staged text in Current state before confirming simulated paste."}
+{"action":"Lose transport","phase":"lost","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Transport lost. Unsent input and staged paste discarded; no automatic replay."}
+{"action":"Attempt sending while lost","phase":"lost","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"This action is unavailable in the current state; nothing was sent."}
+{"action":"Reconcile original","phase":"attached","authority":"Simulated fresh checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":2,"notice":"Original session attached by a simulated authoritative result with fresh checks. No input replayed."}
+{"action":"Attempt stale confirmation","phase":"attached","authority":"Simulated fresh checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":2,"notice":"This action is unavailable in the current state; nothing was sent."}
+
+Walkthrough: Revocation
+{"action":"Connect","phase":"preparing","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Attach","phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":1,"notice":"Simulated authorization and host-key checks succeeded. No real checks occurred."}
+{"action":"Revoke","phase":"closing","authority":"Authorization revoked — simulated","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Authorization revoked — simulated. Input/output withheld; closure still needs confirmation. A new start needs fresh checks."}
+{"action":"Attempt premature new start","phase":"closing","authority":"Authorization revoked — simulated","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Reconcile or confirm closure of the original session before another start."}
+{"action":"Confirm closure","phase":"closed","authority":"Authorization revoked — simulated","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated authority confirms the original session closed. Background commands could outlive SSH."}
+
+Walkthrough: Reject host key
+{"action":"Connect","phase":"preparing","authority":"Not checked","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Reject key","phase":"hostkey","authority":"SSH host-key failure — simulated","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"Simulated rejection before attachment. No usable terminal or bypass."}
+{"action":"Attempt typing","phase":"hostkey","authority":"SSH host-key failure — simulated","session":"demo-1","starts":1,"draft":"","staged":"","outputEntries":0,"notice":"This action is unavailable in the current state; nothing was sent."}
+{"action":"New request","phase":"preparing","authority":"Not checked","session":"demo-2","starts":2,"draft":"","staged":"","outputEntries":0,"notice":"Simulated start requested; no input until simulated checks succeed."}
+{"action":"Deny access","phase":"denied","authority":"Access denied — simulated","session":"demo-2","starts":2,"draft":"","staged":"","outputEntries":0,"notice":"Simulated rejection before attachment. No usable terminal or bypass."}
+
+Free-play outcome denied: {"phase":"denied","authority":"Access denied — simulated","session":"demo-1","starts":1,"draft":"","paste":"","staged":"","columns":80,"rows":24,"output":[],"notice":"This action is unavailable in the current state; nothing was sent."}
+
+Free-play outcome expired: {"phase":"closing","authority":"Authorization expired — simulated","session":"demo-1","starts":1,"draft":"","paste":"","staged":"","columns":80,"rows":24,"output":[],"notice":"Reconcile or confirm closure of the original session before another start."}
+
+Free-play outcome unavailable: {"phase":"unavailable","authority":"Service unavailable — simulated","session":"demo-1","starts":1,"draft":"","paste":"","staged":"","columns":80,"rows":24,"output":[],"notice":"This action is unavailable in the current state; nothing was sent."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"<img src=x onerror=example>\necho inert","staged":"","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned."],"notice":"Paste preview edited; confirm only after staging again."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"<img src=x onerror=example>\necho inert","staged":"<img src=x onerror=example>\necho inert","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned."],"notice":"Inspect staged text in Current state before confirming simulated paste."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"edited sample","staged":"","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned."],"notice":"Paste preview edited; confirm only after staging again."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"edited sample","staged":"","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned."],"notice":"This action is unavailable in the current state; nothing was sent."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"edited sample","staged":"edited sample","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned."],"notice":"Inspect staged text in Current state before confirming simulated paste."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"","staged":"","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned.","[DEMO paste] edited sample","[DEMO] Canned acknowledgement; nothing executed."],"notice":"Paste simulated once. No commands executed."}
+Paste exploration: {"phase":"attached","authority":"Simulated checks succeeded","session":"demo-1","starts":1,"draft":"","paste":"","staged":"","columns":80,"rows":24,"output":["[DEMO] Attached. Commands are inert; responses are canned.","[DEMO paste] edited sample","[DEMO] Canned acknowledgement; nothing executed."],"notice":"This action is unavailable in the current state; nothing was sent."}
+
+Bounded exploration: output entries=40; maximum entry characters=1050; dimensions=80x24; Demo dimensions must be whole numbers: columns 20–240, rows 5–80.
+LIMIT: pure model and script syntax only; no DOM, browser, SSH, PTY or security acceptance.
+
+exit 0
+
+$ python3 -c 'from pathlib import Path
+from html.parser import HTMLParser
+import re, subprocess
+root=Path.cwd()
+count=0
+for file in ['"'"'README.md'"'"','"'"'docs/ux/UX-03.md'"'"','"'"'docs/ux/UX-05.md'"'"']:
+ p=root/file
+ for target in re.findall(r'"'"'\]\(([^)]+)\)'"'"',p.read_text()):
+  if '"'"'://'"'"' in target or target.startswith('"'"'#'"'"'): continue
+  target=target.split('"'"'#'"'"')[0]
+  if target:
+   assert (p.parent/target).exists(),(file,target)
+   count+=1
+print(f'"'"'PASS: {count} local Markdown file targets; external URLs/fragments unverified.'"'"')
+class Inspect(HTMLParser):
+ def __init__(self): super().__init__(); self.ids=[]; self.remote=[]
+ def handle_starttag(self,tag,attrs):
+  attrs=dict(attrs)
+  if '"'"'id'"'"' in attrs: self.ids.append(attrs['"'"'id'"'"'])
+  for key in ['"'"'src'"'"','"'"'href'"'"','"'"'action'"'"']:
+   if attrs.get(key): self.remote.append((tag,key,attrs[key]))
+p=Inspect(); p.feed((root/'"'"'docs/ux/prototype/terminal-logic.html'"'"').read_text())
+assert len(p.ids)==len(set(p.ids))
+assert not p.remote,p.remote
+print(f'"'"'PASS: HTML parsed; {len(p.ids)} unique IDs; no src/href/action resource references. Not browser validation.'"'"')
+base='"'"'c3f4c99e508a6466f48bd3efd31c6eb1a1ec64dc'"'"'
+protected=['"'"'agent'"'"','"'"'cli'"'"','"'"'server'"'"','"'"'deploy'"'"','"'"'packaging'"'"','"'"'ci'"'"','"'"'security'"'"','"'"'AGENTS.md'"'"','"'"'docs/adr'"'"','"'"'docs/M01_EXECUTION.md'"'"','"'"'docs/M02_EXECUTION.md'"'"','"'"'docs/ux/prototype/index.html'"'"','"'"'docs/ux/prototype/prototype.js'"'"','"'"'docs/ux/prototype/prototype.css'"'"']
+assert not subprocess.check_output(['"'"'git'"'"','"'"'diff'"'"',base,'"'"'--'"'"',*protected])
+print('"'"'PASS: runtime, contracts, ADRs, M01/M02 and existing fleet prototype unchanged.'"'"')
+'
+PASS: 25 local Markdown file targets; external URLs/fragments unverified.
+PASS: HTML parsed; 24 unique IDs; no src/href/action resource references. Not browser validation.
+PASS: runtime, contracts, ADRs, M01/M02 and existing fleet prototype unchanged.
+
+exit 0
+
+$ git diff --check
+
+exit 0
+
+No browser/DOM/clipboard/keyboard/accessibility, actual SSH/PTY/security, application build, Windows/ARM toolchain, physical ARM or hosted CI validation executed. BrowserOS neo MCP tools unavailable; no fallback browser substituted. Model traces are exploratory diagnostics, not a test suite or human flow approval.
