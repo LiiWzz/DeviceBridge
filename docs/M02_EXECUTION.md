@@ -130,14 +130,29 @@ The limited confirmation after PR #62 is recorded in
 above remains historical. Approval-record checks are included in
 [D02a validation](evidence/m02-d02a/validation.txt).
 
-[D02a / Proposed ADR-009](adr/ADR-009-active-session-validity.md),
-[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), proposes stopping both
+[D02a / ADR-009](adr/ADR-009-active-session-validity.md),
+[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), records owner agreement
+with the limited policy of stopping both
 directions of usable session traffic and bounded closure when validity is lost
 or cannot be established. No automatic resume or replay; local/remote/audit
 outcomes stay distinct. Detection, freshness, propagation, cutoff/closure budgets
 and mechanisms remain approval blockers; this completes no D02/D03 or
 implementation gate. Evidence:
 [validation](evidence/m02-d02a/validation.txt), [scan](evidence/m02-d02a/secrets.txt).
+The limited confirmation after PR #64 is recorded in
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65); original proposal evidence
+above remains historical. Approval-record checks are included in
+[D02b validation](evidence/m02-d02b/validation.txt).
+
+[D02b / Proposed ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), proposes a shared
+authoritative commit for protected control-state mutation, operation outcome
+and required audit record, with separately derived read/export views. Remote
+effects need their own evidence; no exporter acknowledgement replaces durable
+audit or resurrects invalidated authority. Store/consistency/integrity/recovery
+mechanisms and measured bounds remain approval blockers; this completes no
+D02/P02 or implementation gate. Evidence:
+[validation](evidence/m02-d02b/validation.txt), [scan](evidence/m02-d02b/secrets.txt).
 
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,

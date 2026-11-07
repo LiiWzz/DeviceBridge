@@ -51,6 +51,11 @@ The current standing of a session's permission to carry maintenance traffic for
 its bound operator, device, account and context.
 _Avoid_: Open connection, agent connectivity, original login success
 
+**Security operation outcome**:
+The authoritative result of a particular maintenance or trust operation,
+distinct from a caller's observation and any unconfirmed remote effect.
+_Avoid_: HTTP success, log message, remote completion
+
 **Browser terminal**:
 An interactive command-line view inside the dashboard for an authorized device
 session. The view itself grants no device or account permissions.

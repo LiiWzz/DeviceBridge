@@ -39,11 +39,19 @@ Independent provisioning trust, mutual service/device verification and
 operation-bound enrollment still require mechanism/budget approval;
 all M01/M02 and browser implementation gates remain open.
 
-[Proposed ADR-009](adr/ADR-009-active-session-validity.md),
-[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), adds the D02/D03
-active-session policy input: stop usable traffic and close within approved
-bounds when validity becomes invalid or uncertain. It selects no mechanism
-or numerical deadline and awaits separate approval; other gates remain open.
+[ADR-009](adr/ADR-009-active-session-validity.md),
+[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), records owner agreement
+with the limited D02/D03 session policy after PR #64, with provenance in
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65): stop usable traffic and
+close within approved bounds when validity is invalid or uncertain. Mechanisms,
+numerical deadlines and all implementation gates remain pending.
+
+[Proposed ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), adds the D02/P02 audit
+consistency architecture input: one authoritative commit for protected mutation,
+outcome and required audit, separate from derived views and remote effects.
+It awaits approval; storage/integrity/recovery decisions and budgets remain
+unresolved, with all implementation and browser gates preserved.
 
 The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
 [#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
