@@ -1,0 +1,18 @@
+$ python3 --version
+Python 3.14.5
+Exit: 0
+
+$ git rev-parse HEAD
+f3ec71ee387aab3e6bb3e9173446d83e96e5dbfa
+Exit: 0
+
+$ python3 docs/evidence/m02-d02c/validate.py
+PASS: 106 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly seven scoped document/evidence files; whitespace clean.
+PASS: runtime, migrations, prototype, glossary, security baseline, ADR-001–009 and M01 unchanged.
+PASS: ADR-010 reviewed body preserved; architecture approval provenance recorded.
+PASS: ADR-011 remains Proposed/unsigned; M02/roadmap handoffs present.
+Exit: 0
+
+$ git diff --check f3ec71ee387aab3e6bb3e9173446d83e96e5dbfa
+Exit: 0

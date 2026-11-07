@@ -144,8 +144,9 @@ The limited confirmation after PR #64 is recorded in
 above remains historical. Approval-record checks are included in
 [D02b validation](evidence/m02-d02b/validation.txt).
 
-[D02b / Proposed ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
-[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), proposes a shared
+[D02b / ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), records owner-approved
+architecture direction for a shared
 authoritative commit for protected control-state mutation, operation outcome
 and required audit record, with separately derived read/export views. Remote
 effects need their own evidence; no exporter acknowledgement replaces durable
@@ -153,6 +154,19 @@ audit or resurrects invalidated authority. Store/consistency/integrity/recovery
 mechanisms and measured bounds remain approval blockers; this completes no
 D02/P02 or implementation gate. Evidence:
 [validation](evidence/m02-d02b/validation.txt), [scan](evidence/m02-d02b/secrets.txt).
+Approval after PR #66 is recorded in
+[#67](https://github.com/LiiWzz/DeviceBridge/issues/67); original proposal evidence
+above remains historical. Approval-record checks are included in
+[D02c validation](evidence/m02-d02c/validation.txt).
+
+[D02c / Proposed ADR-011](adr/ADR-011-trusted-time-validity.md),
+[#67](https://github.com/LiiWzz/DeviceBridge/issues/67), proposes independently
+trusted current-time bounds wholly inside authorized validity windows, with
+conservative local enforcement, non-circular bootstrap and uncertainty-aware
+audit. Time evidence grants no identity/policy/revocation authority. Source,
+verification/clock/continuity mechanisms and measured budgets remain approval
+blockers; this completes no D02/D03 or implementation gate. Evidence:
+[validation](evidence/m02-d02c/validation.txt), [scan](evidence/m02-d02c/secrets.txt).
 
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,

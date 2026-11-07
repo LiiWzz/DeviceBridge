@@ -46,12 +46,20 @@ with the limited D02/D03 session policy after PR #64, with provenance in
 close within approved bounds when validity is invalid or uncertain. Mechanisms,
 numerical deadlines and all implementation gates remain pending.
 
-[Proposed ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
-[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), adds the D02/P02 audit
-consistency architecture input: one authoritative commit for protected mutation,
-outcome and required audit, separate from derived views and remote effects.
-It awaits approval; storage/integrity/recovery decisions and budgets remain
-unresolved, with all implementation and browser gates preserved.
+[ADR-010](adr/ADR-010-authoritative-audit-consistency.md),
+[#65](https://github.com/LiiWzz/DeviceBridge/issues/65), records owner approval
+of the D02/P02 architecture direction after PR #66, with provenance in
+[#67](https://github.com/LiiWzz/DeviceBridge/issues/67): one authoritative commit
+for protected mutation/outcome/required audit, separate from derived views and
+remote effects. Exact storage/integrity/recovery mechanisms, budgets and
+implementation/browser gates remain pending.
+
+[Proposed ADR-011](adr/ADR-011-trusted-time-validity.md),
+[#67](https://github.com/LiiWzz/DeviceBridge/issues/67), adds D02 trusted-time
+policy input: independent bounded time evidence and conservative validity,
+local enforcement, bootstrap/restart and uncertain audit time. It awaits
+approval, selects no source/protocol/clock API or numeric policy and preserves
+all implementation and browser gates.
 
 The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
 [#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
