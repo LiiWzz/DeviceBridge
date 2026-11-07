@@ -46,6 +46,11 @@ Permission for a particular user to request access to a particular device in a
 particular session context.
 _Avoid_: Inventory visibility, enrollment authority
 
+**Session validity**:
+The current standing of a session's permission to carry maintenance traffic for
+its bound operator, device, account and context.
+_Avoid_: Open connection, agent connectivity, original login success
+
 **Browser terminal**:
 An interactive command-line view inside the dashboard for an authorized device
 session. The view itself grants no device or account permissions.
