@@ -1,6 +1,6 @@
 # ADR-010: Propose one authoritative commit for security outcomes and audit
 
-**Status: Proposed — explicit human Tech Lead approval required.**
+**Status: Accepted (architecture direction only); concrete mechanisms, budgets and implementation gates remain pending.**
 Issue [#65](https://github.com/LiiWzz/DeviceBridge/issues/65).
 Repository source baseline: `b25d382076facb1f7d4e68da79f392ed93a6caae`.
 
@@ -179,8 +179,21 @@ operation outcomes and audit; replaying exports or restoring a snapshot cannot
 grant access or restore withdrawn trust. Do not delete audit to make an older
 deployment compatible. Code rollback cannot undo commands or restore secrets.
 
-**Human decision: PENDING; intentionally unsigned.** Tech Lead records exact
-reviewed revision, scope, accept/revise/reject decision, owners and authoritative
-identity/time reference. “ok next” concerns ADR-009's limited policy, not this
-new architecture. Agent review and merge supply no contract/security approval
-under [AGENTS.md](../../AGENTS.md).
+**Human decision: accepted architecture direction.** In the project conversation
+on 2026-11-07 (Asia/Bangkok), the owner replied “approve and next” after the
+summary of [PR #66](https://github.com/LiiWzz/DeviceBridge/pull/66), reviewed text
+at `656ad1209d50d3c7e8fe7aec0c141276ca396927`. Approval covers the proposed shared
+authoritative commit for protected mutation, operation outcome and required audit
+record; separately derived views and verified remote effects; scoped original-
+operation reconciliation, attributable corrections and invalidation/restore
+safety. The original reviewed proposal above is retained. No signing identity,
+exact approval time or external signature was captured; none is invented here.
+This records the owner's approval, not an agent signature or approval by merge.
+
+Exact storage/transaction/durability/acknowledgement, integrity/custody, producer/
+projection/recovery/retention mechanisms, schema/API/wire, numerical budgets and
+implementation remain unresolved. Remaining D01/D02/D03, P00/M01/M02 and browser
+gates stay open under [AGENTS.md](../../AGENTS.md); approval of this direction
+does not claim production durability or authorize dependent implementation.
+Approval-record checks are linked from [ADR-011](ADR-011-trusted-time-validity.md);
+original proposal evidence above remains historical.
