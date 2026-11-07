@@ -116,6 +116,15 @@ delegation and provisioning mechanisms remain approval blockers; it completes
 no D01 or implementation gate. Evidence:
 [validation](evidence/m02-d01c/validation.txt), [scan](evidence/m02-d01c/secrets.txt).
 
+[D01d / Proposed ADR-008](adr/ADR-008-device-bootstrap-trust.md),
+[#61](https://github.com/LiiWzz/DeviceBridge/issues/61), proposes independently
+established intended-device trust, mutual bootstrap and fresh operation-bound
+enrollment proof, with protected provisioning/custody and durable one-use
+binding/reconciliation. Proof, service/time trust, delivery/storage mechanisms,
+clone assumptions and measured budgets remain approval blockers; it completes
+no D01 or implementation gate. Evidence:
+[validation](evidence/m02-d01d/validation.txt), [scan](evidence/m02-d01d/secrets.txt).
+
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,
 revocation and session-grant mutations; lifecycle logs alone do not satisfy it.

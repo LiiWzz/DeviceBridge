@@ -1,0 +1,29 @@
+$ python3 --version
+Python 3.14.5
+Exit: 0
+
+$ git rev-parse HEAD
+77976bdf60270fe187393155c4856833432c3fd4
+Exit: 0
+
+$ python3 docs/evidence/m02-d01d/validate.py
+PASS: 77 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly seven scoped document/evidence files; whitespace clean.
+PASS: runtime, prototype, security baseline, prior ADRs and M01 unchanged.
+PASS: proposed unsigned status and M02/roadmap handoffs retained.
+Exit: 0
+
+$ git diff --check 77976bdf60270fe187393155c4856833432c3fd4
+Exit: 0
+
+Initial git diff --cached --check reported new blank lines at EOF in the two evidence logs (exit 2). Removed only terminal blank lines; final verification follows.
+
+$ python3 docs/evidence/m02-d01d/validate.py
+PASS: 77 local Markdown file targets; external URLs/fragments unverified.
+PASS: exactly seven scoped document/evidence files; whitespace clean.
+PASS: runtime, prototype, security baseline, prior ADRs and M01 unchanged.
+PASS: proposed unsigned status and M02/roadmap handoffs retained.
+Exit: 0
+
+$ git diff --check 77976bdf60270fe187393155c4856833432c3fd4
+Exit: 0
