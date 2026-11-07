@@ -1,6 +1,6 @@
 # ADR-008: Propose independently established device bootstrap trust
 
-**Status: Proposed — explicit human Tech Lead approval required.**
+**Status: Accepted (domain principles only); mechanisms, budgets and implementation gates remain pending.**
 Issue [#61](https://github.com/LiiWzz/DeviceBridge/issues/61).
 Repository source baseline: `77976bdf60270fe187393155c4856833432c3fd4`.
 
@@ -173,7 +173,24 @@ must preserve consumed authority, invalidated trust, original binding/outcomes
 and audit history; restoring an image/database cannot revive withdrawn material.
 Code rollback cannot restore stolen secrets or undo completed remote commands.
 
-**Human decision: PENDING; intentionally unsigned.** Tech Lead records exact
-reviewed revision, scope, accept/revise/reject decision, owners and authoritative
-identity/time reference. Instruction to continue, agent review and merge supply
-no contract/security approval under [AGENTS.md](../../AGENTS.md).
+**Human decision: accepted limited domain principles.** In the project
+conversation on 2026-11-07 (Asia/Bangkok), the owner replied “confirm and next”
+after the summary of [PR #62](https://github.com/LiiWzz/DeviceBridge/pull/62),
+reviewed text at `44fd7fa18527ea3dc3583e1e4402e2cafbfc86a8`. This records approval
+of the proposed domain constraints: independent intended-device trust, mutual
+bootstrap, separate device proof and enrollment authority, protected per-device
+provisioning/custody, durable one-use binding/reconciliation, invalidation
+precedence and independently authenticated recovery with physical-service limits.
+The original proposal above is retained as the reviewed text. No signing
+identity, exact approval time or external signature was captured; none is
+invented here. This is the owner's conversation confirmation, not an agent
+signature or approval inferred from merge.
+
+Proof/credential/crypto/hardware/provider choices, service/time bootstrap,
+delivery/storage, protocol/API/schema, consistency/audit mechanisms, numerical
+lifetimes/resource budgets and implementation remain unapproved. ADR-001/002/
+006/007, remaining D01/D02/D03, P00/M01/M02 and browser gates stay open under
+[AGENTS.md](../../AGENTS.md). This approval does not authorize implementation.
+Approval-record validation/scan evidence is linked from
+[ADR-009](ADR-009-active-session-validity.md); original proposal evidence above
+remains historical and is not evidence of this later status change.

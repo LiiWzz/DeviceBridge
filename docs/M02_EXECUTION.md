@@ -116,14 +116,28 @@ delegation and provisioning mechanisms remain approval blockers; it completes
 no D01 or implementation gate. Evidence:
 [validation](evidence/m02-d01c/validation.txt), [scan](evidence/m02-d01c/secrets.txt).
 
-[D01d / Proposed ADR-008](adr/ADR-008-device-bootstrap-trust.md),
-[#61](https://github.com/LiiWzz/DeviceBridge/issues/61), proposes independently
+[D01d / ADR-008](adr/ADR-008-device-bootstrap-trust.md),
+[#61](https://github.com/LiiWzz/DeviceBridge/issues/61), records owner-accepted
+domain principles for independently
 established intended-device trust, mutual bootstrap and fresh operation-bound
 enrollment proof, with protected provisioning/custody and durable one-use
 binding/reconciliation. Proof, service/time trust, delivery/storage mechanisms,
 clone assumptions and measured budgets remain approval blockers; it completes
 no D01 or implementation gate. Evidence:
 [validation](evidence/m02-d01d/validation.txt), [scan](evidence/m02-d01d/secrets.txt).
+The limited confirmation after PR #62 is recorded in
+[#63](https://github.com/LiiWzz/DeviceBridge/issues/63); original proposal evidence
+above remains historical. Approval-record checks are included in
+[D02a validation](evidence/m02-d02a/validation.txt).
+
+[D02a / Proposed ADR-009](adr/ADR-009-active-session-validity.md),
+[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), proposes stopping both
+directions of usable session traffic and bounded closure when validity is lost
+or cannot be established. No automatic resume or replay; local/remote/audit
+outcomes stay distinct. Detection, freshness, propagation, cutoff/closure budgets
+and mechanisms remain approval blockers; this completes no D02/D03 or
+implementation gate. Evidence:
+[validation](evidence/m02-d02a/validation.txt), [scan](evidence/m02-d02a/secrets.txt).
 
 P01 must scope bootstrap/provisioning explicitly so audit does not depend on an
 unaudited enrollment shortcut. P02 precedes enrollment, credential changes,

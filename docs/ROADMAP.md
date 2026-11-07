@@ -31,11 +31,19 @@ operator trust, scoped maintenance authority and delegation review inputs.
 It selects no identity provider, role/tenant model or policy mechanism and
 retains all explicit human approval and M01/M02 implementation gates.
 
-[Proposed ADR-008](adr/ADR-008-device-bootstrap-trust.md),
-[#61](https://github.com/LiiWzz/DeviceBridge/issues/61), adds remaining D01
-intended-device bootstrap/proof review input. Independent provisioning trust,
-mutual service/device verification and operation-bound enrollment require
-separate mechanism/budget approval; all M01/M02 and browser gates remain open.
+[ADR-008](adr/ADR-008-device-bootstrap-trust.md),
+[#61](https://github.com/LiiWzz/DeviceBridge/issues/61), records limited owner
+approval of intended-device bootstrap/proof domain principles after PR #62,
+with provenance in [#63](https://github.com/LiiWzz/DeviceBridge/issues/63).
+Independent provisioning trust, mutual service/device verification and
+operation-bound enrollment still require mechanism/budget approval;
+all M01/M02 and browser implementation gates remain open.
+
+[Proposed ADR-009](adr/ADR-009-active-session-validity.md),
+[#63](https://github.com/LiiWzz/DeviceBridge/issues/63), adds the D02/D03
+active-session policy input: stop usable traffic and close within approved
+bounds when validity becomes invalid or uncertain. It selects no mechanism
+or numerical deadline and awaits separate approval; other gates remain open.
 
 The proposed [M02 execution plan](M02_EXECUTION.md), tracked in
 [#35](https://github.com/LiiWzz/DeviceBridge/issues/35), breaks secure connectivity
