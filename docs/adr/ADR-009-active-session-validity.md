@@ -1,6 +1,6 @@
 # ADR-009: Propose bounded closure when active-session validity is lost
 
-**Status: Proposed — explicit human Tech Lead approval required.**
+**Status: Accepted (domain policy only); mechanisms, budgets and implementation gates remain pending.**
 Issue [#63](https://github.com/LiiWzz/DeviceBridge/issues/63).
 Repository source baseline: `697045e113b5a8b5ff834181e023c37eef6bc2a7`.
 
@@ -157,8 +157,21 @@ now. Future rollback must retain stopped/invalidated authority, original outcome
 and audit; an older deployment or restored database must not resume a stopped
 session or bypass host keys. Reverting code cannot undo completed commands.
 
-**Human decision: PENDING; intentionally unsigned.** Tech Lead records exact
-reviewed revision, scope, accept/revise/reject decision, accountable owners and
-authoritative identity/time reference. The preceding “confirm and next” approves
-ADR-008's limited domain principles only; it does not approve this new proposal.
-Agent review and merge supply no approval under [AGENTS.md](../../AGENTS.md).
+**Human decision: accepted limited domain policy.** In the project conversation
+on 2026-11-07 (Asia/Bangkok), the owner replied “ok next” after the summary of
+[PR #64](https://github.com/LiiWzz/DeviceBridge/pull/64), reviewed text at
+`25fae2fb0fc8d5ff85c3caf79331f73e0dbab3ec`. This records agreement with the
+proposed domain policy: stop usable session traffic when validity is invalid or
+cannot be established, bounded closure, no automatic resume/input replay,
+distinct local/remote/audit outcomes and independent agent continuity. The
+original reviewed proposal above is retained. No signing identity, exact approval
+time or external signature was captured; none is invented here. The confirmation
+is not inferred from merge or an agent signature.
+
+Detection/freshness, propagation, cutoff/closure/retention budgets, trusted time,
+enforcement/audit mechanisms, credentials/provider/crypto, protocol/API/schema
+and implementation remain unapproved. Remaining D01/D02/D03, P00/M01/M02 and
+browser gates stay open under [AGENTS.md](../../AGENTS.md). No remote-process
+termination or maximum access-after-revoke guarantee is approved by this record.
+Approval-record checks are included in [ADR-010's evidence](ADR-010-authoritative-audit-consistency.md);
+original proposal evidence above remains historical.
